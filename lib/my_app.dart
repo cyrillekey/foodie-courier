@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:foodie_courier/screens/Authentication/sign_in.dart';
+import 'package:foodie_courier/screens/Layout/main_layout.dart';
 
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
@@ -22,7 +23,7 @@ class MyApp extends StatelessWidget {
         // is not restarted.
         primarySwatch: Colors.blue,
       ),
-      home: const SignIn(),
+      home: MainLayout(index: 0),
     );
   }
 }
