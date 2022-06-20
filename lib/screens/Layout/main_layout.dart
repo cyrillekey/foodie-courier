@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:foodie_courier/screens/Deliveries/parcel_center.dart';
 import 'package:foodie_courier/screens/Home/home.dart';
 import 'package:foodie_courier/screens/Orders/my_deliveries.dart';
+import 'package:foodie_courier/screens/Profile/profile_screen.dart';
 
 class MainLayout extends StatefulWidget {
   final int index;
@@ -15,7 +17,7 @@ class _MainLayoutState extends State<MainLayout> {
   late int item;
   @override
   void initState() {
-    screens = [Home(), MyDeliveries()];
+    screens = [Home(), MyDeliveries(), ParcelCenter(), ProfileScreen()];
     item = widget.index;
     super.initState();
   }
