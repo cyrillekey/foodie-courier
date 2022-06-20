@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:foodie_courier/screens/DeliveryMap/delivery_directions.dart';
+import 'package:foodie_courier/screens/Scanner/qr_scanner.dart';
 
 class Home extends StatelessWidget {
   const Home({Key? key}) : super(key: key);
@@ -58,7 +60,7 @@ class Home extends StatelessWidget {
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Container(
+                              SizedBox(
                                 width: MediaQuery.of(context).size.width * 0.6,
                                 child: TextFormField(
                                   decoration: InputDecoration(
@@ -72,15 +74,24 @@ class Home extends StatelessWidget {
                                               BorderRadius.circular(6))),
                                 ),
                               ),
-                              Container(
-                                height: 60,
-                                decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(8),
-                                    color: Colors.white),
-                                width: 60,
-                                child: const Icon(
-                                  Icons.qr_code_outlined,
-                                  size: 35,
+                              InkWell(
+                                onTap: () {
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              const QrScanner()));
+                                },
+                                child: Container(
+                                  height: 60,
+                                  decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(8),
+                                      color: Colors.white),
+                                  width: 60,
+                                  child: const Icon(
+                                    Icons.qr_code_outlined,
+                                    size: 35,
+                                  ),
                                 ),
                               )
                             ],
@@ -128,6 +139,12 @@ class Home extends StatelessWidget {
                     itemCount: 2,
                     itemBuilder: (context, index) {
                       return InkWell(
+                        onTap: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => DeliveryLocation()));
+                        },
                         child: Card(
                           child: Container(
                             height: 174,
