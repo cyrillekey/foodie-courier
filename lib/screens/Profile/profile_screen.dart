@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 
 class ProfileScreen extends StatelessWidget {
@@ -40,19 +42,98 @@ class ProfileScreen extends StatelessWidget {
                             ),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
+                              children: const [
                                 Text(
                                   "55,0000",
                                   style: TextStyle(
                                       fontSize: 35,
                                       fontWeight: FontWeight.w800,
                                       color: Colors.yellow),
+                                ),
+                                Text(
+                                  " ",
+                                  style: TextStyle(
+                                      fontSize: 35,
+                                      fontWeight: FontWeight.w500),
                                 )
                               ],
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: const [
+                                Text(
+                                  "Orders: ",
+                                  style: TextStyle(
+                                      fontSize: 15,
+                                      fontWeight: FontWeight.w600),
+                                ),
+                                Text(
+                                  "1250",
+                                  style: TextStyle(
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.w500),
+                                )
+                              ],
+                            ),
+                            const SizedBox(
+                              height: 10,
+                            ),
+                            Container(
+                              width: 100,
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 5, vertical: 5),
+                              decoration: BoxDecoration(
+                                  border: Border.all(color: Colors.white),
+                                  borderRadius: BorderRadius.circular(12)),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: const [
+                                  Icon(
+                                    Icons.money,
+                                    color: Colors.white,
+                                    size: 20,
+                                  ),
+                                  SizedBox(
+                                    width: 5,
+                                  ),
+                                  Text(
+                                    "Withdraw",
+                                    style: TextStyle(color: Colors.white),
+                                  )
+                                ],
+                              ),
                             )
                           ],
                         ),
-                      )
+                      ),
+                      const Positioned(
+                          left: -170,
+                          top: -170,
+                          child: CircleAvatar(
+                            radius: 130,
+                            backgroundColor: Colors.yellowAccent,
+                          )),
+                      const Positioned(
+                          left: -160,
+                          top: -190,
+                          child: CircleAvatar(
+                            radius: 130,
+                            backgroundColor: Colors.redAccent,
+                          )),
+                      const Positioned(
+                          right: -170,
+                          bottom: -170,
+                          child: CircleAvatar(
+                            radius: 130,
+                            backgroundColor: Colors.pinkAccent,
+                          )),
+                      const Positioned(
+                          right: -160,
+                          bottom: -190,
+                          child: CircleAvatar(
+                            radius: 130,
+                            backgroundColor: Colors.purpleAccent,
+                          ))
                     ],
                   ),
                 ),

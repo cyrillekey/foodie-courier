@@ -3,6 +3,7 @@ import 'package:foodie_courier/screens/Deliveries/parcel_center.dart';
 import 'package:foodie_courier/screens/Home/home.dart';
 import 'package:foodie_courier/screens/Orders/my_deliveries.dart';
 import 'package:foodie_courier/screens/Profile/profile_screen.dart';
+import 'package:salomon_bottom_bar/salomon_bottom_bar.dart';
 
 class MainLayout extends StatefulWidget {
   final int index;
@@ -25,18 +26,39 @@ class _MainLayoutState extends State<MainLayout> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      bottomNavigationBar: Container(
-        height: 65,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: [
-            tabButton(Icons.home, "Home", 0),
-            tabButton(Icons.delivery_dining, "My Orders", 1),
-            tabButton(Icons.mail, "Parcel Center", 2),
-            tabButton(Icons.account_circle, "Profile", 3)
-          ],
-        ),
-      ),
+      bottomNavigationBar: SalomonBottomBar(
+          margin: EdgeInsets.only(bottom: 30, top: 10, right: 20, left: 20),
+          currentIndex: item,
+          onTap: (i) {
+            setState(() {
+              item = i;
+            });
+          },
+          items: [
+            SalomonBottomBarItem(
+                icon: const Icon(Icons.home), title: const Text("Home")),
+            SalomonBottomBarItem(
+                icon: const Icon(Icons.delivery_dining),
+                title: const Text("My Orders")),
+            SalomonBottomBarItem(
+                icon: const Icon(Icons.mail),
+                title: const Text("Parcel Center")),
+            SalomonBottomBarItem(
+                icon: const Icon(Icons.account_circle),
+                title: const Text("Profile"))
+          ]),
+      // Container(
+      //   height: 65,
+      //   child: Row(
+      //     mainAxisAlignment: MainAxisAlignment.spaceAround,
+      //     children: [
+      //       tabButton(Icons.home, "Home", 0),
+      //       tabButton(Icons.delivery_dining, "My Orders", 1),
+      //       tabButton(Icons.mail, "Parcel Center", 2),
+      //       tabButton(Icons.account_circle, "Profile", 3)
+      //     ],
+      //   ),
+      // ),
       body: Container(
         height: MediaQuery.of(context).size.height,
         width: MediaQuery.of(context).size.width,
