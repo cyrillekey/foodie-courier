@@ -174,7 +174,7 @@ class __$$_UserCopyWithImpl<$Res> extends _$UserCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$_User implements _User {
+class _$_User extends _User {
   _$_User(
       {@JsonKey(name: "customer_id") this.customer_id = 0,
       @JsonKey(name: "user_mail") this.user_mail = "",
@@ -182,7 +182,8 @@ class _$_User implements _User {
       @JsonKey(name: "user_phone") this.user_phone = " ",
       @JsonKey(name: "accountType") this.accountType = "CUSTOMER",
       @JsonKey(name: "dateJoined") this.dateJoined = "",
-      @JsonKey(name: "accountStatus") this.accountStatus = ""});
+      @JsonKey(name: "accountStatus") this.accountStatus = ""})
+      : super._();
 
   factory _$_User.fromJson(Map<String, dynamic> json) => _$$_UserFromJson(json);
 
@@ -255,7 +256,7 @@ class _$_User implements _User {
   }
 }
 
-abstract class _User implements User {
+abstract class _User extends User {
   factory _User(
       {@JsonKey(name: "customer_id") final int customer_id,
       @JsonKey(name: "user_mail") final String user_mail,
@@ -264,6 +265,7 @@ abstract class _User implements User {
       @JsonKey(name: "accountType") final String accountType,
       @JsonKey(name: "dateJoined") final String dateJoined,
       @JsonKey(name: "accountStatus") final String accountStatus}) = _$_User;
+  _User._() : super._();
 
   factory _User.fromJson(Map<String, dynamic> json) = _$_User.fromJson;
 

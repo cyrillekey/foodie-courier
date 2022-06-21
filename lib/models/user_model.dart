@@ -6,6 +6,7 @@ part 'user_model.freezed.dart';
 
 @freezed
 class User with _$User implements Insertable<User> {
+  const User._();
   factory User(
           {@Default(0) @JsonKey(name: "customer_id") int customer_id,
           @Default("") @JsonKey(name: "user_mail") String user_mail,

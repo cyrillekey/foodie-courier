@@ -19,7 +19,7 @@ class ApiClient {
       Options? options,
       ProgressCallback? progressCallback}) async {
     try {
-      var response = await dio.post(uri,
+      var response = await dio.post(baseUrl + uri,
           data: data,
           queryParameters: queryParameters,
           onReceiveProgress: progressCallback,
@@ -32,7 +32,7 @@ class ApiClient {
             response: response.data);
       }
     } catch (e) {
-      rethrow;
+      return ApiResponse(false, e.toString());
     }
   }
 
@@ -53,7 +53,7 @@ class ApiClient {
             response: response.data);
       }
     } catch (e) {
-      rethrow;
+      return ApiResponse(false, e.toString());
     }
   }
 }

@@ -231,7 +231,7 @@ class __$$_CourierCopyWithImpl<$Res> extends _$CourierCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$_Courier implements _Courier {
+class _$_Courier extends _Courier {
   _$_Courier(
       {@JsonKey(name: "courier_id") this.courier_id = 0,
       @JsonKey(name: "id_number") this.id_number = "",
@@ -243,7 +243,8 @@ class _$_Courier implements _Courier {
       @JsonKey(name: "rating") this.rating = 0.0,
       @JsonKey(name: "onAssingment") this.onAssingment = true,
       @JsonKey(name: "currentStatus") this.currentStatus = true,
-      @JsonKey(name: "vehicle_registration") this.vehicle_registration = ""});
+      @JsonKey(name: "vehicle_registration") this.vehicle_registration = ""})
+      : super._();
 
   factory _$_Courier.fromJson(Map<String, dynamic> json) =>
       _$$_CourierFromJson(json);
@@ -341,7 +342,7 @@ class _$_Courier implements _Courier {
   }
 }
 
-abstract class _Courier implements Courier {
+abstract class _Courier extends Courier {
   factory _Courier(
       {@JsonKey(name: "courier_id")
           final int courier_id,
@@ -365,6 +366,7 @@ abstract class _Courier implements Courier {
           final bool currentStatus,
       @JsonKey(name: "vehicle_registration")
           final String vehicle_registration}) = _$_Courier;
+  _Courier._() : super._();
 
   factory _Courier.fromJson(Map<String, dynamic> json) = _$_Courier.fromJson;
 

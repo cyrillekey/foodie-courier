@@ -1,7 +1,13 @@
+import 'package:dio/dio.dart';
+import 'package:foodie_courier/api_client/api_client.dart';
+import 'package:foodie_courier/database/local_db.dart';
+import 'package:foodie_courier/database/local_db_dao.dart';
+import 'package:foodie_courier/database/shared_database.dart';
 import 'package:get_it/get_it.dart';
 import 'package:logger/logger.dart';
 
 GetIt locator = GetIt.instance;
+final AppDatabase _appDatabase = AppDatabase(constructDb().executor);
 var logger = Logger(
     printer: PrettyPrinter(
   methodCount: 1,
@@ -11,4 +17,8 @@ var logger = Logger(
   printEmojis: true,
   printTime: true,
 ));
-void setupLocator() {}
+void setupLocator() {
+  locator
+      .registerSingleton(ApiClient("https://foodieback.herokuapp.com/", Dio()));
+  locator.registerSingleton(LocalDaoDb(_appDatabase));
+}

@@ -289,7 +289,7 @@ class CourierTableCompanion extends UpdateCompanion<Courier> {
     this.vehicle_registration = const Value.absent(),
   });
   CourierTableCompanion.insert({
-    required int courier_id,
+    this.courier_id = const Value.absent(),
     required String id_number,
     required String phone_number1,
     required String phone_number2,
@@ -300,8 +300,7 @@ class CourierTableCompanion extends UpdateCompanion<Courier> {
     required bool onAssingment,
     required bool currentStatus,
     required String vehicle_registration,
-  })  : courier_id = Value(courier_id),
-        id_number = Value(id_number),
+  })  : id_number = Value(id_number),
         phone_number1 = Value(phone_number1),
         phone_number2 = Value(phone_number2),
         currentLatitude = Value(currentLatitude),
@@ -436,7 +435,7 @@ class $CourierTableTable extends CourierTable
   @override
   late final GeneratedColumn<int?> courier_id = GeneratedColumn<int?>(
       'courier_id', aliasedName, false,
-      type: const IntType(), requiredDuringInsert: true);
+      type: const IntType(), requiredDuringInsert: false);
   final VerificationMeta _id_numberMeta = const VerificationMeta('id_number');
   @override
   late final GeneratedColumn<String?> id_number = GeneratedColumn<String?>(
@@ -527,8 +526,6 @@ class $CourierTableTable extends CourierTable
           _courier_idMeta,
           courier_id.isAcceptableOrUnknown(
               data['courier_id']!, _courier_idMeta));
-    } else if (isInserting) {
-      context.missing(_courier_idMeta);
     }
     if (data.containsKey('id_number')) {
       context.handle(_id_numberMeta,
@@ -610,7 +607,7 @@ class $CourierTableTable extends CourierTable
   }
 
   @override
-  Set<GeneratedColumn> get $primaryKey => <GeneratedColumn>{};
+  Set<GeneratedColumn> get $primaryKey => {courier_id};
   @override
   Courier map(Map<String, dynamic> data, {String? tablePrefix}) {
     final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';

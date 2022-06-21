@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:foodie_courier/screens/Authentication/sign_in.dart';
 import 'package:foodie_courier/screens/Layout/main_layout.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:introduction_screen/introduction_screen.dart';
@@ -22,39 +23,52 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
     }
   }
 
-  final List<PageViewModel> _pages = [
-    PageViewModel(
-        title: "Deliver Foods country wide",
-        body: "Deliver ajs na mam",
-        image: Center(
-          child: Image.asset(
-            ("assets/img/hot_delivery.png"),
-            fit: BoxFit.contain,
-          ),
-        )),
-    PageViewModel(
-        title: "Deliver Foods country wide",
-        body: "Deliver ajs na mam",
-        image: Center(
-          child: Image.asset(
-            ("assets/img/favourite_food.png"),
-            fit: BoxFit.contain,
-          ),
-        )),
-    PageViewModel(
-        title: "Deliver Foods country wide",
-        body: "Deliver ajs na mam",
-        image: Center(
-          child: Image.asset(
-            ("assets/img/great_food.png"),
-            fit: BoxFit.contain,
-          ),
-        ))
-  ];
+  List<PageViewModel> _pages = List.empty();
+
+  PageDecoration getPagedDecoration() {
+    return const PageDecoration(
+      imagePadding: EdgeInsets.only(top: 120),
+      bodyPadding: EdgeInsets.only(top: 8, left: 20, right: 20),
+      titlePadding: EdgeInsets.only(top: 50),
+    );
+  }
+
   @override
   void initState() {
-    super.initState();
+    _pages = [
+      PageViewModel(
+          decoration: getPagedDecoration(),
+          title: "Deliver Foods country wide",
+          body: "Deliver ajs na mam",
+          image: Center(
+            child: Image.asset(
+              ("assets/img/hot_delivery.png"),
+              fit: BoxFit.contain,
+            ),
+          )),
+      PageViewModel(
+          decoration: getPagedDecoration(),
+          title: "Deliver Foods country wide",
+          body: "Deliver ajs na mam",
+          image: Center(
+            child: Image.asset(
+              ("assets/img/favourite_food.png"),
+              fit: BoxFit.contain,
+            ),
+          )),
+      PageViewModel(
+          decoration: getPagedDecoration(),
+          title: "Deliver Foods country wide",
+          body: "Deliver ajs na mam",
+          image: Center(
+            child: Image.asset(
+              ("assets/img/great_food.png"),
+              fit: BoxFit.contain,
+            ),
+          ))
+    ];
     _getUserPosition();
+    super.initState();
   }
 
   @override
@@ -68,8 +82,8 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
       showSkipButton: true,
       skip: Text("Skip"),
       onDone: () {
-        Navigator.push(context,
-            MaterialPageRoute(builder: (context) => MainLayout(index: 0)));
+        Navigator.push(
+            context, MaterialPageRoute(builder: (context) => SignIn()));
       },
     ));
   }

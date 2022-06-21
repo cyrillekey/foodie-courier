@@ -36,4 +36,6 @@ class CourierTable extends Table {
   BoolColumn get onAssingment => boolean()();
   BoolColumn get currentStatus => boolean()();
   TextColumn get vehicle_registration => text()();
+  @override
+  Set<Column> get primaryKey => {courier_id};
 }

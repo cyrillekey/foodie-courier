@@ -6,6 +6,7 @@ part 'courier_model.freezed.dart';
 
 @freezed
 class Courier with _$Courier implements Insertable<Courier> {
+  const Courier._();
   factory Courier(
       {@Default(0)
       @JsonKey(name: "courier_id")
