@@ -1,9 +1,24 @@
 import 'package:flutter/material.dart';
+import 'package:foodie_courier/controllers/auth_provider.dart';
+import 'package:foodie_courier/models/user_model.dart';
 import 'package:foodie_courier/screens/DeliveryMap/delivery_directions.dart';
 import 'package:foodie_courier/screens/Scanner/qr_scanner.dart';
+import 'package:provider/provider.dart';
 
-class Home extends StatelessWidget {
+class Home extends StatefulWidget {
   const Home({Key? key}) : super(key: key);
+
+  @override
+  State<Home> createState() => _HomeState();
+}
+
+class _HomeState extends State<Home> {
+  User? user;
+  @override
+  void initState() {
+    super.initState();
+    user = Provider.of<AuthProvider>(context, listen: false).currentUser;
+  }
 
   @override
   Widget build(BuildContext context) {

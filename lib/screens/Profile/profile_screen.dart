@@ -1,6 +1,13 @@
+import 'dart:ffi';
 import 'dart:ui';
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:foodie_courier/controllers/auth_provider.dart';
+import 'package:foodie_courier/screens/Authentication/sign_in.dart';
+import 'package:foodie_courier/screens/Profile/edit_profile.dart';
+import 'package:path/path.dart';
+import 'package:provider/provider.dart';
 
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({Key? key}) : super(key: key);
@@ -9,137 +16,378 @@ class ProfileScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 10),
+        padding: const EdgeInsets.only(left: 16, top: 25, right: 16),
         height: MediaQuery.of(context).size.height,
         width: MediaQuery.of(context).size.width,
-        child: SingleChildScrollView(
-          child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
+        child: ListView(
+          children: [
+            const Text(
+              "Settings",
+              style: TextStyle(fontSize: 25, fontWeight: FontWeight.w500),
+            ),
+            const SizedBox(
+              height: 20,
+            ),
+            wallet(),
+            const SizedBox(
+              height: 20,
+            ),
+            Row(
+              children: const [
+                Icon(
+                  Icons.person,
+                  color: Colors.green,
+                ),
+                SizedBox(
+                  width: 8,
+                ),
+                Text(
+                  "Account",
+                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                )
+              ],
+            ),
+            const Divider(
+              height: 15,
+              thickness: 2,
+            ),
+            const SizedBox(
+              height: 10,
+            ),
+            settingsButton(() {}, "Change Password"),
+            settingsButton(() {
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => const EditProfile()));
+            }, "Edit Profile"),
+            settingsButton(() {}, "Privacy and Security"),
+            settingsButton(() {}, "Contact Support"),
             const SizedBox(
               height: 40,
             ),
-            SizedBox(
-              child: ClipRRect(
-                borderRadius: const BorderRadius.all(Radius.circular(40)),
-                child: Container(
-                  color: Colors.blue,
-                  child: Stack(
-                    children: [
-                      Container(
-                        margin: const EdgeInsets.only(top: 20, bottom: 20),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            const Text(
-                              "Total Balance",
-                              style: TextStyle(
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.w500,
-                                  color: Colors.white),
-                            ),
-                            const SizedBox(
-                              height: 10,
-                            ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: const [
-                                Text(
-                                  "55,0000",
-                                  style: TextStyle(
-                                      fontSize: 35,
-                                      fontWeight: FontWeight.w800,
-                                      color: Colors.yellow),
-                                ),
-                                Text(
-                                  " ",
-                                  style: TextStyle(
-                                      fontSize: 35,
-                                      fontWeight: FontWeight.w500),
-                                )
+            Row(
+              children: const [
+                Icon(
+                  Icons.toggle_off,
+                  color: Colors.green,
+                ),
+                SizedBox(
+                  width: 8,
+                ),
+                Text(
+                  "Change Status",
+                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                )
+              ],
+            ),
+            const Divider(
+              height: 15,
+              thickness: 2,
+            ),
+            const SizedBox(
+              height: 10,
+            ),
+            customSwitch("Go offline", false, (value) {}),
+            customSwitch("Notifications", true, (value) {}),
+            const SizedBox(
+              height: 50,
+            ),
+            Center(
+              child: OutlinedButton(
+                  style: ButtonStyle(
+                      padding: MaterialStateProperty.all(
+                          const EdgeInsets.symmetric(horizontal: 40)),
+                      shape: MaterialStateProperty.all(RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(20)))),
+                  onPressed: () {
+                    showDialog(
+                        context: context,
+                        builder: (context) => AlertDialog(
+                              title: const Text("Logout"),
+                              content: const Text(
+                                  "Are you sure you wish to log out?"),
+                              actions: [
+                                TextButton(
+                                    onPressed: () {
+                                      Navigator.pop(context);
+                                    },
+                                    child: const Text("No")),
+                                TextButton(
+                                    onPressed: () {
+                                      Provider.of<AuthProvider>(context,
+                                              listen: false)
+                                          .logout();
+                                      Navigator.pop(context);
+                                      Navigator.pushAndRemoveUntil(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) => SignIn()),
+                                          (route) => false);
+                                    },
+                                    child: const Text("Yes"))
                               ],
-                            ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: const [
-                                Text(
-                                  "Orders: ",
-                                  style: TextStyle(
-                                      fontSize: 15,
-                                      fontWeight: FontWeight.w600),
-                                ),
-                                Text(
-                                  "1250",
-                                  style: TextStyle(
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.w500),
-                                )
-                              ],
-                            ),
-                            const SizedBox(
-                              height: 10,
-                            ),
-                            Container(
-                              width: 100,
-                              padding: const EdgeInsets.symmetric(
-                                  horizontal: 5, vertical: 5),
-                              decoration: BoxDecoration(
-                                  border: Border.all(color: Colors.white),
-                                  borderRadius: BorderRadius.circular(12)),
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: const [
-                                  Icon(
-                                    Icons.money,
-                                    color: Colors.white,
-                                    size: 20,
-                                  ),
-                                  SizedBox(
-                                    width: 5,
-                                  ),
-                                  Text(
-                                    "Withdraw",
-                                    style: TextStyle(color: Colors.white),
-                                  )
-                                ],
-                              ),
-                            )
-                          ],
+                            ));
+                  },
+                  child: const Text("LOG OUT")),
+            )
+          ],
+        ),
+      ),
+    );
+  }
+
+  Padding testing(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 5),
+      child: Container(
+        width: MediaQuery.of(context).size.width - 50,
+        padding: const EdgeInsets.all(8),
+        decoration: const BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.all(Radius.circular(15))),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                ClipOval(
+                  child: Material(
+                    color: Colors.black87,
+                    child: InkWell(
+                      splashColor: Colors.red,
+                      child: const SizedBox(
+                        width: 56,
+                        height: 56,
+                        child: Icon(
+                          Icons.account_balance_wallet,
+                          color: Colors.white,
+                          size: 25,
                         ),
                       ),
-                      const Positioned(
-                          left: -170,
-                          top: -170,
-                          child: CircleAvatar(
-                            radius: 130,
-                            backgroundColor: Colors.yellowAccent,
-                          )),
-                      const Positioned(
-                          left: -160,
-                          top: -190,
-                          child: CircleAvatar(
-                            radius: 130,
-                            backgroundColor: Colors.redAccent,
-                          )),
-                      const Positioned(
-                          right: -170,
-                          bottom: -170,
-                          child: CircleAvatar(
-                            radius: 130,
-                            backgroundColor: Colors.pinkAccent,
-                          )),
-                      const Positioned(
-                          right: -160,
-                          bottom: -190,
-                          child: CircleAvatar(
-                            radius: 130,
-                            backgroundColor: Colors.purpleAccent,
-                          ))
-                    ],
+                      onTap: () {},
+                    ),
                   ),
                 ),
-              ),
+                const SizedBox(
+                  width: 20,
+                ),
+                const Expanded(
+                    child: Text(
+                  "Total Wallet balance",
+                  style: TextStyle(fontWeight: FontWeight.bold),
+                )),
+                Row(
+                  children: const [
+                    Text(
+                      "KES",
+                    ),
+                    Icon(Icons.keyboard_arrow_down)
+                  ],
+                )
+              ],
+            ),
+            const SizedBox(
+              height: 25,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                const Text(
+                  "Kes 1500.00",
+                  style: TextStyle(
+                      fontSize: 40,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.black87),
+                ),
+                Container(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 12, vertical: 7),
+                  decoration: const BoxDecoration(
+                      color: Colors.green,
+                      borderRadius: BorderRadius.all(Radius.circular(30))),
+                  child: const Text(
+                    "12%",
+                    style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold),
+                  ),
+                )
+              ],
+            ),
+            const SizedBox(
+              height: 10,
+            ),
+            Text("data")
+          ],
+        ),
+      ),
+    );
+  }
+
+  Row customSwitch(
+      String title, bool isActive, void Function(bool value)? onChanged) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Text(
+          title,
+          style: TextStyle(
+              fontSize: 18,
+              fontWeight: FontWeight.w500,
+              color: Colors.grey[600]),
+        ),
+        Transform.scale(
+          scale: 0.7,
+          child: CupertinoSwitch(value: isActive, onChanged: onChanged),
+        )
+      ],
+    );
+  }
+
+  InkWell settingsButton(void Function() onTap, String title) {
+    return InkWell(
+      onTap: onTap,
+      child: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 8),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text(
+              title,
+              style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.w500,
+                  color: Colors.grey[600]),
+            ),
+            const Icon(
+              Icons.arrow_forward_ios,
+              color: Colors.grey,
             )
-          ]),
+          ],
+        ),
+      ),
+    );
+  }
+
+  SizedBox wallet() {
+    return SizedBox(
+      child: ClipRRect(
+        borderRadius: const BorderRadius.all(Radius.circular(40)),
+        child: Container(
+          color: Colors.blue,
+          child: Stack(
+            children: [
+              Container(
+                margin: const EdgeInsets.only(top: 20, bottom: 20),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    const Text(
+                      "Total Balance",
+                      style: TextStyle(
+                          fontSize: 14,
+                          fontWeight: FontWeight.w500,
+                          color: Colors.white),
+                    ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: const [
+                        Text(
+                          "55,0000",
+                          style: TextStyle(
+                              fontSize: 35,
+                              fontWeight: FontWeight.w800,
+                              color: Colors.yellow),
+                        ),
+                        Text(
+                          " ",
+                          style: TextStyle(
+                              fontSize: 35, fontWeight: FontWeight.w500),
+                        )
+                      ],
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: const [
+                        Text(
+                          "Orders: ",
+                          style: TextStyle(
+                              fontSize: 15, fontWeight: FontWeight.w600),
+                        ),
+                        Text(
+                          "1250",
+                          style: TextStyle(
+                              fontSize: 16, fontWeight: FontWeight.w500),
+                        )
+                      ],
+                    ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    Container(
+                      width: 100,
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 5, vertical: 5),
+                      decoration: BoxDecoration(
+                          border: Border.all(color: Colors.white),
+                          borderRadius: BorderRadius.circular(12)),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: const [
+                          Icon(
+                            Icons.money,
+                            color: Colors.white,
+                            size: 20,
+                          ),
+                          SizedBox(
+                            width: 5,
+                          ),
+                          Text(
+                            "Withdraw",
+                            style: TextStyle(color: Colors.white),
+                          )
+                        ],
+                      ),
+                    )
+                  ],
+                ),
+              ),
+              const Positioned(
+                  left: -170,
+                  top: -170,
+                  child: CircleAvatar(
+                    radius: 130,
+                    backgroundColor: Colors.yellowAccent,
+                  )),
+              const Positioned(
+                  left: -160,
+                  top: -190,
+                  child: CircleAvatar(
+                    radius: 130,
+                    backgroundColor: Colors.redAccent,
+                  )),
+              const Positioned(
+                  right: -170,
+                  bottom: -170,
+                  child: CircleAvatar(
+                    radius: 130,
+                    backgroundColor: Colors.pinkAccent,
+                  )),
+              const Positioned(
+                  right: -160,
+                  bottom: -190,
+                  child: CircleAvatar(
+                    radius: 130,
+                    backgroundColor: Colors.purpleAccent,
+                  ))
+            ],
+          ),
         ),
       ),
     );

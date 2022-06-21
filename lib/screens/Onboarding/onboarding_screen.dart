@@ -3,6 +3,7 @@ import 'package:foodie_courier/screens/Authentication/sign_in.dart';
 import 'package:foodie_courier/screens/Layout/main_layout.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:introduction_screen/introduction_screen.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class OnBoardingScreen extends StatefulWidget {
   const OnBoardingScreen({Key? key}) : super(key: key);
@@ -28,9 +29,14 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
   PageDecoration getPagedDecoration() {
     return const PageDecoration(
       imagePadding: EdgeInsets.only(top: 120),
-      bodyPadding: EdgeInsets.only(top: 8, left: 20, right: 20),
+      bodyPadding: EdgeInsets.only(top: 20, left: 20, right: 20),
       titlePadding: EdgeInsets.only(top: 50),
     );
+  }
+
+  void setViewOnboarded() async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setBool("onboarded", true);
   }
 
   @override
@@ -38,8 +44,9 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
     _pages = [
       PageViewModel(
           decoration: getPagedDecoration(),
-          title: "Deliver Foods country wide",
-          body: "Deliver ajs na mam",
+          title: "Choose a Favourite Food",
+          body:
+              "When you oder Eat Steet, we’ll hook you up with exclusive coupon, specials and rewards",
           image: Center(
             child: Image.asset(
               ("assets/img/hot_delivery.png"),
@@ -48,8 +55,9 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
           )),
       PageViewModel(
           decoration: getPagedDecoration(),
-          title: "Deliver Foods country wide",
-          body: "Deliver ajs na mam",
+          title: "Hot Delivery to Home",
+          body:
+              "We make food ordering fast, simple and free-no matter if you order online or cash",
           image: Center(
             child: Image.asset(
               ("assets/img/favourite_food.png"),
@@ -58,8 +66,9 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
           )),
       PageViewModel(
           decoration: getPagedDecoration(),
-          title: "Deliver Foods country wide",
-          body: "Deliver ajs na mam",
+          title: "Receive the Great Food",
+          body:
+              "You’ll receive the great food within a hour. And get free delivery credits for every order.",
           image: Center(
             child: Image.asset(
               ("assets/img/great_food.png"),
@@ -76,12 +85,13 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
     return Scaffold(
         body: IntroductionScreen(
       pages: _pages,
-      done: Text("Done"),
-      next: Text("Next"),
+      done: const Text("Done"),
+      next: const Text("Next"),
       showNextButton: true,
       showSkipButton: true,
-      skip: Text("Skip"),
+      skip: const Text("Skip"),
       onDone: () {
+        setViewOnboarded();
         Navigator.push(
             context, MaterialPageRoute(builder: (context) => SignIn()));
       },

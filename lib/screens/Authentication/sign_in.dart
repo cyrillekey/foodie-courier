@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:foodie_courier/controllers/auth_provider.dart';
 import 'package:foodie_courier/screens/Home/home.dart';
+import 'package:foodie_courier/screens/Layout/main_layout.dart';
 import 'package:foodie_courier/screens/widgets/Alerts.dart';
 import 'package:provider/provider.dart';
 
@@ -29,8 +30,7 @@ class _SignInState extends State<SignIn> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        decoration:
-            const BoxDecoration(color: Color.fromARGB(255, 229, 229, 229)),
+        decoration: const BoxDecoration(color: Colors.white),
         height: MediaQuery.of(context).size.height,
         child: SingleChildScrollView(
           child: Form(
@@ -40,6 +40,12 @@ class _SignInState extends State<SignIn> {
               children: [
                 const SizedBox(
                   height: 80,
+                ),
+                Center(
+                  child: SizedBox(
+                    height: 100,
+                    child: Image.asset("assets/img/logo_01.png"),
+                  ),
                 ),
                 const Center(
                   child: Text(
@@ -61,53 +67,6 @@ class _SignInState extends State<SignIn> {
                 ),
                 const SizedBox(
                   height: 40,
-                ),
-                SizedBox(
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      TextButton(
-                          style: ButtonStyle(
-                              shape: MaterialStateProperty.all<OutlinedBorder>(
-                                  RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(10))),
-                              backgroundColor: MaterialStateProperty.all<Color>(
-                                  Colors.white),
-                              fixedSize: MaterialStateProperty.all<Size>(
-                                  const Size(140, 60))),
-                          onPressed: () {},
-                          child: const Icon(
-                            Icons.g_mobiledata,
-                            size: 45,
-                          )),
-                      TextButton(
-                          style: ButtonStyle(
-                              backgroundColor: MaterialStateProperty.all<Color>(
-                                  Colors.blueAccent),
-                              fixedSize: MaterialStateProperty.all<Size>(
-                                  const Size(140, 60))),
-                          onPressed: () {},
-                          child: const Icon(
-                            Icons.facebook,
-                            color: Colors.white,
-                            size: 45,
-                          ))
-                    ],
-                  ),
-                ),
-                const SizedBox(
-                  height: 40,
-                ),
-                const Center(
-                  child: Text(
-                    "or Login with Email",
-                    style: TextStyle(
-                        color: Color.fromRGBO(110, 142, 176, 1.0),
-                        fontSize: 14),
-                  ),
-                ),
-                const SizedBox(
-                  height: 10,
                 ),
                 inputField("Email", emailController, (value) {
                   if (value == null || value.isEmpty) {
@@ -174,11 +133,20 @@ void signin(BuildContext context, GlobalKey<FormState> key, String email,
     bool status = await AuthProvider().loginUser(email, password);
     if (status == true) {
       Navigator.pop(context);
+      Navigator.pushAndRemoveUntil(
+          context,
+          MaterialPageRoute(builder: (context) => const MainLayout(index: 0)),
+          (route) => false);
     } else {
+      Navigator.pop(context);
       showDialog(
           context: context,
           builder: (context) => const AlertDialog(
-                content: Text("Tiel"),
+                title: Text("Error!"),
+                content: Padding(
+                  padding: EdgeInsets.all(14.0),
+                  child: Text("Invalid Credentials"),
+                ),
               ));
     }
   }
@@ -229,7 +197,7 @@ Container inputField(
                 borderSide: const BorderSide(color: Colors.red, width: 1),
                 borderRadius: BorderRadius.circular(18),
               ),
-              fillColor: Colors.white),
+              fillColor: Colors.black12),
         )
       ],
     ),
