@@ -20,7 +20,7 @@ Order _$OrderFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$Order {
-// Courier? courier,
+  Courier? get courier => throw _privateConstructorUsedError;
   @JsonKey(name: "order_id")
   int get order_id => throw _privateConstructorUsedError;
   @JsonKey(name: "order_date")
@@ -37,6 +37,8 @@ mixin _$Order {
   double get latitude => throw _privateConstructorUsedError;
   @JsonKey(name: 'longitude')
   double get longitude => throw _privateConstructorUsedError;
+  @JsonKey(name: "productOrder")
+  List<ProductOrder> get productOrder => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -48,14 +50,18 @@ abstract class $OrderCopyWith<$Res> {
   factory $OrderCopyWith(Order value, $Res Function(Order) then) =
       _$OrderCopyWithImpl<$Res>;
   $Res call(
-      {@JsonKey(name: "order_id") int order_id,
+      {Courier? courier,
+      @JsonKey(name: "order_id") int order_id,
       @JsonKey(name: "order_date") String order_date,
       @JsonKey(name: "order_amount") double order_amount,
       @JsonKey(name: "quantity") int quantity,
       @JsonKey(name: "delivery_cost") int delivery_cost,
       @JsonKey(name: "orderStatus") String orderStatus,
       @JsonKey(name: "latitude") double latitude,
-      @JsonKey(name: 'longitude') double longitude});
+      @JsonKey(name: 'longitude') double longitude,
+      @JsonKey(name: "productOrder") List<ProductOrder> productOrder});
+
+  $CourierCopyWith<$Res>? get courier;
 }
 
 /// @nodoc
@@ -68,6 +74,7 @@ class _$OrderCopyWithImpl<$Res> implements $OrderCopyWith<$Res> {
 
   @override
   $Res call({
+    Object? courier = freezed,
     Object? order_id = freezed,
     Object? order_date = freezed,
     Object? order_amount = freezed,
@@ -76,8 +83,13 @@ class _$OrderCopyWithImpl<$Res> implements $OrderCopyWith<$Res> {
     Object? orderStatus = freezed,
     Object? latitude = freezed,
     Object? longitude = freezed,
+    Object? productOrder = freezed,
   }) {
     return _then(_value.copyWith(
+      courier: courier == freezed
+          ? _value.courier
+          : courier // ignore: cast_nullable_to_non_nullable
+              as Courier?,
       order_id: order_id == freezed
           ? _value.order_id
           : order_id // ignore: cast_nullable_to_non_nullable
@@ -110,7 +122,22 @@ class _$OrderCopyWithImpl<$Res> implements $OrderCopyWith<$Res> {
           ? _value.longitude
           : longitude // ignore: cast_nullable_to_non_nullable
               as double,
+      productOrder: productOrder == freezed
+          ? _value.productOrder
+          : productOrder // ignore: cast_nullable_to_non_nullable
+              as List<ProductOrder>,
     ));
+  }
+
+  @override
+  $CourierCopyWith<$Res>? get courier {
+    if (_value.courier == null) {
+      return null;
+    }
+
+    return $CourierCopyWith<$Res>(_value.courier!, (value) {
+      return _then(_value.copyWith(courier: value));
+    });
   }
 }
 
@@ -120,14 +147,19 @@ abstract class _$$_OrderCopyWith<$Res> implements $OrderCopyWith<$Res> {
       __$$_OrderCopyWithImpl<$Res>;
   @override
   $Res call(
-      {@JsonKey(name: "order_id") int order_id,
+      {Courier? courier,
+      @JsonKey(name: "order_id") int order_id,
       @JsonKey(name: "order_date") String order_date,
       @JsonKey(name: "order_amount") double order_amount,
       @JsonKey(name: "quantity") int quantity,
       @JsonKey(name: "delivery_cost") int delivery_cost,
       @JsonKey(name: "orderStatus") String orderStatus,
       @JsonKey(name: "latitude") double latitude,
-      @JsonKey(name: 'longitude') double longitude});
+      @JsonKey(name: 'longitude') double longitude,
+      @JsonKey(name: "productOrder") List<ProductOrder> productOrder});
+
+  @override
+  $CourierCopyWith<$Res>? get courier;
 }
 
 /// @nodoc
@@ -141,6 +173,7 @@ class __$$_OrderCopyWithImpl<$Res> extends _$OrderCopyWithImpl<$Res>
 
   @override
   $Res call({
+    Object? courier = freezed,
     Object? order_id = freezed,
     Object? order_date = freezed,
     Object? order_amount = freezed,
@@ -149,8 +182,13 @@ class __$$_OrderCopyWithImpl<$Res> extends _$OrderCopyWithImpl<$Res>
     Object? orderStatus = freezed,
     Object? latitude = freezed,
     Object? longitude = freezed,
+    Object? productOrder = freezed,
   }) {
     return _then(_$_Order(
+      courier: courier == freezed
+          ? _value.courier
+          : courier // ignore: cast_nullable_to_non_nullable
+              as Courier?,
       order_id: order_id == freezed
           ? _value.order_id
           : order_id // ignore: cast_nullable_to_non_nullable
@@ -183,6 +221,10 @@ class __$$_OrderCopyWithImpl<$Res> extends _$OrderCopyWithImpl<$Res>
           ? _value.longitude
           : longitude // ignore: cast_nullable_to_non_nullable
               as double,
+      productOrder: productOrder == freezed
+          ? _value._productOrder
+          : productOrder // ignore: cast_nullable_to_non_nullable
+              as List<ProductOrder>,
     ));
   }
 }
@@ -191,19 +233,32 @@ class __$$_OrderCopyWithImpl<$Res> extends _$OrderCopyWithImpl<$Res>
 @JsonSerializable()
 class _$_Order implements _Order {
   _$_Order(
-      {@JsonKey(name: "order_id") this.order_id = 0,
-      @JsonKey(name: "order_date") this.order_date = "",
-      @JsonKey(name: "order_amount") this.order_amount = 0.0,
-      @JsonKey(name: "quantity") this.quantity = 0,
-      @JsonKey(name: "delivery_cost") this.delivery_cost = 0,
-      @JsonKey(name: "orderStatus") this.orderStatus = "",
-      @JsonKey(name: "latitude") this.latitude = 0.0,
-      @JsonKey(name: 'longitude') this.longitude = 0.0});
+      {this.courier,
+      @JsonKey(name: "order_id")
+          this.order_id = 0,
+      @JsonKey(name: "order_date")
+          this.order_date = "",
+      @JsonKey(name: "order_amount")
+          this.order_amount = 0.0,
+      @JsonKey(name: "quantity")
+          this.quantity = 0,
+      @JsonKey(name: "delivery_cost")
+          this.delivery_cost = 0,
+      @JsonKey(name: "orderStatus")
+          this.orderStatus = "",
+      @JsonKey(name: "latitude")
+          this.latitude = 0.0,
+      @JsonKey(name: 'longitude')
+          this.longitude = 0.0,
+      @JsonKey(name: "productOrder")
+          final List<ProductOrder> productOrder = const []})
+      : _productOrder = productOrder;
 
   factory _$_Order.fromJson(Map<String, dynamic> json) =>
       _$$_OrderFromJson(json);
 
-// Courier? courier,
+  @override
+  final Courier? courier;
   @override
   @JsonKey(name: "order_id")
   final int order_id;
@@ -228,10 +283,17 @@ class _$_Order implements _Order {
   @override
   @JsonKey(name: 'longitude')
   final double longitude;
+  final List<ProductOrder> _productOrder;
+  @override
+  @JsonKey(name: "productOrder")
+  List<ProductOrder> get productOrder {
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_productOrder);
+  }
 
   @override
   String toString() {
-    return 'Order(order_id: $order_id, order_date: $order_date, order_amount: $order_amount, quantity: $quantity, delivery_cost: $delivery_cost, orderStatus: $orderStatus, latitude: $latitude, longitude: $longitude)';
+    return 'Order(courier: $courier, order_id: $order_id, order_date: $order_date, order_amount: $order_amount, quantity: $quantity, delivery_cost: $delivery_cost, orderStatus: $orderStatus, latitude: $latitude, longitude: $longitude, productOrder: $productOrder)';
   }
 
   @override
@@ -239,6 +301,7 @@ class _$_Order implements _Order {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_Order &&
+            const DeepCollectionEquality().equals(other.courier, courier) &&
             const DeepCollectionEquality().equals(other.order_id, order_id) &&
             const DeepCollectionEquality()
                 .equals(other.order_date, order_date) &&
@@ -250,13 +313,16 @@ class _$_Order implements _Order {
             const DeepCollectionEquality()
                 .equals(other.orderStatus, orderStatus) &&
             const DeepCollectionEquality().equals(other.latitude, latitude) &&
-            const DeepCollectionEquality().equals(other.longitude, longitude));
+            const DeepCollectionEquality().equals(other.longitude, longitude) &&
+            const DeepCollectionEquality()
+                .equals(other._productOrder, _productOrder));
   }
 
   @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hash(
       runtimeType,
+      const DeepCollectionEquality().hash(courier),
       const DeepCollectionEquality().hash(order_id),
       const DeepCollectionEquality().hash(order_date),
       const DeepCollectionEquality().hash(order_amount),
@@ -264,7 +330,8 @@ class _$_Order implements _Order {
       const DeepCollectionEquality().hash(delivery_cost),
       const DeepCollectionEquality().hash(orderStatus),
       const DeepCollectionEquality().hash(latitude),
-      const DeepCollectionEquality().hash(longitude));
+      const DeepCollectionEquality().hash(longitude),
+      const DeepCollectionEquality().hash(_productOrder));
 
   @JsonKey(ignore: true)
   @override
@@ -279,18 +346,31 @@ class _$_Order implements _Order {
 
 abstract class _Order implements Order {
   factory _Order(
-      {@JsonKey(name: "order_id") final int order_id,
-      @JsonKey(name: "order_date") final String order_date,
-      @JsonKey(name: "order_amount") final double order_amount,
-      @JsonKey(name: "quantity") final int quantity,
-      @JsonKey(name: "delivery_cost") final int delivery_cost,
-      @JsonKey(name: "orderStatus") final String orderStatus,
-      @JsonKey(name: "latitude") final double latitude,
-      @JsonKey(name: 'longitude') final double longitude}) = _$_Order;
+      {final Courier? courier,
+      @JsonKey(name: "order_id")
+          final int order_id,
+      @JsonKey(name: "order_date")
+          final String order_date,
+      @JsonKey(name: "order_amount")
+          final double order_amount,
+      @JsonKey(name: "quantity")
+          final int quantity,
+      @JsonKey(name: "delivery_cost")
+          final int delivery_cost,
+      @JsonKey(name: "orderStatus")
+          final String orderStatus,
+      @JsonKey(name: "latitude")
+          final double latitude,
+      @JsonKey(name: 'longitude')
+          final double longitude,
+      @JsonKey(name: "productOrder")
+          final List<ProductOrder> productOrder}) = _$_Order;
 
   factory _Order.fromJson(Map<String, dynamic> json) = _$_Order.fromJson;
 
-  @override // Courier? courier,
+  @override
+  Courier? get courier => throw _privateConstructorUsedError;
+  @override
   @JsonKey(name: "order_id")
   int get order_id => throw _privateConstructorUsedError;
   @override
@@ -314,6 +394,9 @@ abstract class _Order implements Order {
   @override
   @JsonKey(name: 'longitude')
   double get longitude => throw _privateConstructorUsedError;
+  @override
+  @JsonKey(name: "productOrder")
+  List<ProductOrder> get productOrder => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
   _$$_OrderCopyWith<_$_Order> get copyWith =>

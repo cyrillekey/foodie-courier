@@ -41,6 +41,8 @@ abstract class $ProductOrderCopyWith<$Res> {
       {@JsonKey(name: "product_order_id") String product_order_id,
       @JsonKey(name: "qunatity") int quantity,
       Food? food});
+
+  $FoodCopyWith<$Res>? get food;
 }
 
 /// @nodoc
@@ -72,6 +74,17 @@ class _$ProductOrderCopyWithImpl<$Res> implements $ProductOrderCopyWith<$Res> {
               as Food?,
     ));
   }
+
+  @override
+  $FoodCopyWith<$Res>? get food {
+    if (_value.food == null) {
+      return null;
+    }
+
+    return $FoodCopyWith<$Res>(_value.food!, (value) {
+      return _then(_value.copyWith(food: value));
+    });
+  }
 }
 
 /// @nodoc
@@ -85,6 +98,9 @@ abstract class _$$_ProductOrderCopyWith<$Res>
       {@JsonKey(name: "product_order_id") String product_order_id,
       @JsonKey(name: "qunatity") int quantity,
       Food? food});
+
+  @override
+  $FoodCopyWith<$Res>? get food;
 }
 
 /// @nodoc
