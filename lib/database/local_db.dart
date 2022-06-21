@@ -1,8 +1,9 @@
 import 'package:drift/drift.dart';
+import 'package:foodie_courier/models/courier_model.dart';
 import 'package:foodie_courier/models/user_model.dart';
 part 'local_db.g.dart';
 
-@DriftDatabase(tables: [UserTable])
+@DriftDatabase(tables: [UserTable, CourierTable])
 class AppDatabase extends _$AppDatabase {
   AppDatabase(QueryExecutor e) : super(e);
   @override
@@ -20,4 +21,19 @@ class UserTable extends Table {
   TextColumn get accountStatus => text()();
   @override
   Set<Column> get primaryKey => {customer_id};
+}
+
+@UseRowClass(Courier)
+class CourierTable extends Table {
+  IntColumn get courier_id => integer()();
+  TextColumn get id_number => text()();
+  TextColumn get phone_number1 => text()();
+  TextColumn get phone_number2 => text()();
+  RealColumn get currentLatitude => real()();
+  RealColumn get currentLongitude => real()();
+  RealColumn get account_balance => real()();
+  RealColumn get rating => real()();
+  BoolColumn get onAssingment => boolean()();
+  BoolColumn get currentStatus => boolean()();
+  TextColumn get vehicle_registration => text()();
 }

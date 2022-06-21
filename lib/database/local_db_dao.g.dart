@@ -8,4 +8,5 @@ part of 'local_db_dao.dart';
 
 mixin _$LocalDaoDbMixin on DatabaseAccessor<AppDatabase> {
   $UserTableTable get userTable => attachedDatabase.userTable;
+  $CourierTableTable get courierTable => attachedDatabase.courierTable;
 }

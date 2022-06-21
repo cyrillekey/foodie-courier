@@ -37,7 +37,7 @@ mixin _$Courier {
   @JsonKey(name: "rating")
   double get rating => throw _privateConstructorUsedError;
   @JsonKey(name: "onAssingment")
-  bool get onAssingmnet => throw _privateConstructorUsedError;
+  bool get onAssingment => throw _privateConstructorUsedError;
   @JsonKey(name: "currentStatus")
   bool get currentStatus => throw _privateConstructorUsedError;
   @JsonKey(name: "vehicle_registration")
@@ -61,7 +61,7 @@ abstract class $CourierCopyWith<$Res> {
       @JsonKey(name: "currentLongitude") double currentLongitude,
       @JsonKey(name: "account_balance") double account_balance,
       @JsonKey(name: "rating") double rating,
-      @JsonKey(name: "onAssingment") bool onAssingmnet,
+      @JsonKey(name: "onAssingment") bool onAssingment,
       @JsonKey(name: "currentStatus") bool currentStatus,
       @JsonKey(name: "vehicle_registration") String vehicle_registration});
 }
@@ -84,7 +84,7 @@ class _$CourierCopyWithImpl<$Res> implements $CourierCopyWith<$Res> {
     Object? currentLongitude = freezed,
     Object? account_balance = freezed,
     Object? rating = freezed,
-    Object? onAssingmnet = freezed,
+    Object? onAssingment = freezed,
     Object? currentStatus = freezed,
     Object? vehicle_registration = freezed,
   }) {
@@ -121,9 +121,9 @@ class _$CourierCopyWithImpl<$Res> implements $CourierCopyWith<$Res> {
           ? _value.rating
           : rating // ignore: cast_nullable_to_non_nullable
               as double,
-      onAssingmnet: onAssingmnet == freezed
-          ? _value.onAssingmnet
-          : onAssingmnet // ignore: cast_nullable_to_non_nullable
+      onAssingment: onAssingment == freezed
+          ? _value.onAssingment
+          : onAssingment // ignore: cast_nullable_to_non_nullable
               as bool,
       currentStatus: currentStatus == freezed
           ? _value.currentStatus
@@ -152,7 +152,7 @@ abstract class _$$_CourierCopyWith<$Res> implements $CourierCopyWith<$Res> {
       @JsonKey(name: "currentLongitude") double currentLongitude,
       @JsonKey(name: "account_balance") double account_balance,
       @JsonKey(name: "rating") double rating,
-      @JsonKey(name: "onAssingment") bool onAssingmnet,
+      @JsonKey(name: "onAssingment") bool onAssingment,
       @JsonKey(name: "currentStatus") bool currentStatus,
       @JsonKey(name: "vehicle_registration") String vehicle_registration});
 }
@@ -176,7 +176,7 @@ class __$$_CourierCopyWithImpl<$Res> extends _$CourierCopyWithImpl<$Res>
     Object? currentLongitude = freezed,
     Object? account_balance = freezed,
     Object? rating = freezed,
-    Object? onAssingmnet = freezed,
+    Object? onAssingment = freezed,
     Object? currentStatus = freezed,
     Object? vehicle_registration = freezed,
   }) {
@@ -213,9 +213,9 @@ class __$$_CourierCopyWithImpl<$Res> extends _$CourierCopyWithImpl<$Res>
           ? _value.rating
           : rating // ignore: cast_nullable_to_non_nullable
               as double,
-      onAssingmnet: onAssingmnet == freezed
-          ? _value.onAssingmnet
-          : onAssingmnet // ignore: cast_nullable_to_non_nullable
+      onAssingment: onAssingment == freezed
+          ? _value.onAssingment
+          : onAssingment // ignore: cast_nullable_to_non_nullable
               as bool,
       currentStatus: currentStatus == freezed
           ? _value.currentStatus
@@ -241,7 +241,7 @@ class _$_Courier implements _Courier {
       @JsonKey(name: "currentLongitude") this.currentLongitude = 0.0,
       @JsonKey(name: "account_balance") this.account_balance = 0.0,
       @JsonKey(name: "rating") this.rating = 0.0,
-      @JsonKey(name: "onAssingment") this.onAssingmnet = true,
+      @JsonKey(name: "onAssingment") this.onAssingment = true,
       @JsonKey(name: "currentStatus") this.currentStatus = true,
       @JsonKey(name: "vehicle_registration") this.vehicle_registration = ""});
 
@@ -274,7 +274,7 @@ class _$_Courier implements _Courier {
   final double rating;
   @override
   @JsonKey(name: "onAssingment")
-  final bool onAssingmnet;
+  final bool onAssingment;
   @override
   @JsonKey(name: "currentStatus")
   final bool currentStatus;
@@ -284,7 +284,7 @@ class _$_Courier implements _Courier {
 
   @override
   String toString() {
-    return 'Courier(courier_id: $courier_id, id_number: $id_number, phone_number1: $phone_number1, phone_number2: $phone_number2, currentLatitude: $currentLatitude, currentLongitude: $currentLongitude, account_balance: $account_balance, rating: $rating, onAssingmnet: $onAssingmnet, currentStatus: $currentStatus, vehicle_registration: $vehicle_registration)';
+    return 'Courier(courier_id: $courier_id, id_number: $id_number, phone_number1: $phone_number1, phone_number2: $phone_number2, currentLatitude: $currentLatitude, currentLongitude: $currentLongitude, account_balance: $account_balance, rating: $rating, onAssingment: $onAssingment, currentStatus: $currentStatus, vehicle_registration: $vehicle_registration)';
   }
 
   @override
@@ -307,7 +307,7 @@ class _$_Courier implements _Courier {
                 .equals(other.account_balance, account_balance) &&
             const DeepCollectionEquality().equals(other.rating, rating) &&
             const DeepCollectionEquality()
-                .equals(other.onAssingmnet, onAssingmnet) &&
+                .equals(other.onAssingment, onAssingment) &&
             const DeepCollectionEquality()
                 .equals(other.currentStatus, currentStatus) &&
             const DeepCollectionEquality()
@@ -326,7 +326,7 @@ class _$_Courier implements _Courier {
       const DeepCollectionEquality().hash(currentLongitude),
       const DeepCollectionEquality().hash(account_balance),
       const DeepCollectionEquality().hash(rating),
-      const DeepCollectionEquality().hash(onAssingmnet),
+      const DeepCollectionEquality().hash(onAssingment),
       const DeepCollectionEquality().hash(currentStatus),
       const DeepCollectionEquality().hash(vehicle_registration));
 
@@ -360,7 +360,7 @@ abstract class _Courier implements Courier {
       @JsonKey(name: "rating")
           final double rating,
       @JsonKey(name: "onAssingment")
-          final bool onAssingmnet,
+          final bool onAssingment,
       @JsonKey(name: "currentStatus")
           final bool currentStatus,
       @JsonKey(name: "vehicle_registration")
@@ -394,7 +394,7 @@ abstract class _Courier implements Courier {
   double get rating => throw _privateConstructorUsedError;
   @override
   @JsonKey(name: "onAssingment")
-  bool get onAssingmnet => throw _privateConstructorUsedError;
+  bool get onAssingment => throw _privateConstructorUsedError;
   @override
   @JsonKey(name: "currentStatus")
   bool get currentStatus => throw _privateConstructorUsedError;

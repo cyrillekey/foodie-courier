@@ -15,7 +15,7 @@ _$_Courier _$$_CourierFromJson(Map<String, dynamic> json) => _$_Courier(
       currentLongitude: (json['currentLongitude'] as num?)?.toDouble() ?? 0.0,
       account_balance: (json['account_balance'] as num?)?.toDouble() ?? 0.0,
       rating: (json['rating'] as num?)?.toDouble() ?? 0.0,
-      onAssingmnet: json['onAssingment'] as bool? ?? true,
+      onAssingment: json['onAssingment'] as bool? ?? true,
       currentStatus: json['currentStatus'] as bool? ?? true,
       vehicle_registration: json['vehicle_registration'] as String? ?? "",
     );
@@ -30,7 +30,7 @@ Map<String, dynamic> _$$_CourierToJson(_$_Courier instance) =>
       'currentLongitude': instance.currentLongitude,
       'account_balance': instance.account_balance,
       'rating': instance.rating,
-      'onAssingment': instance.onAssingmnet,
+      'onAssingment': instance.onAssingment,
       'currentStatus': instance.currentStatus,
       'vehicle_registration': instance.vehicle_registration,
     };
