@@ -6,6 +6,7 @@ import 'package:foodie_courier/my_app.dart';
 import 'package:foodie_courier/services/service_locator.dart';
 import 'package:foodie_courier/services/update_location.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:workmanager/workmanager.dart';
 
 void main() async {
@@ -13,6 +14,10 @@ void main() async {
   FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
   await Firebase.initializeApp();
   setupLocator();
+
+  final prefs = await SharedPreferences.getInstance();
+  bool onBoarded = await prefs.getBool("onboarded") ?? false;
+
   // if (defaultTargetPlatform == TargetPlatform.android) {
   //   AndroidGoogleMapsFlutter.useAndroidViewSurface = true;
   // }
@@ -21,7 +26,9 @@ void main() async {
   //     frequency: Duration(minutes: 15));
   runApp(MultiProvider(
     providers: [ChangeNotifierProvider(create: (_) => AuthProvider())],
-    child: const MyApp(),
+    child: MyApp(
+      onBoarded: onBoarded,
+    ),
   ));
   FlutterNativeSplash.remove();
 }
