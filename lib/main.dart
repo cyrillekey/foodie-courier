@@ -21,9 +21,9 @@ void main() async {
   // if (defaultTargetPlatform == TargetPlatform.android) {
   //   AndroidGoogleMapsFlutter.useAndroidViewSurface = true;
   // }
-  // Workmanager().initialize(updateCourierLocation, isInDebugMode: true);
-  // Workmanager().registerPeriodicTask("1", "fetchBackground",
-  //     frequency: Duration(minutes: 15));
+  Workmanager().initialize(updateCourierLocation, isInDebugMode: false);
+  Workmanager().registerPeriodicTask("1", "fetchBackground",
+      frequency: Duration(minutes: 15));
   runApp(MultiProvider(
     providers: [ChangeNotifierProvider(create: (_) => AuthProvider())],
     child: MyApp(

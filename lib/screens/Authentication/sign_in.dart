@@ -43,9 +43,13 @@ class _SignInState extends State<SignIn> {
                 ),
                 Center(
                   child: SizedBox(
-                    height: 100,
+                    height: MediaQuery.of(context).size.height * 0.30,
+                    width: MediaQuery.of(context).size.width * 0.6,
                     child: Image.asset("assets/img/logo_01.png"),
                   ),
+                ),
+                const SizedBox(
+                  height: 10,
                 ),
                 const Center(
                   child: Text(
@@ -55,18 +59,6 @@ class _SignInState extends State<SignIn> {
                 ),
                 const SizedBox(
                   height: 10,
-                ),
-                const Center(
-                  child: Text(
-                    "Access Account",
-                    style: TextStyle(
-                      fontSize: 18,
-                      color: Colors.lightBlue,
-                    ),
-                  ),
-                ),
-                const SizedBox(
-                  height: 40,
                 ),
                 inputField("Email", emailController, (value) {
                   if (value == null || value.isEmpty) {
@@ -80,8 +72,22 @@ class _SignInState extends State<SignIn> {
                   }
                   return null;
                 }, isPassword: true),
-                const SizedBox(
-                  height: 20,
+                Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 5),
+                  child: Row(
+                    children: [
+                      Checkbox(
+                          materialTapTargetSize: MaterialTapTargetSize.padded,
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(4)),
+                          fillColor: MaterialStateProperty.all(
+                              Color.fromRGBO(252, 127, 87, 0.8)),
+                          value: true,
+                          onChanged: (value) {
+                            print(value);
+                          })
+                    ],
+                  ),
                 ),
                 TextButton(
                     style: ButtonStyle(
@@ -89,9 +95,9 @@ class _SignInState extends State<SignIn> {
                             RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(20))),
                         backgroundColor: MaterialStateProperty.all<Color>(
-                            const Color.fromRGBO(109, 97, 242, 1.0)),
+                            const Color.fromRGBO(252, 106, 87, 1.0)),
                         fixedSize: MaterialStateProperty.all<Size>(
-                            Size(MediaQuery.of(context).size.width * 0.8, 64))),
+                            Size(MediaQuery.of(context).size.width * 0.9, 64))),
                     onPressed: () => signin(
                         context,
                         _key,
@@ -101,22 +107,6 @@ class _SignInState extends State<SignIn> {
                       "Sign In",
                       style: TextStyle(color: Colors.white, fontSize: 18),
                     )),
-                const SizedBox(
-                  height: 40,
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    const Text("Dont have and account?"),
-                    const SizedBox(
-                      width: 5,
-                    ),
-                    InkWell(
-                      child: const Text("Register"),
-                      onTap: () {},
-                    )
-                  ],
-                )
               ],
             ),
           ),
@@ -161,7 +151,6 @@ Container inputField(
   return Container(
     alignment: Alignment.centerLeft,
     margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 15),
-    padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
     child: Column(
       children: [
         Container(
@@ -180,24 +169,23 @@ Container inputField(
           obscureText: isPassword,
           validator: validator,
           decoration: InputDecoration(
-              filled: true,
-              focusedBorder: OutlineInputBorder(
-                borderSide: const BorderSide(color: Colors.white, width: 0),
-                borderRadius: BorderRadius.circular(18),
-              ),
-              border: OutlineInputBorder(
-                borderSide: const BorderSide(color: Colors.white, width: 0),
-                borderRadius: BorderRadius.circular(18),
-              ),
-              enabledBorder: OutlineInputBorder(
-                borderSide: const BorderSide(color: Colors.white, width: 0),
-                borderRadius: BorderRadius.circular(18),
-              ),
-              errorBorder: OutlineInputBorder(
-                borderSide: const BorderSide(color: Colors.red, width: 1),
-                borderRadius: BorderRadius.circular(18),
-              ),
-              fillColor: Colors.black12),
+            focusedBorder: OutlineInputBorder(
+              borderSide: const BorderSide(color: Colors.grey, width: 0),
+              borderRadius: BorderRadius.circular(10),
+            ),
+            border: OutlineInputBorder(
+              borderSide: const BorderSide(color: Colors.grey, width: 0),
+              borderRadius: BorderRadius.circular(10),
+            ),
+            enabledBorder: OutlineInputBorder(
+              borderSide: const BorderSide(color: Colors.grey, width: 0),
+              borderRadius: BorderRadius.circular(10),
+            ),
+            errorBorder: OutlineInputBorder(
+              borderSide: const BorderSide(color: Colors.red, width: 1),
+              borderRadius: BorderRadius.circular(10),
+            ),
+          ),
         )
       ],
     ),

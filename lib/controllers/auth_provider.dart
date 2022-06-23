@@ -21,6 +21,7 @@ class AuthProvider with ChangeNotifier {
   logout() async {
     final _prefs = await SharedPreferences.getInstance();
     await _prefs.remove("token");
+    await _prefs.remove("courier");
     await db.logout();
     notifyListeners();
   }
@@ -38,6 +39,7 @@ class AuthProvider with ChangeNotifier {
             Courier.fromJson(response.response['customer']['courier']);
         db.saveUser(user);
         db.saveCourier(courier);
+        await _prefs.setString("courier", courier.courier_id.toString());
         return true;
       } else {
         return false;
