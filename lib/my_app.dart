@@ -6,9 +6,7 @@ import 'package:foodie_courier/screens/Home/home.dart';
 import 'package:foodie_courier/screens/Layout/main_layout.dart';
 import 'package:foodie_courier/screens/Onboarding/onboarding_screen.dart';
 import 'package:foodie_courier/services/push_notification_service.dart';
-import 'package:foodie_courier/services/service_locator.dart';
 import 'package:provider/provider.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class MyApp extends StatefulWidget {
   final bool onBoarded;
@@ -23,7 +21,6 @@ class _MyAppState extends State<MyApp> {
       GlobalKey(debugLabel: "Main Navigator");
   @override
   void initState() {
-    PushNotificationService().oninit();
     Provider.of<AuthProvider>(context, listen: false).onInit();
     super.initState();
   }
@@ -38,6 +35,7 @@ class _MyAppState extends State<MyApp> {
       ),
       home: Consumer<AuthProvider>(builder: (context, authProvider, child) {
         Widget home;
+        PushNotificationService(authProvider.currentUser).oninit();
         if (widget.onBoarded == true) {
           if (authProvider.currentUser != null) {
             home = const MainLayout(index: 0);

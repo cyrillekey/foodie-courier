@@ -1,8 +1,9 @@
-import 'dart:io';
-
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:foodie_courier/api_client/api_client.dart';
 import 'package:foodie_courier/services/service_locator.dart';
+
+import '../models/user_model.dart';
 
 var flutterNotification = FlutterLocalNotificationsPlugin();
 Future<void> _handlingFirebaseBackgroungMessage(RemoteMessage message) async {
@@ -11,6 +12,9 @@ Future<void> _handlingFirebaseBackgroungMessage(RemoteMessage message) async {
 }
 
 class PushNotificationService {
+  late User? user;
+  final _apiClient = locator<ApiClient>();
+  PushNotificationService(this.user);
   static Future<dynamic> myBackgroundMessageHandler(
       Map<String, dynamic> message) async {
     return Future<void>.value();
@@ -18,7 +22,7 @@ class PushNotificationService {
 
   void oninit() {
     var initializationSettingsAndroid =
-        const AndroidInitializationSettings("@mipmap/launcher_icon");
+        const AndroidInitializationSettings("@mipmap/ic_launcher");
     var initializeIosSetttings = const IOSInitializationSettings();
     var initializationSettings = InitializationSettings(
         android: initializationSettingsAndroid, iOS: initializeIosSetttings);
@@ -30,7 +34,11 @@ class PushNotificationService {
     });
     FirebaseMessaging.onBackgroundMessage(_handlingFirebaseBackgroungMessage);
     FirebaseMessaging.instance.getToken().then((value) async {
-      //TODO implement api to send fcm token to database
+      logger.i(user);
+      if (user != null) {
+        _apiClient.post("update-fcm-token/${user?.customer_id}",
+            data: {"token": value});
+      }
     });
   }
 
