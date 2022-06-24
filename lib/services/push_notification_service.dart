@@ -34,11 +34,11 @@ class PushNotificationService {
     });
     FirebaseMessaging.onBackgroundMessage(_handlingFirebaseBackgroungMessage);
     FirebaseMessaging.instance.getToken().then((value) async {
-      logger.i(user);
-      if (user != null) {
-        _apiClient.post("update-fcm-token/${user?.customer_id}",
-            data: {"token": value});
-      }
+      // if (user != null) {
+      //   _apiClient.post("update-fcm-token/${user?.customer_id}",
+      //       data: {"token": value});
+      //   logger.e("Im calles");
+      // }
     });
   }
 

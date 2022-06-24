@@ -8,20 +8,24 @@ import 'package:workmanager/workmanager.dart';
 const fetchBackground = "fetchBackground";
 
 void updateCourierLocation() {
-  final apiClient = locator<ApiClient>();
   Workmanager().executeTask((taskName, inputData) async {
     logger.i("Backgound service was called");
     final prefs = await SharedPreferences.getInstance();
     String? courier = prefs.getString("courier");
     String? token = prefs.getString("token");
     if (courier != null) {
-      await Geolocator.requestPermission();
       await Geolocator.getCurrentPosition(
               desiredAccuracy: LocationAccuracy.bestForNavigation)
           .then((value) {
-        apiClient.post("courier/update-location/$courier",
-            options: Options(headers: {"Authorization": "Bearer $token"}),
+        Dio().post(
+            "https://foodieback.herokuapp.com/courier/update-location/$courier",
+            options: Options(
+              headers: {"Authorization": "Bearer $token"},
+            ),
             data: {'latitude': value.latitude, 'longitude': value.longitude});
+        //apiClient.post("courier/update-location/$courier",
+        //  options: Options(headers: {"Authorization": "Bearer $token"}),
+        //data: {'latitude': value.latitude, 'longitude': value.longitude});
       });
     }
     return Future.value(true);
