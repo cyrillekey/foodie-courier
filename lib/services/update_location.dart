@@ -18,6 +18,7 @@ void updateCourierLocation() {
       await Geolocator.getCurrentPosition(
               desiredAccuracy: LocationAccuracy.bestForNavigation)
           .then((value) {
+        logger.i(value);
         Dio().post(
             "https://foodieback.herokuapp.com/courier/update-location/$courier",
             options: Options(

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:foodie_courier/screens/Authentication/sign_in.dart';
-import 'package:foodie_courier/screens/Layout/main_layout.dart';
+import 'package:foodie_courier/screens/Authentication/login_screen.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:introduction_screen/introduction_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -93,7 +92,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
       onDone: () {
         setViewOnboarded();
         Navigator.push(
-            context, MaterialPageRoute(builder: (context) => SignIn()));
+            context, MaterialPageRoute(builder: (context) => LoginScreen()));
       },
     ));
   }

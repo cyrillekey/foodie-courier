@@ -34,6 +34,8 @@ mixin _$User {
   String get dateJoined => throw _privateConstructorUsedError;
   @JsonKey(name: "accountStatus")
   String get accountStatus => throw _privateConstructorUsedError;
+  @JsonKey(name: "profile_picture")
+  String get profile_picture => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -51,7 +53,8 @@ abstract class $UserCopyWith<$Res> {
       @JsonKey(name: "user_phone") String user_phone,
       @JsonKey(name: "accountType") String accountType,
       @JsonKey(name: "dateJoined") String dateJoined,
-      @JsonKey(name: "accountStatus") String accountStatus});
+      @JsonKey(name: "accountStatus") String accountStatus,
+      @JsonKey(name: "profile_picture") String profile_picture});
 }
 
 /// @nodoc
@@ -71,6 +74,7 @@ class _$UserCopyWithImpl<$Res> implements $UserCopyWith<$Res> {
     Object? accountType = freezed,
     Object? dateJoined = freezed,
     Object? accountStatus = freezed,
+    Object? profile_picture = freezed,
   }) {
     return _then(_value.copyWith(
       customer_id: customer_id == freezed
@@ -101,6 +105,10 @@ class _$UserCopyWithImpl<$Res> implements $UserCopyWith<$Res> {
           ? _value.accountStatus
           : accountStatus // ignore: cast_nullable_to_non_nullable
               as String,
+      profile_picture: profile_picture == freezed
+          ? _value.profile_picture
+          : profile_picture // ignore: cast_nullable_to_non_nullable
+              as String,
     ));
   }
 }
@@ -117,7 +125,8 @@ abstract class _$$_UserCopyWith<$Res> implements $UserCopyWith<$Res> {
       @JsonKey(name: "user_phone") String user_phone,
       @JsonKey(name: "accountType") String accountType,
       @JsonKey(name: "dateJoined") String dateJoined,
-      @JsonKey(name: "accountStatus") String accountStatus});
+      @JsonKey(name: "accountStatus") String accountStatus,
+      @JsonKey(name: "profile_picture") String profile_picture});
 }
 
 /// @nodoc
@@ -138,6 +147,7 @@ class __$$_UserCopyWithImpl<$Res> extends _$UserCopyWithImpl<$Res>
     Object? accountType = freezed,
     Object? dateJoined = freezed,
     Object? accountStatus = freezed,
+    Object? profile_picture = freezed,
   }) {
     return _then(_$_User(
       customer_id: customer_id == freezed
@@ -168,6 +178,10 @@ class __$$_UserCopyWithImpl<$Res> extends _$UserCopyWithImpl<$Res>
           ? _value.accountStatus
           : accountStatus // ignore: cast_nullable_to_non_nullable
               as String,
+      profile_picture: profile_picture == freezed
+          ? _value.profile_picture
+          : profile_picture // ignore: cast_nullable_to_non_nullable
+              as String,
     ));
   }
 }
@@ -182,7 +196,8 @@ class _$_User extends _User {
       @JsonKey(name: "user_phone") this.user_phone = " ",
       @JsonKey(name: "accountType") this.accountType = "CUSTOMER",
       @JsonKey(name: "dateJoined") this.dateJoined = "",
-      @JsonKey(name: "accountStatus") this.accountStatus = ""})
+      @JsonKey(name: "accountStatus") this.accountStatus = "",
+      @JsonKey(name: "profile_picture") this.profile_picture = ""})
       : super._();
 
   factory _$_User.fromJson(Map<String, dynamic> json) => _$$_UserFromJson(json);
@@ -208,10 +223,13 @@ class _$_User extends _User {
   @override
   @JsonKey(name: "accountStatus")
   final String accountStatus;
+  @override
+  @JsonKey(name: "profile_picture")
+  final String profile_picture;
 
   @override
   String toString() {
-    return 'User(customer_id: $customer_id, user_mail: $user_mail, user_name: $user_name, user_phone: $user_phone, accountType: $accountType, dateJoined: $dateJoined, accountStatus: $accountStatus)';
+    return 'User(customer_id: $customer_id, user_mail: $user_mail, user_name: $user_name, user_phone: $user_phone, accountType: $accountType, dateJoined: $dateJoined, accountStatus: $accountStatus, profile_picture: $profile_picture)';
   }
 
   @override
@@ -230,7 +248,9 @@ class _$_User extends _User {
             const DeepCollectionEquality()
                 .equals(other.dateJoined, dateJoined) &&
             const DeepCollectionEquality()
-                .equals(other.accountStatus, accountStatus));
+                .equals(other.accountStatus, accountStatus) &&
+            const DeepCollectionEquality()
+                .equals(other.profile_picture, profile_picture));
   }
 
   @JsonKey(ignore: true)
@@ -243,7 +263,8 @@ class _$_User extends _User {
       const DeepCollectionEquality().hash(user_phone),
       const DeepCollectionEquality().hash(accountType),
       const DeepCollectionEquality().hash(dateJoined),
-      const DeepCollectionEquality().hash(accountStatus));
+      const DeepCollectionEquality().hash(accountStatus),
+      const DeepCollectionEquality().hash(profile_picture));
 
   @JsonKey(ignore: true)
   @override
@@ -258,13 +279,15 @@ class _$_User extends _User {
 
 abstract class _User extends User {
   factory _User(
-      {@JsonKey(name: "customer_id") final int customer_id,
-      @JsonKey(name: "user_mail") final String user_mail,
-      @JsonKey(name: "user_name") final String user_name,
-      @JsonKey(name: "user_phone") final String user_phone,
-      @JsonKey(name: "accountType") final String accountType,
-      @JsonKey(name: "dateJoined") final String dateJoined,
-      @JsonKey(name: "accountStatus") final String accountStatus}) = _$_User;
+          {@JsonKey(name: "customer_id") final int customer_id,
+          @JsonKey(name: "user_mail") final String user_mail,
+          @JsonKey(name: "user_name") final String user_name,
+          @JsonKey(name: "user_phone") final String user_phone,
+          @JsonKey(name: "accountType") final String accountType,
+          @JsonKey(name: "dateJoined") final String dateJoined,
+          @JsonKey(name: "accountStatus") final String accountStatus,
+          @JsonKey(name: "profile_picture") final String profile_picture}) =
+      _$_User;
   _User._() : super._();
 
   factory _User.fromJson(Map<String, dynamic> json) = _$_User.fromJson;
@@ -290,6 +313,9 @@ abstract class _User extends User {
   @override
   @JsonKey(name: "accountStatus")
   String get accountStatus => throw _privateConstructorUsedError;
+  @override
+  @JsonKey(name: "profile_picture")
+  String get profile_picture => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
   _$$_UserCopyWith<_$_User> get copyWith => throw _privateConstructorUsedError;

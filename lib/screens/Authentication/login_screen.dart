@@ -1,28 +1,35 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:foodie_courier/controllers/auth_provider.dart';
+import 'package:foodie_courier/screens/Home/home.dart';
+import 'package:foodie_courier/screens/Layout/main_layout.dart';
+import 'package:foodie_courier/screens/widgets/Alerts.dart';
 import 'package:foodie_courier/services/service_locator.dart';
 import 'package:provider/provider.dart';
 
-class SignUpScreen extends StatefulWidget {
-  const SignUpScreen({Key? key}) : super(key: key);
+class LoginScreen extends StatefulWidget {
+  const LoginScreen({Key? key}) : super(key: key);
 
   @override
-  State<SignUpScreen> createState() => _SignUpScreenState();
+  State<LoginScreen> createState() => _LoginScreenState();
 }
 
-class _SignUpScreenState extends State<SignUpScreen> {
-  TextEditingController username = TextEditingController();
-  TextEditingController password = TextEditingController();
+class _LoginScreenState extends State<LoginScreen> {
+  final formKey = GlobalKey<FormState>();
+  final TextEditingController emailController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
   bool busy = false;
+  @override
+  void initState() {
+    super.initState();
+  }
+
   @override
   void dispose() {
     super.dispose();
     busy = false;
   }
 
-  final formKey = GlobalKey<FormState>();
-  final TextEditingController emailController = TextEditingController();
-  final TextEditingController passwordController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     final height = MediaQuery.of(context).size.height;
@@ -136,67 +143,18 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     height: 20,
                   ),
                   InkWell(
-                    onTap: () {
-                      logger.i("clicked");
-                      setState(() {
-                        busy;
-                      });
-                    }
-                    // !busy
-                    //     ? () async {
-                    //         if (formKey.currentState!.validate()) {
-                    //           setState(() {
-                    //             busy = !busy;
-                    //           });
-                    //           try {
-                    //             User? uid = await authProvider.signupUser(
-                    //                 emailController.text.trim(),
-                    //                 passwordController.text.trim());
-                    //             if (uid != null && uid.emailVerified) {
-                    //               Navigator.push(
-                    //                   context,
-                    //                   MaterialPageRoute(
-                    //                       builder: (context) => HomePage()));
-                    //             } else if (uid != null &&
-                    //                 !uid.emailVerified) {
-                    //               Navigator.push(
-                    //                   context,
-                    //                   MaterialPageRoute(
-                    //                       builder: (context) =>
-                    //                           EmailVerify(user: uid)));
-                    //             }
-                    //           } on FirebaseAuthException catch (e) {
-                    //             setState(() {
-                    //               busy = !busy;
-                    //             });
-                    //             Alerts.show(context, "Error", e.message!);
-                    //           } catch (e) {
-                    //             setState(() {
-                    //               busy = !busy;
-                    //             });
-                    //             Alerts.show(context, "Error",
-                    //                 "An error occured try again");
-                    //           }
-                    //         }
-                    //       }
-                    //:
-                    // null,
-                    ,
+                    onTap: !busy
+                        ? () {
+                            if (formKey.currentState!.validate()) {
+                              loginHandle(emailController.text.trim(),
+                                  passwordController.text.trim());
+                            }
+                          }
+                        : null,
                     child: Container(
                       width: MediaQuery.of(context).size.width,
                       padding: const EdgeInsets.symmetric(vertical: 15),
                       alignment: Alignment.center,
-                      child: busy
-                          ? CircularProgressIndicator(
-                              color: Colors.white,
-                            )
-                          : Text(
-                              "Login",
-                              style: TextStyle(
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.w600,
-                                  color: Colors.white),
-                            ),
                       decoration: BoxDecoration(
                           borderRadius: const BorderRadius.all(
                             Radius.circular(5),
@@ -212,6 +170,17 @@ class _SignUpScreenState extends State<SignUpScreen> {
                               begin: Alignment.centerLeft,
                               end: Alignment.centerRight,
                               colors: [Color(0xfffbb448), Color(0xfff7892b)])),
+                      child: busy
+                          ? const CircularProgressIndicator(
+                              color: Colors.white,
+                            )
+                          : const Text(
+                              "Login",
+                              style: TextStyle(
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.w600,
+                                  color: Colors.white),
+                            ),
                     ),
                   ),
                   Container(
@@ -280,5 +249,37 @@ class _SignUpScreenState extends State<SignUpScreen> {
         ],
       ),
     ));
+  }
+
+  Future<void> loginHandle(String email, String password) async {
+    setState(() {
+      busy = !busy;
+    });
+    AuthProvider().loginUser(email, password).then((value) {
+      if (value == true) {
+        Navigator.pushAndRemoveUntil(
+            context,
+            MaterialPageRoute(builder: (context) => const MainLayout(index: 0)),
+            (route) => false);
+      } else {
+        setState(() {
+          busy = !busy;
+        });
+        showDialog(
+            context: context,
+            builder: (context) => AlertDialog(
+                  title: const Text("Error occured!"),
+                  content: const Text(
+                      "Invalid Login credentials. If problems persist please contact system administrator"),
+                  actions: [
+                    TextButton(
+                        onPressed: () {
+                          Navigator.pop(context);
+                        },
+                        child: const Text("Ok"))
+                  ],
+                ));
+      }
+    });
   }
 }

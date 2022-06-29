@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:foodie_courier/controllers/auth_provider.dart';
 import 'package:foodie_courier/screens/Authentication/login_screen.dart';
-import 'package:foodie_courier/screens/Authentication/sign_in.dart';
-import 'package:foodie_courier/screens/Home/home.dart';
 import 'package:foodie_courier/screens/Layout/main_layout.dart';
 import 'package:foodie_courier/screens/Onboarding/onboarding_screen.dart';
 import 'package:foodie_courier/services/push_notification_service.dart';
@@ -29,7 +27,7 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'Flutter Demo',
+      title: 'Foodie Courier App',
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
@@ -40,7 +38,7 @@ class _MyAppState extends State<MyApp> {
           if (authProvider.currentUser != null) {
             home = const MainLayout(index: 0);
           } else {
-            home = SignUpScreen();
+            home = LoginScreen();
           }
         } else {
           home = const OnBoardingScreen();

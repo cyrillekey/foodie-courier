@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:foodie_courier/controllers/auth_provider.dart';
 import 'package:foodie_courier/models/courier_model.dart';
-import 'package:foodie_courier/screens/Authentication/sign_in.dart';
+import 'package:foodie_courier/screens/Authentication/login_screen.dart';
 import 'package:foodie_courier/screens/Profile/edit_profile.dart';
 import 'package:provider/provider.dart';
 
@@ -121,7 +121,8 @@ class ProfileScreen extends StatelessWidget {
                                         Navigator.pushAndRemoveUntil(
                                             context,
                                             MaterialPageRoute(
-                                                builder: (context) => SignIn()),
+                                                builder: (context) =>
+                                                    LoginScreen()),
                                             (route) => false);
                                       },
                                       child: const Text("Yes"))

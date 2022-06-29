@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:foodie_courier/controllers/auth_provider.dart';
 import 'package:foodie_courier/models/user_model.dart';
+import 'package:foodie_courier/services/service_locator.dart';
 import 'package:provider/provider.dart';
 
 class EditProfile extends StatefulWidget {
@@ -27,6 +28,7 @@ class _EditProfileState extends State<EditProfile> {
 
   @override
   Widget build(BuildContext context) {
+    logger.i(user);
     return Scaffold(
         appBar: AppBar(
           backgroundColor: Theme.of(context).scaffoldBackgroundColor,
@@ -74,9 +76,10 @@ class _EditProfileState extends State<EditProfile> {
                                   offset: const Offset(0, 10))
                             ],
                             shape: BoxShape.circle,
-                            image: const DecorationImage(
+                            image: DecorationImage(
                                 fit: BoxFit.cover,
-                                image: CachedNetworkImageProvider(
+                                image: CachedNetworkImageProvider(user
+                                        ?.profile_picture ??
                                     "https://images.pexels.com/photos/3307758/pexels-photo-3307758.jpeg?auto=compress&cs=tinysrgb&dpr=3&h=250"))),
                       ),
                       Positioned(

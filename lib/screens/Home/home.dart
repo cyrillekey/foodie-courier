@@ -20,6 +20,7 @@ class _HomeState extends State<Home> {
   @override
   void initState() {
     super.initState();
+    Provider.of<AuthProvider>(context, listen: false).onInit();
     user = Provider.of<AuthProvider>(context, listen: false).currentUser;
   }
 
