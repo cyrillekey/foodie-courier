@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:foodie_courier/controllers/auth_provider.dart';
 import 'package:foodie_courier/models/user_model.dart';
 import 'package:foodie_courier/screens/DeliveryMap/delivery_directions.dart';
+import 'package:foodie_courier/screens/Orders/delivery_success.dart';
 import 'package:foodie_courier/screens/Orders/order_details.dart';
 import 'package:foodie_courier/screens/Scanner/qr_scanner.dart';
+import 'package:foodie_courier/screens/widgets/order_item.dart';
 import 'package:provider/provider.dart';
 
 class Home extends StatefulWidget {
@@ -125,7 +127,10 @@ class _HomeState extends State<Home> {
                               MediaQuery.of(context).size.width * 0.8, 60)),
                           backgroundColor:
                               MaterialStateProperty.all<Color>(Colors.black)),
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.of(context).push(
+                            MaterialPageRoute(builder: (context) => Success()));
+                      },
                       child: const Text(
                         "Deliver Parcel",
                         style: TextStyle(
@@ -154,109 +159,7 @@ class _HomeState extends State<Home> {
                 child: ListView.builder(
                     itemCount: 2,
                     itemBuilder: (context, index) {
-                      return Card(
-                        child: Container(
-                          padding: const EdgeInsets.all(20),
-                          height: 174,
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              SizedBox(
-                                child: Row(
-                                  children: const [
-                                    Text(
-                                      "Order Id",
-                                      style: TextStyle(fontSize: 18),
-                                    ),
-                                    SizedBox(
-                                      width: 5,
-                                    ),
-                                    Text(
-                                      "#45514",
-                                      style: TextStyle(
-                                          fontSize: 18,
-                                          fontWeight: FontWeight.w700),
-                                    )
-                                  ],
-                                ),
-                              ),
-                              SizedBox(
-                                height: 10,
-                              ),
-                              SizedBox(
-                                child: Row(
-                                  children: const [
-                                    Icon(Icons.location_on),
-                                    SizedBox(
-                                      width: 5,
-                                    ),
-                                    Flexible(
-                                      child: Text(
-                                        "23/A Block Sector 4, Kiambu, Kikuyu, 24km",
-                                        softWrap: true,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              SizedBox(
-                                height: 15,
-                              ),
-                              Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  OutlinedButton(
-                                      style: ButtonStyle(
-                                          fixedSize: MaterialStateProperty.all(
-                                              const Size(140, 40)),
-                                          shape: MaterialStateProperty.all<
-                                                  OutlinedBorder>(
-                                              RoundedRectangleBorder(
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                          12)))),
-                                      onPressed: () {
-                                        Navigator.push(
-                                            context,
-                                            MaterialPageRoute(
-                                                builder: (context) =>
-                                                    OrderDetails()));
-                                      },
-                                      child: const Text(
-                                        "View Order",
-                                        style: TextStyle(color: Colors.black),
-                                      )),
-                                  OutlinedButton(
-                                      style: ButtonStyle(
-                                          backgroundColor:
-                                              MaterialStateProperty.all(
-                                                  const Color.fromRGBO(
-                                                      252, 106, 87, 0.8)),
-                                          fixedSize: MaterialStateProperty.all(
-                                              const Size(140, 40)),
-                                          shape: MaterialStateProperty.all<
-                                                  OutlinedBorder>(
-                                              RoundedRectangleBorder(
-                                                  borderRadius:
-                                                      BorderRadius.circular(12)))),
-                                      onPressed: () {
-                                        Navigator.push(
-                                            context,
-                                            MaterialPageRoute(
-                                                builder: (context) =>
-                                                    DeliveryLocation()));
-                                      },
-                                      child: const Text(
-                                        "View Direction",
-                                        style: TextStyle(color: Colors.white),
-                                      ))
-                                ],
-                              )
-                            ],
-                          ),
-                        ),
-                      );
+                      return OrderItem();
                     }),
               )
             ],

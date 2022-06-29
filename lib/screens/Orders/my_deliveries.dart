@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:foodie_courier/screens/widgets/order_item.dart';
 
 class MyDeliveries extends StatelessWidget {
   const MyDeliveries({Key? key}) : super(key: key);
@@ -30,19 +31,17 @@ class MyDeliveries extends StatelessWidget {
                   "Orders",
                   style: TextStyle(fontSize: 16, fontWeight: FontWeight.w700),
                 )),
-            SizedBox(
+            const SizedBox(
               height: 10,
             ),
             Container(
-              padding: EdgeInsets.symmetric(horizontal: 24, vertical: 16),
+              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
               width: MediaQuery.of(context).size.width,
               height: MediaQuery.of(context).size.height * 0.7,
               child: ListView.builder(
                   itemCount: 2,
                   itemBuilder: (context, index) {
-                    return Card(
-                      child: Container(height: 115, child: Text("testing")),
-                    );
+                    return const OrderItem();
                   }),
             )
           ],

@@ -1,12 +1,9 @@
-import 'dart:ffi';
-import 'dart:ui';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:foodie_courier/controllers/auth_provider.dart';
+import 'package:foodie_courier/models/courier_model.dart';
 import 'package:foodie_courier/screens/Authentication/sign_in.dart';
 import 'package:foodie_courier/screens/Profile/edit_profile.dart';
-import 'package:path/path.dart';
 import 'package:provider/provider.dart';
 
 class ProfileScreen extends StatelessWidget {
@@ -15,214 +12,128 @@ class ProfileScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
-        padding: const EdgeInsets.only(left: 16, top: 25, right: 16),
-        height: MediaQuery.of(context).size.height,
-        width: MediaQuery.of(context).size.width,
-        child: ListView(
-          children: [
-            const Text(
-              "Settings",
-              style: TextStyle(fontSize: 25, fontWeight: FontWeight.w500),
-            ),
-            const SizedBox(
-              height: 20,
-            ),
-            wallet(),
-            const SizedBox(
-              height: 20,
-            ),
-            Row(
-              children: const [
-                Icon(
-                  Icons.person,
-                  color: Colors.green,
-                ),
-                SizedBox(
-                  width: 8,
-                ),
-                Text(
-                  "Account",
-                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                )
-              ],
-            ),
-            const Divider(
-              height: 15,
-              thickness: 2,
-            ),
-            const SizedBox(
-              height: 10,
-            ),
-            settingsButton(() {}, "Change Password"),
-            settingsButton(() {
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => const EditProfile()));
-            }, "Edit Profile"),
-            settingsButton(() {}, "Privacy and Security"),
-            settingsButton(() {}, "Contact Support"),
-            const SizedBox(
-              height: 40,
-            ),
-            Row(
-              children: const [
-                Icon(
-                  Icons.toggle_off,
-                  color: Colors.green,
-                ),
-                SizedBox(
-                  width: 8,
-                ),
-                Text(
-                  "Change Status",
-                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                )
-              ],
-            ),
-            const Divider(
-              height: 15,
-              thickness: 2,
-            ),
-            const SizedBox(
-              height: 10,
-            ),
-            customSwitch("Go offline", false, (value) {}),
-            customSwitch("Notifications", true, (value) {}),
-            const SizedBox(
-              height: 50,
-            ),
-            Center(
-              child: OutlinedButton(
-                  style: ButtonStyle(
-                      padding: MaterialStateProperty.all(
-                          const EdgeInsets.symmetric(horizontal: 40)),
-                      shape: MaterialStateProperty.all(RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(20)))),
-                  onPressed: () {
-                    showDialog(
-                        context: context,
-                        builder: (context) => AlertDialog(
-                              title: const Text("Logout"),
-                              content: const Text(
-                                  "Are you sure you wish to log out?"),
-                              actions: [
-                                TextButton(
-                                    onPressed: () {
-                                      Navigator.pop(context);
-                                    },
-                                    child: const Text("No")),
-                                TextButton(
-                                    onPressed: () {
-                                      Provider.of<AuthProvider>(context,
-                                              listen: false)
-                                          .logout();
-                                      Navigator.pop(context);
-                                      Navigator.pushAndRemoveUntil(
-                                          context,
-                                          MaterialPageRoute(
-                                              builder: (context) => SignIn()),
-                                          (route) => false);
-                                    },
-                                    child: const Text("Yes"))
-                              ],
-                            ));
-                  },
-                  child: const Text("LOG OUT")),
-            )
-          ],
-        ),
-      ),
-    );
-  }
-
-  Padding testing(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 5),
-      child: Container(
-        width: MediaQuery.of(context).size.width - 50,
-        padding: const EdgeInsets.all(8),
-        decoration: const BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.all(Radius.circular(15))),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                ClipOval(
-                  child: Material(
-                    color: Colors.black87,
-                    child: InkWell(
-                      splashColor: Colors.red,
-                      child: const SizedBox(
-                        width: 56,
-                        height: 56,
-                        child: Icon(
-                          Icons.account_balance_wallet,
-                          color: Colors.white,
-                          size: 25,
-                        ),
-                      ),
-                      onTap: () {},
-                    ),
+      body: Consumer<AuthProvider>(builder: (context, authProvider, child) {
+        Courier courier = authProvider.courier!;
+        return Container(
+          padding: const EdgeInsets.only(left: 16, top: 25, right: 16),
+          height: MediaQuery.of(context).size.height,
+          width: MediaQuery.of(context).size.width,
+          child: ListView(
+            children: [
+              const Text(
+                "Settings",
+                style: TextStyle(fontSize: 25, fontWeight: FontWeight.w500),
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+              wallet(courier.account_balance, courier.rating),
+              const SizedBox(
+                height: 20,
+              ),
+              Row(
+                children: const [
+                  Icon(
+                    Icons.person,
+                    color: Colors.green,
                   ),
-                ),
-                const SizedBox(
-                  width: 20,
-                ),
-                const Expanded(
-                    child: Text(
-                  "Total Wallet balance",
-                  style: TextStyle(fontWeight: FontWeight.bold),
-                )),
-                Row(
-                  children: const [
-                    Text(
-                      "KES",
-                    ),
-                    Icon(Icons.keyboard_arrow_down)
-                  ],
-                )
-              ],
-            ),
-            const SizedBox(
-              height: 25,
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                const Text(
-                  "Kes 1500.00",
-                  style: TextStyle(
-                      fontSize: 40,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.black87),
-                ),
-                Container(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 12, vertical: 7),
-                  decoration: const BoxDecoration(
-                      color: Colors.green,
-                      borderRadius: BorderRadius.all(Radius.circular(30))),
-                  child: const Text(
-                    "12%",
-                    style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold),
+                  SizedBox(
+                    width: 8,
                   ),
-                )
-              ],
-            ),
-            const SizedBox(
-              height: 10,
-            ),
-            Text("data")
-          ],
-        ),
-      ),
+                  Text(
+                    "Account",
+                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                  )
+                ],
+              ),
+              const Divider(
+                height: 15,
+                thickness: 2,
+              ),
+              const SizedBox(
+                height: 10,
+              ),
+              settingsButton(() {}, "Change Password"),
+              settingsButton(() {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const EditProfile()));
+              }, "Edit Profile"),
+              settingsButton(() {}, "Privacy and Security"),
+              settingsButton(() {}, "Contact Support"),
+              const SizedBox(
+                height: 20,
+              ),
+              Row(
+                children: const [
+                  Icon(
+                    Icons.toggle_off,
+                    color: Colors.green,
+                  ),
+                  SizedBox(
+                    width: 8,
+                  ),
+                  Text(
+                    "Change Status",
+                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                  )
+                ],
+              ),
+              const Divider(
+                height: 15,
+                thickness: 2,
+              ),
+              const SizedBox(
+                height: 10,
+              ),
+              customSwitch("Offline", courier.currentStatus, (value) {}),
+              customSwitch("On Assignment", courier.onAssingment, (value) {}),
+              const SizedBox(
+                height: 50,
+              ),
+              Center(
+                child: OutlinedButton(
+                    style: ButtonStyle(
+                        padding: MaterialStateProperty.all(
+                            const EdgeInsets.symmetric(horizontal: 40)),
+                        shape: MaterialStateProperty.all(RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(20)))),
+                    onPressed: () {
+                      showDialog(
+                          context: context,
+                          builder: (context) => AlertDialog(
+                                title: const Text("Logout"),
+                                content: const Text(
+                                    "Are you sure you wish to log out?"),
+                                actions: [
+                                  TextButton(
+                                      onPressed: () {
+                                        Navigator.pop(context);
+                                      },
+                                      child: const Text("No")),
+                                  TextButton(
+                                      onPressed: () {
+                                        Provider.of<AuthProvider>(context,
+                                                listen: false)
+                                            .logout();
+                                        Navigator.pop(context);
+                                        Navigator.pushAndRemoveUntil(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: (context) => SignIn()),
+                                            (route) => false);
+                                      },
+                                      child: const Text("Yes"))
+                                ],
+                              ));
+                    },
+                    child: const Text("LOG OUT")),
+              )
+            ],
+          ),
+        );
+      }),
     );
   }
 
@@ -271,7 +182,7 @@ class ProfileScreen extends StatelessWidget {
     );
   }
 
-  SizedBox wallet() {
+  SizedBox wallet(double amount, double ratings) {
     return SizedBox(
       child: ClipRRect(
         borderRadius: const BorderRadius.all(Radius.circular(40)),
@@ -297,15 +208,15 @@ class ProfileScreen extends StatelessWidget {
                     ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
-                      children: const [
+                      children: [
                         Text(
-                          "55,0000",
-                          style: TextStyle(
+                          "$amount",
+                          style: const TextStyle(
                               fontSize: 35,
                               fontWeight: FontWeight.w800,
                               color: Colors.yellow),
                         ),
-                        Text(
+                        const Text(
                           " ",
                           style: TextStyle(
                               fontSize: 35, fontWeight: FontWeight.w500),
@@ -314,15 +225,15 @@ class ProfileScreen extends StatelessWidget {
                     ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
-                      children: const [
-                        Text(
-                          "Orders: ",
+                      children: [
+                        const Text(
+                          "Ratings: ",
                           style: TextStyle(
                               fontSize: 15, fontWeight: FontWeight.w600),
                         ),
                         Text(
-                          "1250",
-                          style: TextStyle(
+                          "$ratings",
+                          style: const TextStyle(
                               fontSize: 16, fontWeight: FontWeight.w500),
                         )
                       ],

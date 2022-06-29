@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:swipeable_button_view/swipeable_button_view.dart';
 
 class OrderDetails extends StatelessWidget {
   const OrderDetails({Key? key}) : super(key: key);
@@ -86,7 +87,7 @@ class OrderDetails extends StatelessWidget {
             const SizedBox(
               height: 20,
             ),
-            Divider(),
+            const Divider(),
             productItem(),
             productItem(),
             productItem(),
@@ -98,9 +99,13 @@ class OrderDetails extends StatelessWidget {
                   style: TextStyle(fontSize: 16, fontWeight: FontWeight.w700),
                 ),
                 SizedBox(
-                  height: 20,
+                  height: 10,
                 ),
-                Text("lorem1 jjsj jdjjd jjjsdl llls lllk kkks ")
+                Text("lorem1 jj"),
+                SizedBox(
+                  height: 10,
+                ),
+                Text("lorem1")
               ],
             ),
             const SizedBox(
@@ -114,15 +119,33 @@ class OrderDetails extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: const [
                 Text(
-                  "Location",
+                  "Total Amount",
                   style: TextStyle(fontSize: 16, fontWeight: FontWeight.w700),
                 ),
                 SizedBox(
                   height: 20,
                 ),
-                Text("lorem1 jjsj jdjjd jjjsdl llls lllk kkks ")
+                Text(
+                  "Kes 400.00",
+                  style: TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.w600,
+                      color: Color.fromRGBO(252, 126, 87, 1.0)),
+                )
               ],
             ),
+            SizedBox(
+              height: 30,
+            ),
+            SwipeableButtonView(
+                onFinish: () {},
+                onWaitingProcess: () {},
+                activeColor: Color.fromRGBO(252, 126, 87, 1.0),
+                buttonWidget: Icon(Icons.keyboard_double_arrow_right_sharp),
+                buttonText: "Swipe to accept order"),
+            SizedBox(
+              height: 10,
+            )
           ],
         ),
       ),

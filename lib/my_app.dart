@@ -40,7 +40,7 @@ class _MyAppState extends State<MyApp> {
           if (authProvider.currentUser != null) {
             home = const MainLayout(index: 0);
           } else {
-            home = SignIn();
+            home = SignUpScreen();
           }
         } else {
           home = const OnBoardingScreen();

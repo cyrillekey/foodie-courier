@@ -26,4 +26,8 @@ class LocalDaoDb extends DatabaseAccessor<AppDatabase> with _$LocalDaoDbMixin {
   Future<User?> getUser() async {
     return select(userTable).getSingleOrNull();
   }
+
+  Future<Courier?> getCourier() async {
+    return select(courierTable).getSingleOrNull();
+  }
 }

@@ -9,10 +9,11 @@ const fetchBackground = "fetchBackground";
 
 void updateCourierLocation() {
   Workmanager().executeTask((taskName, inputData) async {
-    logger.i("Backgound service was called");
     final prefs = await SharedPreferences.getInstance();
     String? courier = prefs.getString("courier");
     String? token = prefs.getString("token");
+    logger.e(courier);
+    logger.e(token);
     if (courier != null) {
       await Geolocator.getCurrentPosition(
               desiredAccuracy: LocationAccuracy.bestForNavigation)

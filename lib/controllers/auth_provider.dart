@@ -12,9 +12,10 @@ class AuthProvider with ChangeNotifier {
   final db = locator<LocalDaoDb>();
   bool isLoading = false;
   User? currentUser;
-
+  Courier? courier;
   onInit() async {
     currentUser = await db.getUser();
+    courier = await db.getCourier();
     notifyListeners();
   }
 
