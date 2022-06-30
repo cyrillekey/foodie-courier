@@ -6,7 +6,7 @@ part 'product_order.freezed.dart';
 @freezed
 class ProductOrder with _$ProductOrder {
   factory ProductOrder(
-      {@Default(0) @JsonKey(name: "product_order_id") String product_order_id,
+      {@Default(0) @JsonKey(name: "product_order_id") int product_order_id,
       @Default(0) @JsonKey(name: "qunatity") int quantity,
       Food? food}) = _ProductOrder;
   factory ProductOrder.fromJson(Map<String, dynamic> json) =>

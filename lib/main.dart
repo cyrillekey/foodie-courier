@@ -2,6 +2,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:foodie_courier/controllers/auth_provider.dart';
+import 'package:foodie_courier/controllers/order_provider.dart';
 import 'package:foodie_courier/my_app.dart';
 import 'package:foodie_courier/services/service_locator.dart';
 import 'package:foodie_courier/services/update_location.dart';
@@ -23,9 +24,13 @@ void main() async {
   // }
   Workmanager().initialize(updateCourierLocation, isInDebugMode: false);
   Workmanager().registerPeriodicTask("1", "fetchBackground",
-      frequency: Duration(minutes: 15));
+      frequency: Duration(minutes: 15),
+      constraints: Constraints(networkType: NetworkType.connected));
   runApp(MultiProvider(
-    providers: [ChangeNotifierProvider(create: (_) => AuthProvider())],
+    providers: [
+      ChangeNotifierProvider(create: (_) => AuthProvider()),
+      ChangeNotifierProvider(create: (_) => OrderProvider())
+    ],
     child: MyApp(
       onBoarded: onBoarded,
     ),

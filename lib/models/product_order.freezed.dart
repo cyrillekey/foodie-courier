@@ -21,7 +21,7 @@ ProductOrder _$ProductOrderFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$ProductOrder {
   @JsonKey(name: "product_order_id")
-  String get product_order_id => throw _privateConstructorUsedError;
+  int get product_order_id => throw _privateConstructorUsedError;
   @JsonKey(name: "qunatity")
   int get quantity => throw _privateConstructorUsedError;
   Food? get food => throw _privateConstructorUsedError;
@@ -38,7 +38,7 @@ abstract class $ProductOrderCopyWith<$Res> {
           ProductOrder value, $Res Function(ProductOrder) then) =
       _$ProductOrderCopyWithImpl<$Res>;
   $Res call(
-      {@JsonKey(name: "product_order_id") String product_order_id,
+      {@JsonKey(name: "product_order_id") int product_order_id,
       @JsonKey(name: "qunatity") int quantity,
       Food? food});
 
@@ -63,7 +63,7 @@ class _$ProductOrderCopyWithImpl<$Res> implements $ProductOrderCopyWith<$Res> {
       product_order_id: product_order_id == freezed
           ? _value.product_order_id
           : product_order_id // ignore: cast_nullable_to_non_nullable
-              as String,
+              as int,
       quantity: quantity == freezed
           ? _value.quantity
           : quantity // ignore: cast_nullable_to_non_nullable
@@ -95,7 +95,7 @@ abstract class _$$_ProductOrderCopyWith<$Res>
       __$$_ProductOrderCopyWithImpl<$Res>;
   @override
   $Res call(
-      {@JsonKey(name: "product_order_id") String product_order_id,
+      {@JsonKey(name: "product_order_id") int product_order_id,
       @JsonKey(name: "qunatity") int quantity,
       Food? food});
 
@@ -124,7 +124,7 @@ class __$$_ProductOrderCopyWithImpl<$Res>
       product_order_id: product_order_id == freezed
           ? _value.product_order_id
           : product_order_id // ignore: cast_nullable_to_non_nullable
-              as String,
+              as int,
       quantity: quantity == freezed
           ? _value.quantity
           : quantity // ignore: cast_nullable_to_non_nullable
@@ -150,7 +150,7 @@ class _$_ProductOrder implements _ProductOrder {
 
   @override
   @JsonKey(name: "product_order_id")
-  final String product_order_id;
+  final int product_order_id;
   @override
   @JsonKey(name: "qunatity")
   final int quantity;
@@ -194,7 +194,7 @@ class _$_ProductOrder implements _ProductOrder {
 
 abstract class _ProductOrder implements ProductOrder {
   factory _ProductOrder(
-      {@JsonKey(name: "product_order_id") final String product_order_id,
+      {@JsonKey(name: "product_order_id") final int product_order_id,
       @JsonKey(name: "qunatity") final int quantity,
       final Food? food}) = _$_ProductOrder;
 
@@ -203,7 +203,7 @@ abstract class _ProductOrder implements ProductOrder {
 
   @override
   @JsonKey(name: "product_order_id")
-  String get product_order_id => throw _privateConstructorUsedError;
+  int get product_order_id => throw _privateConstructorUsedError;
   @override
   @JsonKey(name: "qunatity")
   int get quantity => throw _privateConstructorUsedError;

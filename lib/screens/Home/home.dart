@@ -1,3 +1,5 @@
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:foodie_courier/controllers/auth_provider.dart';
 import 'package:foodie_courier/models/user_model.dart';
@@ -6,7 +8,10 @@ import 'package:foodie_courier/screens/Orders/delivery_success.dart';
 import 'package:foodie_courier/screens/Orders/order_details.dart';
 import 'package:foodie_courier/screens/Scanner/qr_scanner.dart';
 import 'package:foodie_courier/screens/widgets/order_item.dart';
+import 'package:foodie_courier/services/service_locator.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class Home extends StatefulWidget {
   const Home({Key? key}) : super(key: key);
@@ -21,11 +26,11 @@ class _HomeState extends State<Home> {
   void initState() {
     super.initState();
     Provider.of<AuthProvider>(context, listen: false).onInit();
-    user = Provider.of<AuthProvider>(context, listen: false).currentUser;
   }
 
   @override
   Widget build(BuildContext context) {
+    user = Provider.of<AuthProvider>(context, listen: false).currentUser;
     return Scaffold(
       body: SizedBox(
         height: MediaQuery.of(context).size.height,
@@ -46,13 +51,18 @@ class _HomeState extends State<Home> {
                   ),
                   Row(
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      children: const [
-                        Text(
+                      children: [
+                        const Text(
                           "Foodie Courier",
                           style: TextStyle(
                               fontSize: 24, fontWeight: FontWeight.w700),
                         ),
-                        CircleAvatar()
+                        CircleAvatar(
+                          radius: 24,
+                          backgroundImage: CachedNetworkImageProvider(user
+                                  ?.profile_picture ??
+                              "https://images.pexels.com/photos/3307758/pexels-photo-3307758.jpeg?auto=compress&cs=tinysrgb&dpr=3&h=250"),
+                        )
                       ]),
                   const SizedBox(
                     height: 50,
@@ -73,7 +83,7 @@ class _HomeState extends State<Home> {
                         const SizedBox(
                           height: 10,
                         ),
-                        Container(
+                        SizedBox(
                           width: MediaQuery.of(context).size.width,
                           height: 60,
                           child: Row(
@@ -129,8 +139,8 @@ class _HomeState extends State<Home> {
                           backgroundColor:
                               MaterialStateProperty.all<Color>(Colors.black)),
                       onPressed: () {
-                        Navigator.of(context).push(
-                            MaterialPageRoute(builder: (context) => Success()));
+                        // Navigator.of(context).push(
+                        //     MaterialPageRoute(builder: (context) => Success()));
                       },
                       child: const Text(
                         "Deliver Parcel",

@@ -42,7 +42,8 @@ class User with _$User implements Insertable<User> {
             user_phone: Value(user_phone),
             accountType: Value(accountType),
             dateJoined: Value(dateJoined),
-            accountStatus: Value(accountStatus))
+            accountStatus: Value(accountStatus),
+            profile_picture: Value(profile_picture))
         .toColumns(nullToAbsent);
   }
 }

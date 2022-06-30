@@ -12,22 +12,28 @@ void updateCourierLocation() {
     final prefs = await SharedPreferences.getInstance();
     String? courier = prefs.getString("courier");
     String? token = prefs.getString("token");
-    logger.e(courier);
-    logger.e(token);
     if (courier != null) {
       await Geolocator.getCurrentPosition(
               desiredAccuracy: LocationAccuracy.bestForNavigation)
           .then((value) {
         logger.i(value);
-        Dio().post(
-            "https://foodieback.herokuapp.com/courier/update-location/$courier",
-            options: Options(
-              headers: {"Authorization": "Bearer $token"},
-            ),
-            data: {'latitude': value.latitude, 'longitude': value.longitude});
-        //apiClient.post("courier/update-location/$courier",
-        //  options: Options(headers: {"Authorization": "Bearer $token"}),
-        //data: {'latitude': value.latitude, 'longitude': value.longitude});
+        Dio()
+            .post(
+                "https://foodieback.herokuapp.com/courier/update-location/$courier",
+                options: Options(
+                  headers: {
+                    "Authorization": "Bearer $token",
+                    'Content-Type': 'application/json'
+                  },
+                ),
+                data: {
+                  'latitude': value.latitude,
+                  'longitude': value.longitude
+                },
+                onReceiveProgress: (res, r) {})
+            .then((value) => logger.d(value))
+            .catchError((err) => logger.e(err));
+        logger.e("Reaches the end");
       });
     }
     return Future.value(true);
