@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:foodie_courier/controllers/auth_provider.dart';
+import 'package:foodie_courier/controllers/order_provider.dart';
 import 'package:foodie_courier/models/user_model.dart';
 import 'package:foodie_courier/screens/DeliveryMap/delivery_directions.dart';
 import 'package:foodie_courier/screens/Orders/delivery_success.dart';
@@ -26,6 +27,7 @@ class _HomeState extends State<Home> {
   void initState() {
     super.initState();
     Provider.of<AuthProvider>(context, listen: false).onInit();
+    Provider.of<OrderProvider>(context, listen: false).init();
   }
 
   @override
@@ -167,11 +169,14 @@ class _HomeState extends State<Home> {
               Container(
                 margin: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
                 height: MediaQuery.of(context).size.height * 0.4,
-                child: ListView.builder(
-                    itemCount: 2,
-                    itemBuilder: (context, index) {
-                      return OrderItem();
-                    }),
+                child: Consumer<OrderProvider>(
+                    builder: (context, orderProvider, child) {
+                  return ListView.builder(
+                      itemCount: orderProvider.my_orders.length,
+                      itemBuilder: (context, index) {
+                        return OrderItem();
+                      });
+                }),
               )
             ],
           ),

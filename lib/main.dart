@@ -18,13 +18,12 @@ void main() async {
 
   final prefs = await SharedPreferences.getInstance();
   bool onBoarded = await prefs.getBool("onboarded") ?? false;
-
   // if (defaultTargetPlatform == TargetPlatform.android) {
   //   AndroidGoogleMapsFlutter.useAndroidViewSurface = true;
   // }
   Workmanager().initialize(updateCourierLocation, isInDebugMode: false);
   Workmanager().registerPeriodicTask("1", "fetchBackground",
-      frequency: Duration(minutes: 15),
+      frequency: const Duration(minutes: 15),
       constraints: Constraints(networkType: NetworkType.connected));
   runApp(MultiProvider(
     providers: [

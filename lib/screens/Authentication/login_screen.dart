@@ -19,6 +19,7 @@ class _LoginScreenState extends State<LoginScreen> {
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
   bool busy = false;
+  bool visible = true;
   @override
   void initState() {
     super.initState();
@@ -118,7 +119,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               ),
                               TextFormField(
                                 controller: passwordController,
-                                obscureText: true,
+                                obscureText: visible,
                                 validator: (value) {
                                   if (value == null || value.isEmpty) {
                                     return 'Password cannot be empty';
@@ -128,7 +129,17 @@ class _LoginScreenState extends State<LoginScreen> {
                                   }
                                   return null;
                                 },
-                                decoration: const InputDecoration(
+                                decoration: InputDecoration(
+                                    suffixIconColor:
+                                        visible ? Colors.blue : Colors.black,
+                                    suffixIcon: InkWell(
+                                        onTap: () {
+                                          setState(() {
+                                            visible = !visible;
+                                          });
+                                        },
+                                        child:
+                                            const Icon(Icons.remove_red_eye)),
                                     border: InputBorder.none,
                                     filled: true,
                                     fillColor: Color(0xfff3f3f4)),
