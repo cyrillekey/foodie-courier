@@ -1,3 +1,4 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:foodie_courier/api_client/api_client.dart';
 import 'package:foodie_courier/api_client/api_response.dart';
@@ -47,6 +48,20 @@ class AuthProvider with ChangeNotifier {
       }
     } else {
       return false;
+    }
+  }
+
+  Future<void> changeCurrentStatus(String id) async {
+    final _prefs = await SharedPreferences.getInstance();
+    String? token = _prefs.getString("token");
+    ApiResponse response = await apiClient.post(
+        "courier/chnage-current-status/${courier!.courier_id}",
+        options: Options(headers: {'Authorization': 'Bearer $token'}));
+    if (response.isSuccess) {
+      Courier courier = Courier.fromJson(response.response);
+      db.saveCourier(courier);
+      this.courier = courier;
+      notifyListeners();
     }
   }
 }

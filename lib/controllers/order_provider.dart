@@ -38,4 +38,9 @@ class OrderProvider with ChangeNotifier {
       }
     }
   }
+
+  Future<void> acceptOrder(String order_id) async {}
+  Future<void> rejectOrder(String order_id) async {}
+  Future<void> getSingleOrder(String order_id) async {}
+  Future<void> deliverOrder(String order_id, String authentication) async {}
 }
