@@ -51,7 +51,7 @@ class AuthProvider with ChangeNotifier {
     }
   }
 
-  Future<void> changeCurrentStatus(String id) async {
+  Future<void> changeCurrentStatus() async {
     final _prefs = await SharedPreferences.getInstance();
     String? token = _prefs.getString("token");
     ApiResponse response = await apiClient.post(

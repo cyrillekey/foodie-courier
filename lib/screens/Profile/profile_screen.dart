@@ -87,7 +87,9 @@ class ProfileScreen extends StatelessWidget {
               const SizedBox(
                 height: 10,
               ),
-              customSwitch("Offline", courier.currentStatus, (value) {}),
+              customSwitch("Offline", courier.currentStatus, (value) async {
+                await authProvider.changeCurrentStatus();
+              }),
               customSwitch("On Assignment", courier.onAssingment, (value) {}),
               const SizedBox(
                 height: 50,
