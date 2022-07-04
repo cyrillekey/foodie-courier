@@ -39,7 +39,13 @@ class OrderProvider with ChangeNotifier {
     }
   }
 
-  Future<void> acceptOrder(String order_id) async {}
+  Future<bool> acceptOrder(String order_id) async {
+    ApiResponse response = await apiClient.post(
+        'courier/assign-courier/${order_id}/${courier!.courier_id}',
+        options: Options(headers: {'Authorization': 'Bearer $token'}));
+    return response.isSuccess;
+  }
+
   Future<void> rejectOrder(String order_id) async {}
   Future<void> getSingleOrder(String order_id) async {}
   Future<void> deliverOrder(String order_id, String authentication) async {}
