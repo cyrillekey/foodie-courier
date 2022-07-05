@@ -4,7 +4,11 @@ buildscript {
         google()
         mavenCentral()
     }
-
+    ext {
+       compileSdkVersion   = 32                // or latest
+       targetSdkVersion    = 30                // or latest
+       appCompatVersion    = "1.1.0"           // or latest
+   }
     dependencies {
         classpath 'com.android.tools.build:gradle:7.1.2'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
@@ -16,6 +20,10 @@ allprojects {
     repositories {
         google()
         mavenCentral()
+        maven {
+           // [required] background_fetch
+           url "${project(':background_fetch').projectDir}/libs"
+       }
     }
 }
 

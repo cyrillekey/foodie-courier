@@ -1,3 +1,4 @@
+import 'package:background_fetch/background_fetch.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
@@ -21,10 +22,10 @@ void main() async {
   // if (defaultTargetPlatform == TargetPlatform.android) {
   //   AndroidGoogleMapsFlutter.useAndroidViewSurface = true;
   // }
-  Workmanager().initialize(updateCourierLocation, isInDebugMode: false);
-  Workmanager().registerPeriodicTask("1", "fetchBackground",
-      frequency: const Duration(minutes: 15),
-      constraints: Constraints(networkType: NetworkType.connected));
+  // Workmanager().initialize(updateCourierLocation, isInDebugMode: false);
+  // Workmanager().registerPeriodicTask("1", "fetchBackground",
+  //     frequency: const Duration(minutes: 15),
+  //     constraints: Constraints(networkType: NetworkType.connected));
   runApp(MultiProvider(
     providers: [
       ChangeNotifierProvider(create: (_) => AuthProvider()),
@@ -34,5 +35,6 @@ void main() async {
       onBoarded: onBoarded,
     ),
   ));
+  BackgroundFetch.registerHeadlessTask(updateCourierLocation);
   FlutterNativeSplash.remove();
 }
