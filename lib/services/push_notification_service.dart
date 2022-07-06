@@ -74,5 +74,7 @@ class PushNotificationService {
     }
   }
 
-  Future<String?> onSelect(String? itm) async {}
+  Future<String?> onSelect(String? itm) async {
+    return "";
+  }
 }

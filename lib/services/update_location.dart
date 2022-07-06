@@ -3,7 +3,6 @@ import 'package:dio/dio.dart';
 import 'package:foodie_courier/services/service_locator.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:workmanager/workmanager.dart';
 
 const fetchBackground = "fetchBackground";
 

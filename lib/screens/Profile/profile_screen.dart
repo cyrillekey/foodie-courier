@@ -4,6 +4,8 @@ import 'package:foodie_courier/controllers/auth_provider.dart';
 import 'package:foodie_courier/models/courier_model.dart';
 import 'package:foodie_courier/screens/Authentication/login_screen.dart';
 import 'package:foodie_courier/screens/Profile/edit_profile.dart';
+import 'package:foodie_courier/services/service_locator.dart';
+import 'package:load_switch/load_switch.dart';
 import 'package:provider/provider.dart';
 
 class ProfileScreen extends StatelessWidget {
@@ -87,9 +89,12 @@ class ProfileScreen extends StatelessWidget {
               const SizedBox(
                 height: 10,
               ),
-              customSwitch("Offline", courier.currentStatus, (value) async {
-                await authProvider.changeCurrentStatus();
-              }),
+              customSwitchAnimated(
+                  "Offline",
+                  courier.currentStatus,
+                  authProvider.changeCurrentStatus,
+                  (value) => logger.d(value),
+                  (value) => logger.d(value)),
               customSwitch("On Assignment", courier.onAssingment, (value) {}),
               const SizedBox(
                 height: 50,
@@ -155,6 +160,34 @@ class ProfileScreen extends StatelessWidget {
         Transform.scale(
           scale: 0.7,
           child: CupertinoSwitch(value: isActive, onChanged: onChanged),
+        )
+      ],
+    );
+  }
+
+  Row customSwitchAnimated(
+      String title,
+      bool isActive,
+      Future<bool> Function() future,
+      dynamic Function(bool value) onChanged,
+      dynamic Function(bool value) onTap) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Text(
+          title,
+          style: TextStyle(
+              fontSize: 18,
+              fontWeight: FontWeight.w500,
+              color: Colors.grey[600]),
+        ),
+        Transform.scale(
+          scale: 0.7,
+          child: LoadSwitch(
+              value: isActive,
+              future: future,
+              onChange: onChanged,
+              onTap: onTap),
         )
       ],
     );

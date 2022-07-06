@@ -9,6 +9,7 @@ import 'package:foodie_courier/models/courier_model.dart';
 import 'package:foodie_courier/models/order_model.dart';
 import 'package:foodie_courier/models/user_model.dart';
 import 'package:foodie_courier/services/service_locator.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class OrderProvider with ChangeNotifier {
@@ -17,6 +18,7 @@ class OrderProvider with ChangeNotifier {
   User? user;
   Courier? courier;
   String? token;
+  Position? position;
   final apiClient = locator<ApiClient>();
   final db = locator<LocalDaoDb>();
 
@@ -49,4 +51,18 @@ class OrderProvider with ChangeNotifier {
   Future<void> rejectOrder(String order_id) async {}
   Future<void> getSingleOrder(String order_id) async {}
   Future<void> deliverOrder(String order_id, String authentication) async {}
+  Future<void> initOrderDeliveryDirections() async {
+    await Geolocator.requestPermission();
+    LocationPermission allowed = await Geolocator.checkPermission();
+    if (allowed == LocationPermission.deniedForever ||
+        allowed == LocationPermission.denied) {
+      initOrderDeliveryDirections();
+    } else {
+      Position userLocation = await Geolocator.getCurrentPosition(
+          desiredAccuracy: LocationAccuracy.bestForNavigation);
+      logger.e(userLocation);
+      position = userLocation;
+      notifyListeners();
+    }
+  }
 }

@@ -1,10 +1,11 @@
 import 'dart:async';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:foodie_courier/controllers/order_provider.dart';
 import 'package:foodie_courier/screens/widgets/progress_inidcator.dart';
-import 'package:foodie_courier/services/service_locator.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:provider/provider.dart';
 
 class DeliveryLocation extends StatefulWidget {
   const DeliveryLocation({Key? key}) : super(key: key);
@@ -15,25 +16,11 @@ class DeliveryLocation extends StatefulWidget {
 
 class _DeliveryLocationState extends State<DeliveryLocation> {
   Position? position;
-  void _getUserPosition() async {
-    await Geolocator.requestPermission();
-    LocationPermission allowed = await Geolocator.checkPermission();
-    if (allowed == LocationPermission.deniedForever ||
-        allowed == LocationPermission.denied) {
-      _getUserPosition();
-    } else {
-      Position userLocation = await Geolocator.getCurrentPosition(
-          desiredAccuracy: LocationAccuracy.bestForNavigation);
-      logger.e(userLocation);
-      setState(() {
-        position = userLocation;
-      });
-    }
-  }
 
   @override
   void initState() {
-    _getUserPosition();
+    Provider.of<OrderProvider>(context, listen: false)
+        .initOrderDeliveryDirections();
     super.initState();
   }
 

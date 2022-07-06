@@ -51,7 +51,7 @@ class AuthProvider with ChangeNotifier {
     }
   }
 
-  Future<void> changeCurrentStatus() async {
+  Future<bool> changeCurrentStatus() async {
     final _prefs = await SharedPreferences.getInstance();
     String? token = _prefs.getString("token");
     ApiResponse response = await apiClient.post(
@@ -63,5 +63,6 @@ class AuthProvider with ChangeNotifier {
       this.courier = courier;
       notifyListeners();
     }
+    return response.isSuccess;
   }
 }
