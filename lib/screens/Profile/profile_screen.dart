@@ -8,14 +8,21 @@ import 'package:foodie_courier/services/service_locator.dart';
 import 'package:load_switch/load_switch.dart';
 import 'package:provider/provider.dart';
 
-class ProfileScreen extends StatelessWidget {
+class ProfileScreen extends StatefulWidget {
   const ProfileScreen({Key? key}) : super(key: key);
 
+  @override
+  State<ProfileScreen> createState() => _ProfileScreenState();
+}
+
+class _ProfileScreenState extends State<ProfileScreen> {
+  bool? current_status;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Consumer<AuthProvider>(builder: (context, authProvider, child) {
         Courier courier = authProvider.courier!;
+        current_status = courier.currentStatus;
         return Container(
           padding: const EdgeInsets.only(left: 16, top: 25, right: 16),
           height: MediaQuery.of(context).size.height,
@@ -90,11 +97,12 @@ class ProfileScreen extends StatelessWidget {
                 height: 10,
               ),
               customSwitchAnimated(
-                  "Offline",
-                  courier.currentStatus,
-                  authProvider.changeCurrentStatus,
-                  (value) => logger.d(value),
-                  (value) => logger.d(value)),
+                  "Offline", current_status!, authProvider.changeCurrentStatus,
+                  (value) {
+                setState(() {
+                  current_status = !value;
+                });
+              }, (value) => logger.d(value)),
               customSwitch("On Assignment", courier.onAssingment, (value) {}),
               const SizedBox(
                 height: 50,
@@ -184,6 +192,9 @@ class ProfileScreen extends StatelessWidget {
         Transform.scale(
           scale: 0.7,
           child: LoadSwitch(
+              height: 30,
+              width: 52,
+              thumbPadding: 0,
               value: isActive,
               future: future,
               onChange: onChanged,

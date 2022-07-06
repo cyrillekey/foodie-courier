@@ -19,6 +19,7 @@ class OrderProvider with ChangeNotifier {
   Courier? courier;
   String? token;
   Position? position;
+  User? _customer;
   final apiClient = locator<ApiClient>();
   final db = locator<LocalDaoDb>();
 
@@ -65,4 +66,6 @@ class OrderProvider with ChangeNotifier {
       notifyListeners();
     }
   }
+
+  Future<void> getCustomerByOrder() async {}
 }

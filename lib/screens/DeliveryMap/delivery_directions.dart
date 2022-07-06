@@ -2,10 +2,12 @@ import 'dart:async';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:foodie_courier/controllers/order_provider.dart';
+import 'package:foodie_courier/models/order_model.dart';
 import 'package:foodie_courier/screens/widgets/progress_inidcator.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:provider/provider.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class DeliveryLocation extends StatefulWidget {
   const DeliveryLocation({Key? key}) : super(key: key);
@@ -16,6 +18,7 @@ class DeliveryLocation extends StatefulWidget {
 
 class _DeliveryLocationState extends State<DeliveryLocation> {
   Position? position;
+  Order? order;
 
   @override
   void initState() {
@@ -154,10 +157,12 @@ class deliveryMap extends StatelessWidget {
     Key? key,
     required this.position,
     required Completer<GoogleMapController> controller,
+    this.order,
   })  : _controller = controller,
         super(key: key);
 
   final Position? position;
+  final Order? order;
   final Completer<GoogleMapController> _controller;
   @override
   Widget build(BuildContext context) {
@@ -289,8 +294,9 @@ class deliveryMap extends StatelessWidget {
                     width: 20,
                   ),
                   InkWell(
-                    onTap: () {
-                      print("should launch caller");
+                    onTap: () async {
+                      final Uri url = Uri(scheme: 'tel', path: "0708073370");
+                      await launchUrl(url);
                     },
                     child: Container(
                       alignment: Alignment.center,
