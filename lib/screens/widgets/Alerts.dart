@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class Alert {
@@ -46,5 +45,13 @@ class Alert {
                 ),
               ),
             ));
+  }
+
+  static void showCustomSnackbar(BuildContext context, String title,
+      {bool isSuccess = true}) {
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+      content: Text(title),
+      backgroundColor: isSuccess ? Colors.green : Colors.red,
+    ));
   }
 }

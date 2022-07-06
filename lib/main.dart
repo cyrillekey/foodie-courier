@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:foodie_courier/controllers/auth_provider.dart';
 import 'package:foodie_courier/controllers/order_provider.dart';
+import 'package:foodie_courier/controllers/parcel_center_provider.dart';
 import 'package:foodie_courier/my_app.dart';
 import 'package:foodie_courier/services/service_locator.dart';
 import 'package:foodie_courier/services/update_location.dart';
@@ -29,7 +30,8 @@ void main() async {
   runApp(MultiProvider(
     providers: [
       ChangeNotifierProvider(create: (_) => AuthProvider()),
-      ChangeNotifierProvider(create: (_) => OrderProvider())
+      ChangeNotifierProvider(create: (_) => OrderProvider()),
+      ChangeNotifierProvider(create: (_) => ParcelCenterProvider())
     ],
     child: MyApp(
       onBoarded: onBoarded,

@@ -17,8 +17,10 @@ Future<void> _handlingFirebaseBackgroungMessage(RemoteMessage message) async {
 
 class PushNotificationService {
   late User? user;
+  late Function navigateToAcceptOrder;
   final _apiClient = locator<ApiClient>();
-  PushNotificationService(this.user);
+
+  PushNotificationService(this.user, this.navigateToAcceptOrder);
   static Future<dynamic> myBackgroundMessageHandler(
       Map<String, dynamic> message) async {
     return Future<void>.value();
@@ -70,7 +72,8 @@ class PushNotificationService {
           importance: Importance.max,
           priority: Priority.high,
           styleInformation: bigTextStyleInformation,
-          ticker: title);
+          ticker: title,
+          icon: null);
       var iosPlaformChannelSpecific = const IOSNotificationDetails();
       var platformChannelsSpecific = NotificationDetails(
           android: androidPlaformChannelsSpecific,
@@ -82,6 +85,13 @@ class PushNotificationService {
   }
 
   Future<String?> onSelect(String? itm) async {
-    return "";
+    Map<String, dynamic> message = json.decode(itm!);
+    var action = message['action'];
+    switch (action) {
+      case 'accept_order':
+        navigateToAcceptOrder("0");
+        break;
+      default:
+    }
   }
 }

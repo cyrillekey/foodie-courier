@@ -41,7 +41,7 @@ class ApiClient {
       Options? options,
       ProgressCallback? progressCallback}) async {
     try {
-      var response = await dio.get(uri,
+      var response = await dio.get(baseUrl + uri,
           queryParameters: queryParameters,
           onReceiveProgress: progressCallback,
           options: options);

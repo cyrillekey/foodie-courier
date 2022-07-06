@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:foodie_courier/api_client/api_client.dart';
@@ -19,7 +17,9 @@ class OrderProvider with ChangeNotifier {
   Courier? courier;
   String? token;
   Position? position;
+  Order? current_order;
   User? _customer;
+  bool isLoading = false;
   final apiClient = locator<ApiClient>();
   final db = locator<LocalDaoDb>();
 
@@ -43,14 +43,31 @@ class OrderProvider with ChangeNotifier {
   }
 
   Future<bool> acceptOrder(String order_id) async {
-    ApiResponse response = await apiClient.post(
-        'courier/assign-courier/${order_id}/${courier!.courier_id}',
-        options: Options(headers: {'Authorization': 'Bearer $token'}));
-    return response.isSuccess;
+    try {
+      ApiResponse response = await apiClient.get(
+          'courier/assign-courier/$order_id/${courier!.courier_id}',
+          options: Options(headers: {'Authorization': 'Bearer $token'}));
+      return response.isSuccess;
+    } catch (e) {
+      return false;
+    }
   }
 
   Future<void> rejectOrder(String order_id) async {}
-  Future<void> getSingleOrder(String order_id) async {}
+  Future<void> getSingleOrder(String order_id) async {
+    isLoading = true;
+    notifyListeners();
+    ApiResponse response = await apiClient.get(
+        "courier/get-order-details/$order_id",
+        options: Options(headers: {'Authorization': 'Bearer $token'}));
+    if (response.isSuccess) {
+      Order order = Order.fromJson(response.response);
+      current_order = order;
+      isLoading = false;
+      notifyListeners();
+    }
+  }
+
   Future<void> deliverOrder(String order_id, String authentication) async {}
   Future<void> initOrderDeliveryDirections() async {
     await Geolocator.requestPermission();

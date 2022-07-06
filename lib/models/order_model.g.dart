@@ -14,7 +14,7 @@ _$_Order _$$_OrderFromJson(Map<String, dynamic> json) => _$_Order(
       order_date: json['order_date'] as String? ?? "",
       order_amount: (json['order_amount'] as num?)?.toDouble() ?? 0.0,
       quantity: json['quantity'] as int? ?? 0,
-      delivery_cost: json['delivery_cost'] as int? ?? 0,
+      delivery_cost: (json['delivery_cost'] as num?)?.toDouble() ?? 0,
       orderStatus: json['orderStatus'] as String? ?? "",
       latitude: (json['latitude'] as num?)?.toDouble() ?? 0.0,
       longitude: (json['longitude'] as num?)?.toDouble() ?? 0.0,

@@ -1,10 +1,58 @@
 import 'package:flutter/material.dart';
+import 'package:foodie_courier/controllers/parcel_center_provider.dart';
+import 'package:foodie_courier/screens/widgets/order_item.dart';
+import 'package:provider/provider.dart';
 
 class ParcelCenter extends StatelessWidget {
   const ParcelCenter({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold();
+    return Scaffold(
+      body: SizedBox(
+        width: MediaQuery.of(context).size.width,
+        height: MediaQuery.of(context).size.height,
+        child: Consumer<ParcelCenterProvider>(
+            builder: (context, parcelCenterProvider, child) {
+          return Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const SizedBox(
+                height: 40,
+              ),
+              Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 20),
+                  child: const Text(
+                    "Parcel Center",
+                    style: TextStyle(fontSize: 24, fontWeight: FontWeight.w700),
+                  )),
+              const SizedBox(
+                height: 30,
+              ),
+              Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 20),
+                  child: const Text(
+                    "Orders awaiting Driver",
+                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.w700),
+                  )),
+              const SizedBox(
+                height: 10,
+              ),
+              Container(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
+                width: MediaQuery.of(context).size.width,
+                height: MediaQuery.of(context).size.height * 0.7,
+                child: ListView.builder(
+                    itemCount: 2,
+                    itemBuilder: (context, index) {
+                      return const OrderItem();
+                    }),
+              )
+            ],
+          );
+        }),
+      ),
+    );
   }
 }

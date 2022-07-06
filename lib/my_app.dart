@@ -4,6 +4,7 @@ import 'package:foodie_courier/controllers/auth_provider.dart';
 import 'package:foodie_courier/screens/Authentication/login_screen.dart';
 import 'package:foodie_courier/screens/Layout/main_layout.dart';
 import 'package:foodie_courier/screens/Onboarding/onboarding_screen.dart';
+import 'package:foodie_courier/screens/Orders/order_details.dart';
 import 'package:foodie_courier/services/push_notification_service.dart';
 import 'package:foodie_courier/services/service_locator.dart';
 import 'package:foodie_courier/services/update_location.dart';
@@ -58,7 +59,12 @@ class _MyAppState extends State<MyApp> {
       ),
       home: Consumer<AuthProvider>(builder: (context, authProvider, child) {
         Widget home;
-        PushNotificationService(authProvider.currentUser).oninit();
+        PushNotificationService(
+            authProvider.currentUser,
+            (String order_id) => Navigator.of(context).push(MaterialPageRoute(
+                builder: (context) => OrderDetails(
+                      order_id: order_id,
+                    )))).oninit();
         if (widget.onBoarded == true) {
           if (authProvider.currentUser != null) {
             home = const MainLayout(index: 0);

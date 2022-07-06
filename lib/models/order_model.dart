@@ -22,7 +22,7 @@ class Order with _$Order {
           int quantity,
       @Default(0)
       @JsonKey(name: "delivery_cost")
-          int delivery_cost,
+          double delivery_cost,
       @Default("")
       @JsonKey(name: "orderStatus")
           String orderStatus,

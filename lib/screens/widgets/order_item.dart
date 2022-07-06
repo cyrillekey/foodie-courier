@@ -69,7 +69,9 @@ class OrderItem extends StatelessWidget {
                       Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => OrderDetails()));
+                              builder: (context) => OrderDetails(
+                                    order_id: "2",
+                                  )));
                     },
                     child: const Text(
                       "View Order",

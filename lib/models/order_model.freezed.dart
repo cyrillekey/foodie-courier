@@ -30,7 +30,7 @@ mixin _$Order {
   @JsonKey(name: "quantity")
   int get quantity => throw _privateConstructorUsedError;
   @JsonKey(name: "delivery_cost")
-  int get delivery_cost => throw _privateConstructorUsedError;
+  double get delivery_cost => throw _privateConstructorUsedError;
   @JsonKey(name: "orderStatus")
   String get orderStatus => throw _privateConstructorUsedError;
   @JsonKey(name: "latitude")
@@ -55,7 +55,7 @@ abstract class $OrderCopyWith<$Res> {
       @JsonKey(name: "order_date") String order_date,
       @JsonKey(name: "order_amount") double order_amount,
       @JsonKey(name: "quantity") int quantity,
-      @JsonKey(name: "delivery_cost") int delivery_cost,
+      @JsonKey(name: "delivery_cost") double delivery_cost,
       @JsonKey(name: "orderStatus") String orderStatus,
       @JsonKey(name: "latitude") double latitude,
       @JsonKey(name: 'longitude') double longitude,
@@ -109,7 +109,7 @@ class _$OrderCopyWithImpl<$Res> implements $OrderCopyWith<$Res> {
       delivery_cost: delivery_cost == freezed
           ? _value.delivery_cost
           : delivery_cost // ignore: cast_nullable_to_non_nullable
-              as int,
+              as double,
       orderStatus: orderStatus == freezed
           ? _value.orderStatus
           : orderStatus // ignore: cast_nullable_to_non_nullable
@@ -152,7 +152,7 @@ abstract class _$$_OrderCopyWith<$Res> implements $OrderCopyWith<$Res> {
       @JsonKey(name: "order_date") String order_date,
       @JsonKey(name: "order_amount") double order_amount,
       @JsonKey(name: "quantity") int quantity,
-      @JsonKey(name: "delivery_cost") int delivery_cost,
+      @JsonKey(name: "delivery_cost") double delivery_cost,
       @JsonKey(name: "orderStatus") String orderStatus,
       @JsonKey(name: "latitude") double latitude,
       @JsonKey(name: 'longitude') double longitude,
@@ -208,7 +208,7 @@ class __$$_OrderCopyWithImpl<$Res> extends _$OrderCopyWithImpl<$Res>
       delivery_cost: delivery_cost == freezed
           ? _value.delivery_cost
           : delivery_cost // ignore: cast_nullable_to_non_nullable
-              as int,
+              as double,
       orderStatus: orderStatus == freezed
           ? _value.orderStatus
           : orderStatus // ignore: cast_nullable_to_non_nullable
@@ -273,7 +273,7 @@ class _$_Order implements _Order {
   final int quantity;
   @override
   @JsonKey(name: "delivery_cost")
-  final int delivery_cost;
+  final double delivery_cost;
   @override
   @JsonKey(name: "orderStatus")
   final String orderStatus;
@@ -356,7 +356,7 @@ abstract class _Order implements Order {
       @JsonKey(name: "quantity")
           final int quantity,
       @JsonKey(name: "delivery_cost")
-          final int delivery_cost,
+          final double delivery_cost,
       @JsonKey(name: "orderStatus")
           final String orderStatus,
       @JsonKey(name: "latitude")
@@ -384,7 +384,7 @@ abstract class _Order implements Order {
   int get quantity => throw _privateConstructorUsedError;
   @override
   @JsonKey(name: "delivery_cost")
-  int get delivery_cost => throw _privateConstructorUsedError;
+  double get delivery_cost => throw _privateConstructorUsedError;
   @override
   @JsonKey(name: "orderStatus")
   String get orderStatus => throw _privateConstructorUsedError;
