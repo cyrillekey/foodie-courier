@@ -52,6 +52,13 @@ class PushNotificationService {
     var action = data['action'];
     String? title = "";
     String? msg = "";
+    switch (action) {
+      case 'accept_order':
+        title = "Order available";
+        msg = "New order available for delivery!";
+        break;
+      default:
+    }
 
     if (title != "" && msg != "") {
       BigTextStyleInformation bigTextStyleInformation =
