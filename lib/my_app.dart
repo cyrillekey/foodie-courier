@@ -24,6 +24,7 @@ class _MyAppState extends State<MyApp> {
   @override
   void initState() {
     Provider.of<AuthProvider>(context, listen: false).onInit();
+    Provider.of<AuthProvider>(context, listen: false).silentLogin();
     initPlatformState();
     super.initState();
   }

@@ -20,6 +20,7 @@ class UserTable extends Table {
   TextColumn get dateJoined => text()();
   TextColumn get accountStatus => text()();
   TextColumn get profile_picture => text()();
+  TextColumn get password => text()();
   @override
   Set<Column> get primaryKey => {customer_id};
 }

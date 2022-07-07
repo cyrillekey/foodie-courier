@@ -3,8 +3,20 @@ import 'package:foodie_courier/controllers/parcel_center_provider.dart';
 import 'package:foodie_courier/screens/widgets/order_item.dart';
 import 'package:provider/provider.dart';
 
-class ParcelCenter extends StatelessWidget {
+class ParcelCenter extends StatefulWidget {
   const ParcelCenter({Key? key}) : super(key: key);
+
+  @override
+  State<ParcelCenter> createState() => _ParcelCenterState();
+}
+
+class _ParcelCenterState extends State<ParcelCenter> {
+  @override
+  void initState() {
+    Provider.of<ParcelCenterProvider>(context, listen: false)
+        .getOrdersWithoutCouriers();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -38,17 +50,19 @@ class ParcelCenter extends StatelessWidget {
               const SizedBox(
                 height: 10,
               ),
-              Container(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
-                width: MediaQuery.of(context).size.width,
-                height: MediaQuery.of(context).size.height * 0.7,
-                child: ListView.builder(
-                    itemCount: 2,
-                    itemBuilder: (context, index) {
-                      return const OrderItem();
-                    }),
-              )
+              Consumer(builder: (context, parcelProvider, child) {
+                return Container(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
+                  width: MediaQuery.of(context).size.width,
+                  height: MediaQuery.of(context).size.height * 0.7,
+                  child: ListView.builder(
+                      itemCount: parcelCenterProvider.awaiting_drivers.length,
+                      itemBuilder: (context, index) {
+                        return const OrderItem();
+                      }),
+                );
+              })
             ],
           );
         }),

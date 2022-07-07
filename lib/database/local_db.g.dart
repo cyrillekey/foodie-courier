@@ -16,6 +16,7 @@ class UserTableCompanion extends UpdateCompanion<User> {
   final Value<String> dateJoined;
   final Value<String> accountStatus;
   final Value<String> profile_picture;
+  final Value<String> password;
   const UserTableCompanion({
     this.customer_id = const Value.absent(),
     this.user_mail = const Value.absent(),
@@ -25,6 +26,7 @@ class UserTableCompanion extends UpdateCompanion<User> {
     this.dateJoined = const Value.absent(),
     this.accountStatus = const Value.absent(),
     this.profile_picture = const Value.absent(),
+    this.password = const Value.absent(),
   });
   UserTableCompanion.insert({
     this.customer_id = const Value.absent(),
@@ -35,13 +37,15 @@ class UserTableCompanion extends UpdateCompanion<User> {
     required String dateJoined,
     required String accountStatus,
     required String profile_picture,
+    required String password,
   })  : user_mail = Value(user_mail),
         user_name = Value(user_name),
         user_phone = Value(user_phone),
         accountType = Value(accountType),
         dateJoined = Value(dateJoined),
         accountStatus = Value(accountStatus),
-        profile_picture = Value(profile_picture);
+        profile_picture = Value(profile_picture),
+        password = Value(password);
   static Insertable<User> custom({
     Expression<int>? customer_id,
     Expression<String>? user_mail,
@@ -51,6 +55,7 @@ class UserTableCompanion extends UpdateCompanion<User> {
     Expression<String>? dateJoined,
     Expression<String>? accountStatus,
     Expression<String>? profile_picture,
+    Expression<String>? password,
   }) {
     return RawValuesInsertable({
       if (customer_id != null) 'customer_id': customer_id,
@@ -61,6 +66,7 @@ class UserTableCompanion extends UpdateCompanion<User> {
       if (dateJoined != null) 'date_joined': dateJoined,
       if (accountStatus != null) 'account_status': accountStatus,
       if (profile_picture != null) 'profile_picture': profile_picture,
+      if (password != null) 'password': password,
     });
   }
 
@@ -72,7 +78,8 @@ class UserTableCompanion extends UpdateCompanion<User> {
       Value<String>? accountType,
       Value<String>? dateJoined,
       Value<String>? accountStatus,
-      Value<String>? profile_picture}) {
+      Value<String>? profile_picture,
+      Value<String>? password}) {
     return UserTableCompanion(
       customer_id: customer_id ?? this.customer_id,
       user_mail: user_mail ?? this.user_mail,
@@ -82,6 +89,7 @@ class UserTableCompanion extends UpdateCompanion<User> {
       dateJoined: dateJoined ?? this.dateJoined,
       accountStatus: accountStatus ?? this.accountStatus,
       profile_picture: profile_picture ?? this.profile_picture,
+      password: password ?? this.password,
     );
   }
 
@@ -112,6 +120,9 @@ class UserTableCompanion extends UpdateCompanion<User> {
     if (profile_picture.present) {
       map['profile_picture'] = Variable<String>(profile_picture.value);
     }
+    if (password.present) {
+      map['password'] = Variable<String>(password.value);
+    }
     return map;
   }
 
@@ -125,7 +136,8 @@ class UserTableCompanion extends UpdateCompanion<User> {
           ..write('accountType: $accountType, ')
           ..write('dateJoined: $dateJoined, ')
           ..write('accountStatus: $accountStatus, ')
-          ..write('profile_picture: $profile_picture')
+          ..write('profile_picture: $profile_picture, ')
+          ..write('password: $password')
           ..write(')'))
         .toString();
   }
@@ -180,6 +192,11 @@ class $UserTableTable extends UserTable with TableInfo<$UserTableTable, User> {
   late final GeneratedColumn<String?> profile_picture =
       GeneratedColumn<String?>('profile_picture', aliasedName, false,
           type: const StringType(), requiredDuringInsert: true);
+  final VerificationMeta _passwordMeta = const VerificationMeta('password');
+  @override
+  late final GeneratedColumn<String?> password = GeneratedColumn<String?>(
+      'password', aliasedName, false,
+      type: const StringType(), requiredDuringInsert: true);
   @override
   List<GeneratedColumn> get $columns => [
         customer_id,
@@ -189,7 +206,8 @@ class $UserTableTable extends UserTable with TableInfo<$UserTableTable, User> {
         accountType,
         dateJoined,
         accountStatus,
-        profile_picture
+        profile_picture,
+        password
       ];
   @override
   String get aliasedName => _alias ?? 'user_table';
@@ -258,6 +276,12 @@ class $UserTableTable extends UserTable with TableInfo<$UserTableTable, User> {
     } else if (isInserting) {
       context.missing(_profile_pictureMeta);
     }
+    if (data.containsKey('password')) {
+      context.handle(_passwordMeta,
+          password.isAcceptableOrUnknown(data['password']!, _passwordMeta));
+    } else if (isInserting) {
+      context.missing(_passwordMeta);
+    }
     return context;
   }
 
@@ -283,6 +307,8 @@ class $UserTableTable extends UserTable with TableInfo<$UserTableTable, User> {
           .mapFromDatabaseResponse(data['${effectivePrefix}account_status'])!,
       profile_picture: const StringType()
           .mapFromDatabaseResponse(data['${effectivePrefix}profile_picture'])!,
+      password: const StringType()
+          .mapFromDatabaseResponse(data['${effectivePrefix}password'])!,
     );
   }
 

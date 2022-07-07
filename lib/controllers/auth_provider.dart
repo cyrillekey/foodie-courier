@@ -41,8 +41,39 @@ class AuthProvider with ChangeNotifier {
             Courier.fromJson(response.response['customer']['courier']);
         db.saveUser(user);
         db.saveCourier(courier);
+        currentUser = user;
+        this.courier = courier;
         await _prefs.setString("courier", courier.courier_id.toString());
         return true;
+      } else {
+        return false;
+      }
+    } else {
+      return false;
+    }
+  }
+
+  Future<bool> silentLogin() async {
+    if (currentUser != null) {
+      final _prefs = await SharedPreferences.getInstance();
+      ApiResponse response = await apiClient.post("silentlogin", data: {
+        "user_mail": currentUser!.user_mail,
+        "user_password": currentUser!.password
+      });
+      if (response.isSuccess) {
+        User user = User.fromJson(response.response['customer']);
+        if (user.accountType == "COURIER") {
+          String token = response.response['token'];
+          await _prefs.setString("token", token);
+          Courier courier =
+              Courier.fromJson(response.response['customer']['courier']);
+          db.saveUser(user);
+          db.saveCourier(courier);
+          await _prefs.setString("courier", courier.courier_id.toString());
+          return true;
+        } else {
+          return false;
+        }
       } else {
         return false;
       }

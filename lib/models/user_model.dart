@@ -8,30 +8,15 @@ part 'user_model.freezed.dart';
 class User with _$User implements Insertable<User> {
   const User._();
   factory User(
-      {@Default(0)
-      @JsonKey(name: "customer_id")
-          int customer_id,
-      @Default("")
-      @JsonKey(name: "user_mail")
-          String user_mail,
-      @Default("")
-      @JsonKey(name: "user_name")
-          String user_name,
-      @Default(" ")
-      @JsonKey(name: "user_phone")
-          String user_phone,
-      @Default("CUSTOMER")
-      @JsonKey(name: "accountType")
-          String accountType,
-      @Default("")
-      @JsonKey(name: "dateJoined")
-          String dateJoined,
-      @Default("")
-      @JsonKey(name: "accountStatus")
-          String accountStatus,
-      @Default("")
-      @JsonKey(name: "profile_picture")
-          String profile_picture}) = _User;
+      {@Default(0) @JsonKey(name: "customer_id") int customer_id,
+      @Default("") @JsonKey(name: "user_mail") String user_mail,
+      @Default("") @JsonKey(name: "user_name") String user_name,
+      @Default(" ") @JsonKey(name: "user_phone") String user_phone,
+      @Default("CUSTOMER") @JsonKey(name: "accountType") String accountType,
+      @Default("") @JsonKey(name: "dateJoined") String dateJoined,
+      @Default("") @JsonKey(name: "accountStatus") String accountStatus,
+      @Default("") @JsonKey(name: "profile_picture") String profile_picture,
+      @JsonKey(name: "password") @Default("") String password}) = _User;
   factory User.fromJson(Map<String, dynamic> json) => _$UserFromJson(json);
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
@@ -43,7 +28,8 @@ class User with _$User implements Insertable<User> {
             accountType: Value(accountType),
             dateJoined: Value(dateJoined),
             accountStatus: Value(accountStatus),
-            profile_picture: Value(profile_picture))
+            profile_picture: Value(profile_picture),
+            password: Value(password))
         .toColumns(nullToAbsent);
   }
 }
