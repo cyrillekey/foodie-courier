@@ -173,9 +173,10 @@ class _HomeState extends State<Home> {
                                 margin: const EdgeInsets.symmetric(
                                     horizontal: 10, vertical: 5),
                                 height: 174,
+                                width: MediaQuery.of(context).size.width,
                                 child: Shimmer.fromColors(
-                                    baseColor: Colors.red,
-                                    highlightColor: Colors.yellow,
+                                    baseColor: Colors.grey[400]!,
+                                    highlightColor: Colors.grey[500]!,
                                     child: const Card()),
                               )
                             : OrderItem(

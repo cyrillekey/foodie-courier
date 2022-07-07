@@ -49,176 +49,179 @@ class _OrderDetailsState extends State<OrderDetails> {
         centerTitle: true,
       ),
       body: Consumer<OrderProvider>(builder: (context, orderProvider, child) {
-        Order currentOrder = orderProvider.current_order!;
-        var date = DateTime.parse(currentOrder.order_date);
-        return orderProvider.isLoading == true
-            ? const CustomIndicator()
-            : Container(
-                height: MediaQuery.of(context).size.height,
-                width: MediaQuery.of(context).size.width,
-                padding: const EdgeInsets.symmetric(horizontal: 10),
-                child: ListView(
-                  children: [
-                    Container(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 8, vertical: 16),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        if (orderProvider.isLoading) {
+          return const CustomIndicator();
+        } else {
+          Order currentOrder = orderProvider.current_order!;
+          var date = DateTime.parse(currentOrder.order_date);
+          return Container(
+            height: MediaQuery.of(context).size.height,
+            width: MediaQuery.of(context).size.width,
+            padding: const EdgeInsets.symmetric(horizontal: 10),
+            child: ListView(
+              children: [
+                Container(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 8, vertical: 16),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Wrap(
                         children: [
-                          Wrap(
-                            children: [
-                              const Text(
-                                "Order Id:",
-                                style: TextStyle(fontSize: 18),
-                              ),
-                              const SizedBox(
-                                width: 10,
-                              ),
-                              Text(
-                                "#${currentOrder.order_id}",
-                                style: const TextStyle(
-                                    fontSize: 18, fontWeight: FontWeight.w700),
-                              )
-                            ],
+                          const Text(
+                            "Order Id:",
+                            style: TextStyle(fontSize: 18),
                           ),
-                          Wrap(
-                            children: [
-                              const Icon(Icons.date_range),
-                              const SizedBox(
-                                width: 5,
-                              ),
-                              Text(
-                                "${date.day}/${date.month}/${date.year}",
-                                style: const TextStyle(fontSize: 16),
-                              )
-                            ],
+                          const SizedBox(
+                            width: 10,
+                          ),
+                          Text(
+                            "#${currentOrder.order_id}",
+                            style: const TextStyle(
+                                fontSize: 18, fontWeight: FontWeight.w700),
                           )
                         ],
                       ),
-                    ),
-                    Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 8),
-                      child: Wrap(
+                      Wrap(
                         children: [
-                          Text(
-                            "Item${currentOrder.productOrder.length > 1 ? 's' : ''}:",
-                            style: const TextStyle(fontSize: 18),
-                          ),
+                          const Icon(Icons.date_range),
                           const SizedBox(
                             width: 5,
                           ),
                           Text(
-                            "${currentOrder.productOrder.length}",
-                            style: const TextStyle(fontSize: 18),
+                            "${date.day}/${date.month}/${date.year}",
+                            style: const TextStyle(fontSize: 16),
                           )
                         ],
+                      )
+                    ],
+                  ),
+                ),
+                Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 8),
+                  child: Wrap(
+                    children: [
+                      Text(
+                        "Item${currentOrder.productOrder.length > 1 ? 's' : ''}:",
+                        style: const TextStyle(fontSize: 18),
                       ),
+                      const SizedBox(
+                        width: 5,
+                      ),
+                      Text(
+                        "${currentOrder.productOrder.length}",
+                        style: const TextStyle(fontSize: 18),
+                      )
+                    ],
+                  ),
+                ),
+                const SizedBox(
+                  height: 20,
+                ),
+                const Divider(),
+                SizedBox(
+                  height: MediaQuery.of(context).size.height * 0.43,
+                  width: MediaQuery.of(context).size.width,
+                  child: ListView.builder(
+                      itemCount: currentOrder.productOrder.length,
+                      itemBuilder: (context, index) => productItem(
+                          currentOrder.productOrder[index].food!.food_name,
+                          currentOrder.productOrder[index].food!.food_price,
+                          currentOrder.productOrder[index].food!.food_image,
+                          currentOrder.productOrder[index].quantity,
+                          date)),
+                ),
+                const SizedBox(
+                  height: 5,
+                ),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: const [
+                    Text(
+                      "Location",
+                      style:
+                          TextStyle(fontSize: 16, fontWeight: FontWeight.w700),
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    Text("lorem1 jj"),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    Text("lorem1")
+                  ],
+                ),
+                const SizedBox(
+                  height: 10,
+                ),
+                const Divider(),
+                const SizedBox(
+                  height: 10,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    const Text(
+                      "Delivery Cost",
+                      style:
+                          TextStyle(fontSize: 16, fontWeight: FontWeight.w700),
                     ),
                     const SizedBox(
                       height: 20,
                     ),
-                    const Divider(),
-                    SizedBox(
-                      height: MediaQuery.of(context).size.height * 0.43,
-                      width: MediaQuery.of(context).size.width,
-                      child: ListView.builder(
-                          itemCount: currentOrder.productOrder.length,
-                          itemBuilder: (context, index) => productItem(
-                              currentOrder.productOrder[index].food!.food_name,
-                              currentOrder.productOrder[index].food!.food_price,
-                              currentOrder.productOrder[index].food!.food_image,
-                              currentOrder.productOrder[index].quantity,
-                              date)),
-                    ),
-                    const SizedBox(
-                      height: 5,
-                    ),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: const [
-                        Text(
-                          "Location",
-                          style: TextStyle(
-                              fontSize: 16, fontWeight: FontWeight.w700),
-                        ),
-                        SizedBox(
-                          height: 10,
-                        ),
-                        Text("lorem1 jj"),
-                        SizedBox(
-                          height: 10,
-                        ),
-                        Text("lorem1")
-                      ],
-                    ),
-                    const SizedBox(
-                      height: 10,
-                    ),
-                    const Divider(),
-                    const SizedBox(
-                      height: 10,
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        const Text(
-                          "Delivery Cost",
-                          style: TextStyle(
-                              fontSize: 16, fontWeight: FontWeight.w700),
-                        ),
-                        const SizedBox(
-                          height: 20,
-                        ),
-                        Text(
-                          "Kes ${currentOrder.delivery_cost}",
-                          style: const TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight.w600,
-                              color: Color.fromRGBO(252, 126, 87, 1.0)),
-                        )
-                      ],
-                    ),
-                    const SizedBox(
-                      height: 30,
-                    ),
-                    SwipeableButtonView(
-                        onFinish: () {
-                          if (isSuccess) {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: ((context) =>
-                                        DeliveryLocation())));
-                          } else {
-                            Alert.showCustomSnackbar(
-                                context, "Order Already Booked",
-                                isSuccess: false);
-                          }
-                          setState(() {
-                            isFinish = false;
-                          });
-                        },
-                        isFinished: isFinish,
-                        onWaitingProcess: () async {
-                          bool result =
-                              await orderProvider.acceptOrder(widget.order_id);
-                          setState(() {
-                            setState(() {
-                              isFinish = true;
-                              isSuccess = result;
-                            });
-                          });
-                        },
-                        activeColor: const Color.fromRGBO(252, 126, 87, 1.0),
-                        buttonWidget:
-                            const Icon(Icons.keyboard_double_arrow_right_sharp),
-                        buttonText: "Swipe to accept order"),
-                    const SizedBox(
-                      height: 10,
+                    Text(
+                      "Kes ${currentOrder.delivery_cost}",
+                      style: const TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.w600,
+                          color: Color.fromRGBO(252, 126, 87, 1.0)),
                     )
                   ],
                 ),
-              );
+                const SizedBox(
+                  height: 30,
+                ),
+                SwipeableButtonView(
+                    isActive: currentOrder.orderStatus == "PENDING" ||
+                        currentOrder.orderStatus == "PLACED",
+                    onFinish: () {
+                      if (isSuccess) {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: ((context) => DeliveryLocation())));
+                      } else {
+                        Alert.showCustomSnackbar(
+                            context, "Order Already Booked",
+                            isSuccess: false);
+                      }
+                      setState(() {
+                        isFinish = false;
+                      });
+                    },
+                    isFinished: isFinish,
+                    onWaitingProcess: () async {
+                      bool result =
+                          await orderProvider.acceptOrder(widget.order_id);
+                      setState(() {
+                        setState(() {
+                          isFinish = true;
+                          isSuccess = result;
+                        });
+                      });
+                    },
+                    activeColor: const Color.fromRGBO(252, 126, 87, 1.0),
+                    buttonWidget:
+                        const Icon(Icons.keyboard_double_arrow_right_sharp),
+                    buttonText: "Swipe to accept order"),
+                const SizedBox(
+                  height: 10,
+                )
+              ],
+            ),
+          );
+        }
       }),
     );
   }
