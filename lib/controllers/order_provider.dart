@@ -32,6 +32,8 @@ class OrderProvider with ChangeNotifier {
   }
 
   Future<void> fetchOrders(String token, int courier_id) async {
+    isLoading = true;
+    notifyListeners();
     my_orders.clear();
     ApiResponse response = await apiClient.post(
         "courier/get-past-orders/$courier_id",
@@ -42,6 +44,8 @@ class OrderProvider with ChangeNotifier {
             .forEach((json) => my_orders.add(Order.fromJson(json)));
       }
     }
+    isLoading = false;
+    notifyListeners();
   }
 
   Future<bool> acceptOrder(String order_id) async {

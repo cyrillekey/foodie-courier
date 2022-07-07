@@ -5,7 +5,6 @@ import 'package:foodie_courier/models/courier_model.dart';
 import 'package:foodie_courier/screens/Authentication/login_screen.dart';
 import 'package:foodie_courier/screens/Profile/edit_profile.dart';
 import 'package:foodie_courier/services/service_locator.dart';
-import 'package:load_switch/load_switch.dart';
 import 'package:provider/provider.dart';
 
 class ProfileScreen extends StatefulWidget {
@@ -16,13 +15,12 @@ class ProfileScreen extends StatefulWidget {
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
-  bool? current_status;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Consumer<AuthProvider>(builder: (context, authProvider, child) {
         Courier courier = authProvider.courier!;
-        current_status = courier.currentStatus;
+
         return Container(
           padding: const EdgeInsets.only(left: 16, top: 25, right: 16),
           height: MediaQuery.of(context).size.height,

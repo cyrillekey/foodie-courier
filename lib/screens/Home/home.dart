@@ -1,18 +1,12 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:foodie_courier/controllers/auth_provider.dart';
 import 'package:foodie_courier/controllers/order_provider.dart';
 import 'package:foodie_courier/models/user_model.dart';
-import 'package:foodie_courier/screens/DeliveryMap/delivery_directions.dart';
-import 'package:foodie_courier/screens/Orders/delivery_success.dart';
-import 'package:foodie_courier/screens/Orders/order_details.dart';
 import 'package:foodie_courier/screens/Scanner/qr_scanner.dart';
 import 'package:foodie_courier/screens/widgets/order_item.dart';
-import 'package:foodie_courier/services/service_locator.dart';
-import 'package:geolocator/geolocator.dart';
 import 'package:provider/provider.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:shimmer/shimmer.dart';
 
 class Home extends StatefulWidget {
   const Home({Key? key}) : super(key: key);
@@ -167,17 +161,28 @@ class _HomeState extends State<Home> {
                 ),
               ),
               Container(
-                margin: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
                 height: MediaQuery.of(context).size.height * 0.4,
                 child: Consumer<OrderProvider>(
                     builder: (context, orderProvider, child) {
                   return ListView.builder(
                       itemCount: orderProvider.my_orders.length,
                       itemBuilder: (context, index) {
-                        return OrderItem(
-                          order_id: orderProvider.my_orders[index].order_id
-                              .toString(),
-                        );
+                        return orderProvider.isLoading
+                            ? Container(
+                                margin: const EdgeInsets.symmetric(
+                                    horizontal: 10, vertical: 5),
+                                height: 174,
+                                child: Shimmer.fromColors(
+                                    baseColor: Colors.red,
+                                    highlightColor: Colors.yellow,
+                                    child: const Card()),
+                              )
+                            : OrderItem(
+                                order_id: orderProvider
+                                    .my_orders[index].order_id
+                                    .toString(),
+                              );
                       });
                 }),
               )
