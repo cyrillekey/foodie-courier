@@ -174,7 +174,10 @@ class _HomeState extends State<Home> {
                   return ListView.builder(
                       itemCount: orderProvider.my_orders.length,
                       itemBuilder: (context, index) {
-                        return OrderItem();
+                        return OrderItem(
+                          order_id: orderProvider.my_orders[index].order_id
+                              .toString(),
+                        );
                       });
                 }),
               )

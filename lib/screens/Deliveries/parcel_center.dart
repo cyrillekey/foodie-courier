@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:foodie_courier/controllers/parcel_center_provider.dart';
 import 'package:foodie_courier/screens/widgets/order_item.dart';
+import 'package:foodie_courier/screens/widgets/progress_inidcator.dart';
 import 'package:provider/provider.dart';
 
 class ParcelCenter extends StatefulWidget {
@@ -50,19 +51,23 @@ class _ParcelCenterState extends State<ParcelCenter> {
               const SizedBox(
                 height: 10,
               ),
-              Consumer(builder: (context, parcelProvider, child) {
-                return Container(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
-                  width: MediaQuery.of(context).size.width,
-                  height: MediaQuery.of(context).size.height * 0.7,
-                  child: ListView.builder(
-                      itemCount: parcelCenterProvider.awaiting_drivers.length,
-                      itemBuilder: (context, index) {
-                        return const OrderItem();
-                      }),
-                );
-              })
+              Container(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
+                width: MediaQuery.of(context).size.width,
+                height: MediaQuery.of(context).size.height * 0.7,
+                child: parcelCenterProvider.isLoading
+                    ? const CustomIndicator()
+                    : ListView.builder(
+                        itemCount: parcelCenterProvider.awaiting_drivers.length,
+                        itemBuilder: (context, index) {
+                          return OrderItem(
+                            order_id: parcelCenterProvider
+                                .awaiting_drivers[index].order_id
+                                .toString(),
+                          );
+                        }),
+              ),
             ],
           );
         }),

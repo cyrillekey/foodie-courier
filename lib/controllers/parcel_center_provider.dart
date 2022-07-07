@@ -12,16 +12,17 @@ class ParcelCenterProvider with ChangeNotifier {
   List<Order> awaiting_drivers = [];
   bool isLoading = false;
   Future<void> getOrdersWithoutCouriers() async {
+    awaiting_drivers.clear();
     var _prefs = await SharedPreferences.getInstance();
     String token = _prefs.getString("token")!;
     isLoading = true;
     notifyListeners();
     ApiResponse response = await _apiClinet.get("courier/get-pending-orders",
         options: Options(headers: {'Authorization': 'Bearer $token'}));
-    logger.i(response.response);
     if (response.isSuccess) {
-      awaiting_drivers =
-          response.response.forEach((json) => Order.fromJson(json));
+      response.response.forEach((json) {
+        awaiting_drivers.add(Order.fromJson(json));
+      });
     }
     isLoading = false;
     notifyListeners();

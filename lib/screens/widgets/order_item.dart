@@ -3,8 +3,10 @@ import 'package:foodie_courier/screens/DeliveryMap/delivery_directions.dart';
 import 'package:foodie_courier/screens/Orders/order_details.dart';
 
 class OrderItem extends StatelessWidget {
+  final String order_id;
   const OrderItem({
     Key? key,
+    required this.order_id,
   }) : super(key: key);
 
   @override
@@ -70,7 +72,7 @@ class OrderItem extends StatelessWidget {
                           context,
                           MaterialPageRoute(
                               builder: (context) => OrderDetails(
-                                    order_id: "2",
+                                    order_id: order_id,
                                   )));
                     },
                     child: const Text(

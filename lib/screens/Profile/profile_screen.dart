@@ -96,13 +96,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
               const SizedBox(
                 height: 10,
               ),
-              customSwitchAnimated(
-                  "Offline", current_status!, authProvider.changeCurrentStatus,
-                  (value) {
-                setState(() {
-                  current_status = !value;
-                });
-              }, (value) => logger.d(value)),
+              CustomLoadingSwitch(
+                title: "Offine",
+                status: authProvider.courier!.currentStatus,
+                future: authProvider.changeCurrentStatus,
+              ),
               customSwitch("On Assignment", courier.onAssingment, (value) {}),
               const SizedBox(
                 height: 50,
@@ -168,37 +166,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
         Transform.scale(
           scale: 0.7,
           child: CupertinoSwitch(value: isActive, onChanged: onChanged),
-        )
-      ],
-    );
-  }
-
-  Row customSwitchAnimated(
-      String title,
-      bool isActive,
-      Future<bool> Function() future,
-      dynamic Function(bool value) onChanged,
-      dynamic Function(bool value) onTap) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        Text(
-          title,
-          style: TextStyle(
-              fontSize: 18,
-              fontWeight: FontWeight.w500,
-              color: Colors.grey[600]),
-        ),
-        Transform.scale(
-          scale: 0.7,
-          child: LoadSwitch(
-              height: 30,
-              width: 52,
-              thumbPadding: 0,
-              value: isActive,
-              future: future,
-              onChange: onChanged,
-              onTap: onTap),
         )
       ],
     );
@@ -348,6 +315,65 @@ class _ProfileScreenState extends State<ProfileScreen> {
           ),
         ),
       ),
+    );
+  }
+}
+
+class CustomLoadingSwitch extends StatefulWidget {
+  final String title;
+  final bool status;
+  final Function future;
+  const CustomLoadingSwitch(
+      {Key? key,
+      required this.title,
+      required this.status,
+      required this.future})
+      : super(key: key);
+
+  @override
+  State<CustomLoadingSwitch> createState() => _CustomLoadingSwitchState();
+}
+
+class _CustomLoadingSwitchState extends State<CustomLoadingSwitch> {
+  bool isLoading = false;
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Text(
+          widget.title,
+          style: TextStyle(
+              fontSize: 18,
+              fontWeight: FontWeight.w500,
+              color: Colors.grey[600]),
+        ),
+        isLoading
+            ? Container(
+                height: 20,
+                width: 20,
+                margin: EdgeInsets.only(right: 20),
+                alignment: Alignment.centerLeft,
+                child: const CircularProgressIndicator(
+                  strokeWidth: 2,
+                ))
+            : Transform.scale(
+                scale: 0.7,
+                child: CupertinoSwitch(
+                  value: widget.status,
+                  onChanged: (val) async {
+                    setState(() {
+                      isLoading = true;
+                    });
+                    await widget.future();
+                    setState(() {
+                      isLoading = false;
+                    });
+                  },
+                  activeColor: Colors.green,
+                  trackColor: Colors.red,
+                )),
+      ],
     );
   }
 }

@@ -41,7 +41,9 @@ class MyDeliveries extends StatelessWidget {
               child: ListView.builder(
                   itemCount: 2,
                   itemBuilder: (context, index) {
-                    return const OrderItem();
+                    return const OrderItem(
+                      order_id: "2",
+                    );
                   }),
             )
           ],
