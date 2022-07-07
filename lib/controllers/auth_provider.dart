@@ -55,6 +55,7 @@ class AuthProvider with ChangeNotifier {
 
   Future<bool> silentLogin() async {
     if (currentUser != null) {
+      logger.v("Silent login performed");
       final _prefs = await SharedPreferences.getInstance();
       ApiResponse response = await apiClient.post("silentlogin", data: {
         "user_mail": currentUser!.user_mail,
