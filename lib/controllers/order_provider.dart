@@ -32,12 +32,14 @@ class OrderProvider with ChangeNotifier {
   }
 
   Future<void> fetchOrders(String token, int courier_id) async {
+    my_orders.clear();
     ApiResponse response = await apiClient.post(
         "courier/get-past-orders/$courier_id",
         options: Options(headers: {"Authorization": "Bearer $token"}));
     if (response.isSuccess) {
       if (!response.response.isEmpty) {
-        my_orders = response.response.forEach((json) => Order.fromJson(json));
+        response.response
+            .forEach((json) => my_orders.add(Order.fromJson(json)));
       }
     }
   }

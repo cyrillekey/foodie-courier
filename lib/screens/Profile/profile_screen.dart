@@ -97,7 +97,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 height: 10,
               ),
               CustomLoadingSwitch(
-                title: "Offine",
+                title: "Go Offine",
+                altTitle: "Go Online",
                 status: authProvider.courier!.currentStatus,
                 future: authProvider.changeCurrentStatus,
               ),
@@ -165,7 +166,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
         ),
         Transform.scale(
           scale: 0.7,
-          child: CupertinoSwitch(value: isActive, onChanged: onChanged),
+          child: CupertinoSwitch(
+            value: isActive,
+            onChanged: onChanged,
+            trackColor: Colors.red,
+          ),
         )
       ],
     );
@@ -321,13 +326,15 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
 class CustomLoadingSwitch extends StatefulWidget {
   final String title;
+  final String altTitle;
   final bool status;
   final Function future;
   const CustomLoadingSwitch(
       {Key? key,
       required this.title,
       required this.status,
-      required this.future})
+      required this.future,
+      required this.altTitle})
       : super(key: key);
 
   @override
@@ -342,7 +349,7 @@ class _CustomLoadingSwitchState extends State<CustomLoadingSwitch> {
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         Text(
-          widget.title,
+          widget.status ? widget.title : widget.altTitle,
           style: TextStyle(
               fontSize: 18,
               fontWeight: FontWeight.w500,
