@@ -43,6 +43,8 @@ class MyDeliveries extends StatelessWidget {
                   itemBuilder: (context, index) {
                     return const OrderItem(
                       order_id: "2",
+                      latitude: 0.0,
+                      longitude: 0.0,
                     );
                   }),
             )

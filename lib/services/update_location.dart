@@ -22,7 +22,6 @@ void updateCourierLocation(HeadlessTask headlessTask) async {
             desiredAccuracy: LocationAccuracy.bestForNavigation)
         .then((value) {
       logger.i(value);
-      updateRequest(token, courier, value.latitude, value.longitude);
       Dio()
           .post(
               "https://foodieback.herokuapp.com/courier/update-location/$courier",
@@ -52,7 +51,6 @@ void updateLocationForeground() async {
             desiredAccuracy: LocationAccuracy.bestForNavigation)
         .then((value) {
       logger.i(value);
-      updateRequest(token, courier, value.latitude, value.longitude);
       Dio()
           .post(
               "https://foodieback.herokuapp.com/courier/update-location/$courier",
@@ -70,5 +68,13 @@ void updateLocationForeground() async {
   }
 }
 
-void updateRequest(
-    String token, String courier, double latitude, double longitude) async {}
+Future<String> getAddressName(String latitude, String longitude) async {
+  logger.i("Im called");
+  Dio()
+      .get(
+          "https://nominatim.openstreetmap.org/reverse?lat=$latitude&lon=$longitude")
+      .then((value) {
+    logger.w(value.data);
+  });
+  return "";
+}

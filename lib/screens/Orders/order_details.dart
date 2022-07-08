@@ -190,7 +190,9 @@ class _OrderDetailsState extends State<OrderDetails> {
                         Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: ((context) => DeliveryLocation())));
+                                builder: ((context) => DeliveryLocation(
+                                      order_id: widget.order_id,
+                                    ))));
                       } else {
                         Alert.showCustomSnackbar(
                             context, "Order Already Booked",

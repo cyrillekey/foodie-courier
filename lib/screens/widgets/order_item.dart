@@ -1,16 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:foodie_courier/screens/DeliveryMap/delivery_directions.dart';
 import 'package:foodie_courier/screens/Orders/order_details.dart';
+import 'package:foodie_courier/services/update_location.dart';
 
 class OrderItem extends StatelessWidget {
   final String order_id;
+  final double latitude;
+  final double longitude;
   const OrderItem({
     Key? key,
     required this.order_id,
+    required this.latitude,
+    required this.longitude,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    getAddressName(latitude.toString(), longitude.toString());
     return Card(
       child: Container(
         padding: const EdgeInsets.all(20),
@@ -20,17 +26,18 @@ class OrderItem extends StatelessWidget {
           children: [
             SizedBox(
               child: Row(
-                children: const [
-                  Text(
+                children: [
+                  const Text(
                     "Order Id",
                     style: TextStyle(fontSize: 18),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     width: 5,
                   ),
                   Text(
-                    "#45514",
-                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.w700),
+                    "#$order_id",
+                    style: const TextStyle(
+                        fontSize: 18, fontWeight: FontWeight.w700),
                   )
                 ],
               ),
@@ -92,7 +99,9 @@ class OrderItem extends StatelessWidget {
                       Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => DeliveryLocation()));
+                              builder: (context) => DeliveryLocation(
+                                    order_id: order_id,
+                                  )));
                     },
                     child: const Text(
                       "View Direction",

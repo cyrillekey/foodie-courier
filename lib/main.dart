@@ -3,6 +3,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:foodie_courier/controllers/auth_provider.dart';
+import 'package:foodie_courier/controllers/delivery_provider.dart';
 import 'package:foodie_courier/controllers/order_provider.dart';
 import 'package:foodie_courier/controllers/parcel_center_provider.dart';
 import 'package:foodie_courier/my_app.dart';
@@ -23,7 +24,8 @@ void main() async {
     providers: [
       ChangeNotifierProvider(create: (_) => AuthProvider()),
       ChangeNotifierProvider(create: (_) => OrderProvider()),
-      ChangeNotifierProvider(create: (_) => ParcelCenterProvider())
+      ChangeNotifierProvider(create: (_) => ParcelCenterProvider()),
+      ChangeNotifierProvider(create: (_) => DeliveryProvider())
     ],
     child: MyApp(
       onBoarded: onBoarded,

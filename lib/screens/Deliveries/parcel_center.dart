@@ -65,6 +65,10 @@ class _ParcelCenterState extends State<ParcelCenter> {
                             order_id: parcelCenterProvider
                                 .awaiting_drivers[index].order_id
                                 .toString(),
+                            latitude: parcelCenterProvider
+                                .awaiting_drivers[index].latitude,
+                            longitude: parcelCenterProvider
+                                .awaiting_drivers[index].longitude,
                           );
                         }),
               ),

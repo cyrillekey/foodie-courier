@@ -183,6 +183,10 @@ class _HomeState extends State<Home> {
                                 order_id: orderProvider
                                     .my_orders[index].order_id
                                     .toString(),
+                                latitude:
+                                    orderProvider.my_orders[index].latitude,
+                                longitude:
+                                    orderProvider.my_orders[index].latitude,
                               );
                       });
                 }),

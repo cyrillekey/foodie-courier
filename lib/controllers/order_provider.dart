@@ -75,20 +75,6 @@ class OrderProvider with ChangeNotifier {
   }
 
   Future<void> deliverOrder(String order_id, String authentication) async {}
-  Future<void> initOrderDeliveryDirections() async {
-    await Geolocator.requestPermission();
-    LocationPermission allowed = await Geolocator.checkPermission();
-    if (allowed == LocationPermission.deniedForever ||
-        allowed == LocationPermission.denied) {
-      initOrderDeliveryDirections();
-    } else {
-      Position userLocation = await Geolocator.getCurrentPosition(
-          desiredAccuracy: LocationAccuracy.bestForNavigation);
-      logger.e(userLocation);
-      position = userLocation;
-      notifyListeners();
-    }
-  }
 
   Future<void> getCustomerByOrder() async {}
 }
