@@ -162,7 +162,7 @@ class _HomeState extends State<Home> {
               ),
               Container(
                 margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-                height: MediaQuery.of(context).size.height * 0.4,
+                height: MediaQuery.of(context).size.height * 0.25,
                 child: Consumer<OrderProvider>(
                     builder: (context, orderProvider, child) {
                   return ListView.builder(

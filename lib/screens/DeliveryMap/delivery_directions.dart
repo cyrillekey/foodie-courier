@@ -5,9 +5,9 @@ import 'package:foodie_courier/controllers/delivery_provider.dart';
 import 'package:foodie_courier/models/order_model.dart';
 import 'package:foodie_courier/models/user_model.dart';
 import 'package:foodie_courier/screens/widgets/progress_inidcator.dart';
-import 'package:foodie_courier/services/service_locator.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:map_launcher/map_launcher.dart' as Mp;
 import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -147,7 +147,26 @@ class _DeliveryLocationState extends State<DeliveryLocation> {
                                     ],
                                   ),
                                 ),
-                                Divider()
+                                Divider(),
+                                TextButton.icon(
+                                    onPressed: () async {
+                                      await Mp.MapLauncher.showDirections(
+                                          directionsMode:
+                                              Mp.DirectionsMode.driving,
+                                          destinationTitle: "Delivering Here",
+                                          origin: Mp.Coords(
+                                              deliveryProvider
+                                                  .position!.latitude,
+                                              deliveryProvider
+                                                  .position!.longitude),
+                                          mapType: Mp.MapType.google,
+                                          destination: Mp.Coords(
+                                              deliveryProvider.order!.latitude,
+                                              deliveryProvider
+                                                  .order!.longitude));
+                                    },
+                                    icon: Icon(Icons.directions),
+                                    label: Text("Open Google Maps"))
                               ],
                             ),
                           ),

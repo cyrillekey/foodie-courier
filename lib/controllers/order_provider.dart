@@ -48,14 +48,15 @@ class OrderProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  Future<bool> acceptOrder(String order_id) async {
+  Future<ApiResponse> acceptOrder(String order_id) async {
     try {
       ApiResponse response = await apiClient.get(
           'courier/assign-courier/$order_id/${courier!.courier_id}',
           options: Options(headers: {'Authorization': 'Bearer $token'}));
-      return response.isSuccess;
+      logger.e(response.message);
+      return response;
     } catch (e) {
-      return false;
+      return ApiResponse(false, e.toString());
     }
   }
 
@@ -74,7 +75,22 @@ class OrderProvider with ChangeNotifier {
     }
   }
 
-  Future<void> deliverOrder(String order_id, String authentication) async {}
+  Future<ApiResponse> deliverOrder(String order_id, String otp) async {
+    isLoading = true;
+    notifyListeners();
+    ApiResponse response = await apiClient.post(
+        "courier/deliver-order/$order_id",
+        options: Options(headers: {'Authorization': 'Bearer $token'}),
+        data: {"otp": otp});
+    return response;
+  }
 
-  Future<void> getCustomerByOrder() async {}
+  Future<void> getCustomerByOrder() async {
+    ApiResponse response = await apiClient.post(
+        "courier/order-customer/${current_order?.order_id}",
+        options: Options(headers: {'Authorization': 'Bearer $token'}));
+    if (response.isSuccess) {
+      _customer = User.fromJson(response.response);
+    }
+  }
 }

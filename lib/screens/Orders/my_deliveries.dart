@@ -1,8 +1,22 @@
 import 'package:flutter/material.dart';
+import 'package:foodie_courier/controllers/order_provider.dart';
 import 'package:foodie_courier/screens/widgets/order_item.dart';
+import 'package:foodie_courier/screens/widgets/progress_inidcator.dart';
+import 'package:provider/provider.dart';
 
-class MyDeliveries extends StatelessWidget {
+class MyDeliveries extends StatefulWidget {
   const MyDeliveries({Key? key}) : super(key: key);
+
+  @override
+  State<MyDeliveries> createState() => _MyDeliveriesState();
+}
+
+class _MyDeliveriesState extends State<MyDeliveries> {
+  @override
+  void initState() {
+    Provider.of<OrderProvider>(context, listen: false).init();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -34,20 +48,27 @@ class MyDeliveries extends StatelessWidget {
             const SizedBox(
               height: 10,
             ),
-            Container(
-              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
-              width: MediaQuery.of(context).size.width,
-              height: MediaQuery.of(context).size.height * 0.7,
-              child: ListView.builder(
-                  itemCount: 2,
-                  itemBuilder: (context, index) {
-                    return const OrderItem(
-                      order_id: "2",
-                      latitude: 0.0,
-                      longitude: 0.0,
+            Consumer<OrderProvider>(builder: (context, orderProvider, child) {
+              return orderProvider.isLoading
+                  ? const CustomIndicator()
+                  : Container(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 10, vertical: 8),
+                      width: MediaQuery.of(context).size.width,
+                      height: MediaQuery.of(context).size.height * 0.7,
+                      child: ListView.builder(
+                          itemCount: orderProvider.my_orders.length,
+                          itemBuilder: (context, index) {
+                            return OrderItem(
+                              order_id: orderProvider.my_orders[index].order_id
+                                  .toString(),
+                              latitude: orderProvider.my_orders[index].latitude,
+                              longitude:
+                                  orderProvider.my_orders[index].longitude,
+                            );
+                          }),
                     );
-                  }),
-            )
+            })
           ],
         ),
       ),

@@ -1,5 +1,8 @@
+import 'dart:convert';
+
 import 'package:dio/dio.dart';
 import 'package:foodie_courier/api_client/api_response.dart';
+import 'package:foodie_courier/services/service_locator.dart';
 
 class ApiClient {
   final String baseUrl;
@@ -31,8 +34,11 @@ class ApiClient {
         return ApiResponse(false, response.statusMessage,
             response: response.data);
       }
+    } on DioError catch (e) {
+      String message = e.response?.data['message'];
+      return ApiResponse(false, message);
     } catch (e) {
-      return ApiResponse(false, e.toString());
+      return ApiResponse(false, "Something Went Wrong");
     }
   }
 
@@ -52,8 +58,11 @@ class ApiClient {
         return ApiResponse(false, response.statusMessage,
             response: response.data);
       }
+    } on DioError catch (e) {
+      String message = e.response?.data['message'];
+      return ApiResponse(false, message, response: e.response?.data);
     } catch (e) {
-      return ApiResponse(false, e.toString());
+      return ApiResponse(false, "Something Went Wrong Please Try Again");
     }
   }
 }

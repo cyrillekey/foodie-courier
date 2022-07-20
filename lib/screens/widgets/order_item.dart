@@ -16,7 +16,7 @@ class OrderItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    getAddressName(latitude.toString(), longitude.toString());
+    // getAddressName(latitude.toString(), longitude.toString());
     return Card(
       child: Container(
         padding: const EdgeInsets.all(20),

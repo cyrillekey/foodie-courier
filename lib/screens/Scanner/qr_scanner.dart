@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:foodie_courier/services/service_locator.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
 
 class QrScanner extends StatelessWidget {
@@ -10,137 +11,72 @@ class QrScanner extends StatelessWidget {
       body: SizedBox(
           width: MediaQuery.of(context).size.width,
           height: MediaQuery.of(context).size.height,
-          child: Center(
-            child: Padding(
-              padding: const EdgeInsets.all(12),
-              child: Card(
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(24)),
-                elevation: 4,
-                child: Stack(
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          Center(
-                            child: Container(
-                              width: double.infinity,
-                              height: MediaQuery.of(context).size.height * 0.50,
-                              child: Stack(
-                                children: [
-                                  Padding(
-                                    padding: const EdgeInsets.all(12),
-                                    child: ClipRRect(
-                                      borderRadius: BorderRadius.circular(24),
-                                      child: MobileScanner(
-                                          allowDuplicates: false,
-                                          onDetect: ((barcode, args) {})),
-                                    ),
-                                  ),
-                                  Positioned(
-                                      bottom: 0.0,
-                                      left: 0.0,
-                                      child: Padding(
-                                        padding: const EdgeInsets.all(24),
-                                        child: IconButton(
-                                          onPressed: () {},
-                                          icon: const Icon(
-                                            Icons.flash_on,
-                                            color: Colors.white,
-                                            size: 36,
-                                          ),
-                                          alignment: Alignment.center,
-                                        ),
-                                      ))
-                                ],
-                              ),
-                            ),
-                          ),
-                          const Padding(
-                            padding: EdgeInsets.all(8.0),
-                            child: Text(
-                              "Qr Code",
-                              style: TextStyle(
-                                  fontWeight: FontWeight.bold, fontSize: 18),
-                            ),
-                          ),
-                          const Padding(
-                            padding: EdgeInsets.all(8.0),
-                            child: Text("Exmaple"),
-                          ),
-                          Row(
-                            children: [
-                              Padding(
-                                padding: EdgeInsets.all(8.0),
-                                child: Chip(
-                                  label: Text("exmaple"),
-                                  shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(8.0)),
-                                ),
-                              )
-                            ],
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.end,
-                            children: [
-                              Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: OutlinedButton.icon(
-                                  onPressed: () {},
-                                  icon: const Icon(Icons.camera),
-                                  label: const Text("label"),
-                                  style: OutlinedButton.styleFrom(
-                                      padding: const EdgeInsets.only(
-                                          left: 8.0, right: 8.0),
-                                      shape: RoundedRectangleBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(12)),
-                                      primary: Theme.of(context).primaryColor,
-                                      side: BorderSide(
-                                          color:
-                                              Theme.of(context).primaryColor)),
-                                ),
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: OutlinedButton.icon(
-                                  onPressed: () {},
-                                  icon: const Icon(Icons.camera),
-                                  label: const Text("label"),
-                                  style: OutlinedButton.styleFrom(
-                                      padding: const EdgeInsets.only(
-                                          left: 8.0, right: 8.0),
-                                      shape: RoundedRectangleBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(12)),
-                                      primary: Theme.of(context).primaryColor,
-                                      side: BorderSide(
-                                          color:
-                                              Theme.of(context).primaryColor)),
-                                ),
-                              )
-                            ],
-                          )
-                        ],
-                      ),
-                    ),
-                    Positioned(
-                        top: 0,
-                        right: 0,
-                        child: TextButton(
-                            autofocus: false,
-                            style: TextButton.styleFrom(
-                                primary: Theme.of(context).primaryColor),
-                            onPressed: () {},
-                            child: const Icon(Icons.clear)))
-                  ],
-                ),
+          child: Stack(
+            children: [
+              SizedBox(
+                width: MediaQuery.of(context).size.width,
+                height: MediaQuery.of(context).size.height * 0.8,
+                child: MobileScanner(onDetect: (Barcode code, ars) {
+                  logger.i(code);
+                }),
               ),
-            ),
+              Positioned(
+                  bottom: 0,
+                  child: Container(
+                    height: MediaQuery.of(context).size.height * 0.25,
+                    width: MediaQuery.of(context).size.width,
+                    padding: const EdgeInsets.all(12),
+                    decoration: const BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.only(
+                            topLeft: Radius.circular(40),
+                            topRight: Radius.circular(40))),
+                    child: Column(
+                      children: [Text("Scann to accetp Payment")],
+                    ),
+                  )),
+              Positioned(
+                  top: 20,
+                  child: Container(
+                    width: MediaQuery.of(context).size.width,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: [
+                        IconButton(
+                            color: Colors.white,
+                            onPressed: () {
+                              Navigator.pop(context);
+                            },
+                            icon: const Icon(Icons.close_outlined)),
+                        const Text(
+                          "Scan To Accept",
+                          style: TextStyle(color: Colors.white),
+                        ),
+                        IconButton(
+                            highlightColor: Colors.white54,
+                            iconSize: 35,
+                            color: Colors.white,
+                            onPressed: () {},
+                            icon: const Icon(Icons.info))
+                      ],
+                    ),
+                  )),
+              Positioned(
+                  top: MediaQuery.of(context).size.height * .20,
+                  left: MediaQuery.of(context).size.width * 0.10,
+                  child: Container(
+                    width: MediaQuery.of(context).size.width * 0.8,
+                    height: MediaQuery.of(context).size.height * 0.4,
+                    decoration: BoxDecoration(
+                      border: Border.all(color: Colors.white),
+                      borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(20),
+                          topRight: Radius.circular(20),
+                          bottomLeft: Radius.circular(20),
+                          bottomRight: Radius.circular(20)),
+                    ),
+                  ))
+            ],
           )),
     );
   }

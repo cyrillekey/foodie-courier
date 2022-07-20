@@ -28,7 +28,7 @@ class AuthProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  Future<bool> loginUser(String email, String password) async {
+  Future<ApiResponse> loginUser(String email, String password) async {
     final _prefs = await SharedPreferences.getInstance();
     ApiResponse response = await apiClient
         .post("login", data: {"user_mail": email, "user_password": password});
@@ -44,12 +44,12 @@ class AuthProvider with ChangeNotifier {
         currentUser = user;
         this.courier = courier;
         await _prefs.setString("courier", courier.courier_id.toString());
-        return true;
+        return response;
       } else {
-        return false;
+        return ApiResponse(false, "User is not a courier");
       }
     } else {
-      return false;
+      return response;
     }
   }
 

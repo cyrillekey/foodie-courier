@@ -267,7 +267,7 @@ class _LoginScreenState extends State<LoginScreen> {
       busy = !busy;
     });
     AuthProvider().loginUser(email, password).then((value) {
-      if (value == true) {
+      if (value.isSuccess) {
         Navigator.pushAndRemoveUntil(
             context,
             MaterialPageRoute(builder: (context) => const MainLayout(index: 0)),
@@ -280,7 +280,7 @@ class _LoginScreenState extends State<LoginScreen> {
             context: context,
             builder: (context) => AlertDialog(
                   title: const Text("Error occured!"),
-                  content: const Text(
+                  content: Text(value.message ??
                       "Invalid Login credentials. If problems persist please contact system administrator"),
                   actions: [
                     TextButton(

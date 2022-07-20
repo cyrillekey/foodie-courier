@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:foodie_courier/api_client/api_response.dart';
 import 'package:foodie_courier/controllers/order_provider.dart';
 import 'package:foodie_courier/models/order_model.dart';
 import 'package:foodie_courier/screens/DeliveryMap/delivery_directions.dart';
@@ -20,6 +21,7 @@ class OrderDetails extends StatefulWidget {
 class _OrderDetailsState extends State<OrderDetails> {
   bool isFinish = false;
   bool isSuccess = false;
+  late ApiResponse response;
   @override
   void initState() {
     Provider.of<OrderProvider>(context, listen: false)
@@ -195,7 +197,7 @@ class _OrderDetailsState extends State<OrderDetails> {
                                     ))));
                       } else {
                         Alert.showCustomSnackbar(
-                            context, "Order Already Booked",
+                            context, response.message ?? 'Something Went Wrong',
                             isSuccess: false);
                       }
                       setState(() {
@@ -204,12 +206,13 @@ class _OrderDetailsState extends State<OrderDetails> {
                     },
                     isFinished: isFinish,
                     onWaitingProcess: () async {
-                      bool result =
+                      ApiResponse result =
                           await orderProvider.acceptOrder(widget.order_id);
                       setState(() {
                         setState(() {
                           isFinish = true;
-                          isSuccess = result;
+                          isSuccess = result.isSuccess;
+                          response = result;
                         });
                       });
                     },

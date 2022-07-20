@@ -66,6 +66,7 @@ dependencies:
   background_fetch: '^1.0.3'
   url_launcher: ^6.1.4
   shimmer: ^2.0.0
+  map_launcher: ^2.2.3
 dev_dependencies:
   flutter_test:
     sdk: flutter
