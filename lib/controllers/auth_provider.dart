@@ -97,4 +97,8 @@ class AuthProvider with ChangeNotifier {
     }
     return response.isSuccess;
   }
+
+  Future<bool> updateProfile() async {
+    return true;
+  }
 }

@@ -1,10 +1,14 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:foodie_courier/api_client/api_response.dart';
 import 'package:foodie_courier/controllers/auth_provider.dart';
 import 'package:foodie_courier/controllers/order_provider.dart';
 import 'package:foodie_courier/models/user_model.dart';
+import 'package:foodie_courier/screens/Orders/delivery_success.dart';
 import 'package:foodie_courier/screens/Scanner/qr_scanner.dart';
+import 'package:foodie_courier/screens/widgets/Alerts.dart';
 import 'package:foodie_courier/screens/widgets/order_item.dart';
+import 'package:foodie_courier/services/service_locator.dart';
 import 'package:provider/provider.dart';
 import 'package:shimmer/shimmer.dart';
 
@@ -23,6 +27,10 @@ class _HomeState extends State<Home> {
     Provider.of<AuthProvider>(context, listen: false).onInit();
     Provider.of<OrderProvider>(context, listen: false).init();
   }
+
+  final TextEditingController _codeController = TextEditingController();
+  final _formKey = GlobalKey<FormState>();
+  bool busy = false;
 
   @override
   Widget build(BuildContext context) {
@@ -79,47 +87,58 @@ class _HomeState extends State<Home> {
                         const SizedBox(
                           height: 10,
                         ),
-                        SizedBox(
-                          width: MediaQuery.of(context).size.width,
-                          height: 60,
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              SizedBox(
-                                width: MediaQuery.of(context).size.width * 0.6,
-                                child: TextFormField(
-                                  decoration: InputDecoration(
-                                      filled: true,
-                                      fillColor: Colors.white,
-                                      border: OutlineInputBorder(
-                                          borderSide: const BorderSide(
-                                              width: 0,
-                                              style: BorderStyle.none),
-                                          borderRadius:
-                                              BorderRadius.circular(6))),
-                                ),
-                              ),
-                              InkWell(
-                                onTap: () {
-                                  Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) =>
-                                              const QrScanner()));
-                                },
-                                child: Container(
-                                  height: 60,
-                                  decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(8),
-                                      color: Colors.white),
-                                  width: 60,
-                                  child: const Icon(
-                                    Icons.qr_code_outlined,
-                                    size: 35,
+                        Form(
+                          key: _formKey,
+                          child: SizedBox(
+                            width: MediaQuery.of(context).size.width,
+                            height: 60,
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                SizedBox(
+                                  width:
+                                      MediaQuery.of(context).size.width * 0.6,
+                                  child: TextFormField(
+                                    validator: (value) {
+                                      if (value == null || value.isEmpty) {
+                                        return 'Code Cannot Be Empty';
+                                      }
+                                      return null;
+                                    },
+                                    controller: _codeController,
+                                    decoration: InputDecoration(
+                                        filled: true,
+                                        fillColor: Colors.white,
+                                        border: OutlineInputBorder(
+                                            borderSide: const BorderSide(
+                                                width: 0,
+                                                style: BorderStyle.none),
+                                            borderRadius:
+                                                BorderRadius.circular(6))),
                                   ),
                                 ),
-                              )
-                            ],
+                                InkWell(
+                                  onTap: () {
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                const QrScanner()));
+                                  },
+                                  child: Container(
+                                    height: 60,
+                                    decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(8),
+                                        color: Colors.white),
+                                    width: 60,
+                                    child: const Icon(
+                                      Icons.qr_code_outlined,
+                                      size: 35,
+                                    ),
+                                  ),
+                                )
+                              ],
+                            ),
                           ),
                         ),
                       ],
@@ -134,18 +153,41 @@ class _HomeState extends State<Home> {
                               MediaQuery.of(context).size.width * 0.8, 60)),
                           backgroundColor:
                               MaterialStateProperty.all<Color>(Colors.black)),
-                      onPressed: () {
-                        // Navigator.of(context).push(
-                        //     MaterialPageRoute(builder: (context) => Success()));
-                      },
-                      child: const Text(
-                        "Deliver Parcel",
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontWeight: FontWeight.w600,
-                          fontSize: 16,
-                        ),
-                      ))
+                      onPressed: !busy
+                          ? () async {
+                              if (_formKey.currentState!.validate()) {
+                                setState(() {
+                                  busy = true;
+                                });
+                                ApiResponse response = await Provider.of<
+                                        OrderProvider>(context, listen: false)
+                                    .deliverOrder(_codeController.text.trim());
+                                if (response.isSuccess) {
+                                  Navigator.of(context).push(MaterialPageRoute(
+                                      builder: (context) => const Success()));
+                                } else {
+                                  Alert.showCustomSnackbar(
+                                      context, "${response.message}",
+                                      isSuccess: false);
+                                }
+                                setState(() {
+                                  busy = false;
+                                });
+                              }
+                            }
+                          : null,
+                      child: !busy
+                          ? const Text(
+                              "Deliver Parcel",
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.w600,
+                                fontSize: 16,
+                              ),
+                            )
+                          : const CircularProgressIndicator(
+                              color: Colors.white,
+                            ))
                 ]),
               ),
               const SizedBox(
@@ -155,7 +197,7 @@ class _HomeState extends State<Home> {
                 alignment: Alignment.centerLeft,
                 padding: const EdgeInsets.symmetric(horizontal: 24),
                 child: const Text(
-                  "My Last Orders",
+                  "My Current Order",
                   textAlign: TextAlign.start,
                   style: TextStyle(fontSize: 16, fontWeight: FontWeight.w700),
                 ),
@@ -166,7 +208,7 @@ class _HomeState extends State<Home> {
                 child: Consumer<OrderProvider>(
                     builder: (context, orderProvider, child) {
                   return ListView.builder(
-                      itemCount: orderProvider.my_orders.length,
+                      itemCount: orderProvider.pending_orders.length,
                       itemBuilder: (context, index) {
                         return orderProvider.isLoading
                             ? Container(
@@ -181,12 +223,12 @@ class _HomeState extends State<Home> {
                               )
                             : OrderItem(
                                 order_id: orderProvider
-                                    .my_orders[index].order_id
+                                    .pending_orders[index].order_id
                                     .toString(),
-                                latitude:
-                                    orderProvider.my_orders[index].latitude,
-                                longitude:
-                                    orderProvider.my_orders[index].latitude,
+                                latitude: orderProvider
+                                    .pending_orders[index].latitude,
+                                longitude: orderProvider
+                                    .pending_orders[index].latitude,
                               );
                       });
                 }),
