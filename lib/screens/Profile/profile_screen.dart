@@ -25,126 +25,133 @@ class _ProfileScreenState extends State<ProfileScreen> {
           padding: const EdgeInsets.only(left: 16, top: 25, right: 16),
           height: MediaQuery.of(context).size.height,
           width: MediaQuery.of(context).size.width,
-          child: ListView(
-            children: [
-              const Text(
-                "Settings",
-                style: TextStyle(fontSize: 25, fontWeight: FontWeight.w500),
-              ),
-              const SizedBox(
-                height: 20,
-              ),
-              wallet(courier.account_balance, courier.rating),
-              const SizedBox(
-                height: 20,
-              ),
-              Row(
-                children: const [
-                  Icon(
-                    Icons.person,
-                    color: Colors.green,
+          child: RefreshIndicator(
+              onRefresh:
+                  Provider.of<AuthProvider>(context, listen: false).silentLogin,
+              child: ListView(
+                children: [
+                  const Text(
+                    "Settings",
+                    style: TextStyle(fontSize: 25, fontWeight: FontWeight.w500),
                   ),
-                  SizedBox(
-                    width: 8,
+                  const SizedBox(
+                    height: 20,
                   ),
-                  Text(
-                    "Account",
-                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                  wallet(courier.account_balance, courier.rating),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  Row(
+                    children: const [
+                      Icon(
+                        Icons.person,
+                        color: Colors.green,
+                      ),
+                      SizedBox(
+                        width: 8,
+                      ),
+                      Text(
+                        "Account",
+                        style: TextStyle(
+                            fontSize: 18, fontWeight: FontWeight.bold),
+                      )
+                    ],
+                  ),
+                  const Divider(
+                    height: 15,
+                    thickness: 2,
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  settingsButton(() {}, "Change Password"),
+                  settingsButton(() {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const EditProfile()));
+                  }, "Edit Profile"),
+                  settingsButton(() {}, "Privacy and Security"),
+                  settingsButton(() {}, "Contact Support"),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  Row(
+                    children: const [
+                      Icon(
+                        Icons.toggle_off,
+                        color: Colors.green,
+                      ),
+                      SizedBox(
+                        width: 8,
+                      ),
+                      Text(
+                        "Change Status",
+                        style: TextStyle(
+                            fontSize: 18, fontWeight: FontWeight.bold),
+                      )
+                    ],
+                  ),
+                  const Divider(
+                    height: 15,
+                    thickness: 2,
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  CustomLoadingSwitch(
+                    title: "Go Offine",
+                    altTitle: "Go Online",
+                    status: authProvider.courier!.currentStatus,
+                    future: authProvider.changeCurrentStatus,
+                  ),
+                  customSwitch(
+                      "On Assignment", courier.onAssingment, (value) {}),
+                  const SizedBox(
+                    height: 50,
+                  ),
+                  Center(
+                    child: OutlinedButton(
+                        style: ButtonStyle(
+                            padding: MaterialStateProperty.all(
+                                const EdgeInsets.symmetric(horizontal: 40)),
+                            shape: MaterialStateProperty.all(
+                                RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(20)))),
+                        onPressed: () {
+                          showDialog(
+                              context: context,
+                              builder: (context) => AlertDialog(
+                                    title: const Text("Logout"),
+                                    content: const Text(
+                                        "Are you sure you wish to log out?"),
+                                    actions: [
+                                      TextButton(
+                                          onPressed: () {
+                                            Navigator.pop(context);
+                                          },
+                                          child: const Text("No")),
+                                      TextButton(
+                                          onPressed: () {
+                                            Provider.of<AuthProvider>(context,
+                                                    listen: false)
+                                                .logout();
+                                            Navigator.pop(context);
+                                            Navigator.pushAndRemoveUntil(
+                                                context,
+                                                MaterialPageRoute(
+                                                    builder: (context) =>
+                                                        LoginScreen()),
+                                                (route) => false);
+                                          },
+                                          child: const Text("Yes"))
+                                    ],
+                                  ));
+                        },
+                        child: const Text("LOG OUT")),
                   )
                 ],
-              ),
-              const Divider(
-                height: 15,
-                thickness: 2,
-              ),
-              const SizedBox(
-                height: 10,
-              ),
-              settingsButton(() {}, "Change Password"),
-              settingsButton(() {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => const EditProfile()));
-              }, "Edit Profile"),
-              settingsButton(() {}, "Privacy and Security"),
-              settingsButton(() {}, "Contact Support"),
-              const SizedBox(
-                height: 20,
-              ),
-              Row(
-                children: const [
-                  Icon(
-                    Icons.toggle_off,
-                    color: Colors.green,
-                  ),
-                  SizedBox(
-                    width: 8,
-                  ),
-                  Text(
-                    "Change Status",
-                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                  )
-                ],
-              ),
-              const Divider(
-                height: 15,
-                thickness: 2,
-              ),
-              const SizedBox(
-                height: 10,
-              ),
-              CustomLoadingSwitch(
-                title: "Go Offine",
-                altTitle: "Go Online",
-                status: authProvider.courier!.currentStatus,
-                future: authProvider.changeCurrentStatus,
-              ),
-              customSwitch("On Assignment", courier.onAssingment, (value) {}),
-              const SizedBox(
-                height: 50,
-              ),
-              Center(
-                child: OutlinedButton(
-                    style: ButtonStyle(
-                        padding: MaterialStateProperty.all(
-                            const EdgeInsets.symmetric(horizontal: 40)),
-                        shape: MaterialStateProperty.all(RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(20)))),
-                    onPressed: () {
-                      showDialog(
-                          context: context,
-                          builder: (context) => AlertDialog(
-                                title: const Text("Logout"),
-                                content: const Text(
-                                    "Are you sure you wish to log out?"),
-                                actions: [
-                                  TextButton(
-                                      onPressed: () {
-                                        Navigator.pop(context);
-                                      },
-                                      child: const Text("No")),
-                                  TextButton(
-                                      onPressed: () {
-                                        Provider.of<AuthProvider>(context,
-                                                listen: false)
-                                            .logout();
-                                        Navigator.pop(context);
-                                        Navigator.pushAndRemoveUntil(
-                                            context,
-                                            MaterialPageRoute(
-                                                builder: (context) =>
-                                                    LoginScreen()),
-                                            (route) => false);
-                                      },
-                                      child: const Text("Yes"))
-                                ],
-                              ));
-                    },
-                    child: const Text("LOG OUT")),
-              )
-            ],
-          ),
+              )),
         );
       }),
     );

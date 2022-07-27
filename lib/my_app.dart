@@ -7,12 +7,11 @@ import 'package:foodie_courier/screens/Onboarding/onboarding_screen.dart';
 import 'package:foodie_courier/screens/Orders/order_details.dart';
 import 'package:foodie_courier/services/push_notification_service.dart';
 import 'package:foodie_courier/services/service_locator.dart';
-import 'package:foodie_courier/services/update_location.dart';
 import 'package:provider/provider.dart';
 
 class MyApp extends StatefulWidget {
   final bool onBoarded;
-  MyApp({Key? key, required this.onBoarded}) : super(key: key);
+  const MyApp({Key? key, required this.onBoarded}) : super(key: key);
 
   @override
   State<MyApp> createState() => _MyAppState();
@@ -23,31 +22,9 @@ class _MyAppState extends State<MyApp> {
       GlobalKey(debugLabel: "Main Navigator");
   @override
   void initState() {
-    Provider.of<AuthProvider>(context, listen: false).onInit();
     Provider.of<AuthProvider>(context, listen: false).silentLogin();
-    initPlatformState();
+    Provider.of<AuthProvider>(context, listen: false).onInit();
     super.initState();
-  }
-
-  Future<void> initPlatformState() async {
-    int status = await BackgroundFetch.configure(
-        BackgroundFetchConfig(
-            minimumFetchInterval: 15,
-            enableHeadless: true,
-            startOnBoot: true,
-            stopOnTerminate: false,
-            requiredNetworkType: NetworkType.ANY,
-            requiresBatteryNotLow: false,
-            requiresCharging: false,
-            requiresDeviceIdle: false,
-            requiresStorageNotLow: false), (String taskId) async {
-      logger.d("Backgorund event $taskId received");
-      updateLocationForeground();
-      BackgroundFetch.finish(taskId);
-    }, (String taskId) async {
-      logger.e("Background task has timed out");
-      BackgroundFetch.finish(taskId);
-    });
   }
 
   @override
@@ -62,15 +39,15 @@ class _MyAppState extends State<MyApp> {
         Widget home;
         PushNotificationService(
             authProvider.currentUser,
-            (String order_id) => Navigator.of(context).push(MaterialPageRoute(
+            (String orderId) => Navigator.of(context).push(MaterialPageRoute(
                 builder: (context) => OrderDetails(
-                      order_id: order_id,
+                      order_id: orderId,
                     )))).oninit();
         if (widget.onBoarded == true) {
           if (authProvider.currentUser != null) {
             home = const MainLayout(index: 0);
           } else {
-            home = LoginScreen();
+            home = const LoginScreen();
           }
         } else {
           home = const OnBoardingScreen();

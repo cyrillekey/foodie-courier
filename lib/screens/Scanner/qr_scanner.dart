@@ -36,9 +36,15 @@ class _QrScannerState extends State<QrScanner> {
                     controller: _controller,
                     allowDuplicates: false,
                     onDetect: (Barcode code, ars) {
-                      setState(() {
-                        this.code = code.rawValue!;
-                      });
+                      if (code.rawValue != null) {
+                        setState(() {
+                          this.code = 'Ready';
+                        });
+                      } else {
+                        setState(() {
+                          this.code = 'Scan';
+                        });
+                      }
                     }),
               ),
               Positioned(
@@ -62,7 +68,7 @@ class _QrScannerState extends State<QrScanner> {
                           height: 20,
                         ),
                         Text(
-                          "Code: $code",
+                          "$code",
                           style: const TextStyle(
                               fontSize: 30, fontWeight: FontWeight.w700),
                         ),
@@ -96,7 +102,8 @@ class _QrScannerState extends State<QrScanner> {
                               : null,
                           child: Container(
                             width: MediaQuery.of(context).size.width,
-                            padding: const EdgeInsets.symmetric(vertical: 15),
+                            padding: const EdgeInsets.symmetric(
+                                vertical: 15, horizontal: 10),
                             alignment: Alignment.center,
                             decoration: BoxDecoration(
                                 borderRadius: const BorderRadius.all(

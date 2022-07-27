@@ -20,7 +20,6 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  User? user;
   @override
   void initState() {
     super.initState();
@@ -34,7 +33,6 @@ class _HomeState extends State<Home> {
 
   @override
   Widget build(BuildContext context) {
-    user = Provider.of<AuthProvider>(context, listen: false).currentUser;
     return Scaffold(
       body: SizedBox(
         height: MediaQuery.of(context).size.height,
@@ -63,7 +61,9 @@ class _HomeState extends State<Home> {
                         ),
                         CircleAvatar(
                           radius: 24,
-                          backgroundImage: CachedNetworkImageProvider(user
+                          backgroundImage: CachedNetworkImageProvider(Provider
+                                      .of<AuthProvider>(context)
+                                  .currentUser
                                   ?.profile_picture ??
                               "https://images.pexels.com/photos/3307758/pexels-photo-3307758.jpeg?auto=compress&cs=tinysrgb&dpr=3&h=250"),
                         )
@@ -207,30 +207,38 @@ class _HomeState extends State<Home> {
                 height: MediaQuery.of(context).size.height * 0.25,
                 child: Consumer<OrderProvider>(
                     builder: (context, orderProvider, child) {
-                  return ListView.builder(
-                      itemCount: orderProvider.pending_orders.length,
-                      itemBuilder: (context, index) {
-                        return orderProvider.isLoading
-                            ? Container(
-                                margin: const EdgeInsets.symmetric(
-                                    horizontal: 10, vertical: 5),
-                                height: 174,
-                                width: MediaQuery.of(context).size.width,
-                                child: Shimmer.fromColors(
-                                    baseColor: Colors.grey[400]!,
-                                    highlightColor: Colors.grey[500]!,
-                                    child: const Card()),
-                              )
-                            : OrderItem(
-                                order_id: orderProvider
-                                    .pending_orders[index].order_id
-                                    .toString(),
-                                latitude: orderProvider
-                                    .pending_orders[index].latitude,
-                                longitude: orderProvider
-                                    .pending_orders[index].latitude,
-                              );
-                      });
+                  return orderProvider.pending_orders.isNotEmpty
+                      ? ListView.builder(
+                          itemCount: orderProvider.pending_orders.length,
+                          itemBuilder: (context, index) {
+                            return orderProvider.isLoading
+                                ? Container(
+                                    margin: const EdgeInsets.symmetric(
+                                        horizontal: 10, vertical: 5),
+                                    height: 174,
+                                    width: MediaQuery.of(context).size.width,
+                                    child: Shimmer.fromColors(
+                                        baseColor: Colors.grey[400]!,
+                                        highlightColor: Colors.grey[500]!,
+                                        child: const Card()),
+                                  )
+                                : OrderItem(
+                                    order_id: orderProvider
+                                        .pending_orders[index].order_id
+                                        .toString(),
+                                    latitude: orderProvider
+                                        .pending_orders[index].latitude,
+                                    longitude: orderProvider
+                                        .pending_orders[index].latitude,
+                                  );
+                          })
+                      : const Center(
+                          child: Text(
+                          "You Currently Have No Pending Order",
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                              fontSize: 35, fontWeight: FontWeight.w700),
+                        ));
                 }),
               )
             ],

@@ -54,12 +54,13 @@ class AuthProvider with ChangeNotifier {
   }
 
   Future<bool> silentLogin() async {
-    if (currentUser != null) {
+    User? current = await db.getUser();
+    if (current != null) {
       logger.v("Silent login performed");
       final _prefs = await SharedPreferences.getInstance();
       ApiResponse response = await apiClient.post("silentlogin", data: {
-        "user_mail": currentUser!.user_mail,
-        "user_password": currentUser!.password
+        "user_mail": current.user_mail,
+        "user_password": current.password
       });
       if (response.isSuccess) {
         User user = User.fromJson(response.response['customer']);
@@ -79,6 +80,8 @@ class AuthProvider with ChangeNotifier {
         return false;
       }
     } else {
+      logger.e("Current user is null");
+      logger.e(currentUser);
       return false;
     }
   }
