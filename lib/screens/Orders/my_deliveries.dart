@@ -28,19 +28,18 @@ class _MyDeliveriesState extends State<MyDeliveries> {
           elevation: 0,
           backgroundColor: Colors.white,
           bottom: TabBar(
-              padding: EdgeInsets.all(10),
+              padding: const EdgeInsets.all(10),
               indicator: BoxDecoration(
                   borderRadius: BorderRadius.circular(50),
                   color: Colors.greenAccent),
+              labelColor: Colors.white,
+              unselectedLabelColor: Colors.black,
               tabs: const [
                 Tab(
-                    icon: Icon(
-                  Icons.production_quantity_limits_sharp,
-                )),
+                  text: "Current Deliveries",
+                ),
                 Tab(
-                  icon: Icon(
-                    Icons.location_city,
-                  ),
+                  text: "Finished Deliveries",
                 )
               ]),
         ),
@@ -79,25 +78,51 @@ class _MyDeliveriesState extends State<MyDeliveries> {
                       builder: (context, orderProvider, child) {
                     return orderProvider.isLoading
                         ? const CustomIndicator()
-                        : Container(
-                            padding: const EdgeInsets.symmetric(
-                                horizontal: 10, vertical: 8),
-                            width: MediaQuery.of(context).size.width,
-                            height: MediaQuery.of(context).size.height * 0.6,
-                            child: ListView.builder(
-                                itemCount: orderProvider.pending_orders.length,
-                                itemBuilder: (context, index) {
-                                  return OrderItem(
-                                    order_id: orderProvider
-                                        .pending_orders[index].order_id
-                                        .toString(),
-                                    latitude: orderProvider
-                                        .pending_orders[index].latitude,
-                                    longitude: orderProvider
-                                        .pending_orders[index].longitude,
-                                  );
-                                }),
-                          );
+                        : orderProvider.pending_orders.isEmpty
+                            ? Column(
+                                children: [
+                                  const SizedBox(
+                                    height: 20,
+                                  ),
+                                  Center(
+                                    child: Image.asset(
+                                      "assets/img/empty.jpg",
+                                      width: MediaQuery.of(context).size.width *
+                                          0.8,
+                                    ),
+                                  ),
+                                  const SizedBox(
+                                    height: 40,
+                                  ),
+                                  const Text(
+                                    "No Orders",
+                                    style: TextStyle(
+                                        fontSize: 35,
+                                        fontWeight: FontWeight.w700),
+                                  )
+                                ],
+                              )
+                            : Container(
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 10, vertical: 8),
+                                width: MediaQuery.of(context).size.width,
+                                height:
+                                    MediaQuery.of(context).size.height * 0.6,
+                                child: ListView.builder(
+                                    itemCount:
+                                        orderProvider.pending_orders.length,
+                                    itemBuilder: (context, index) {
+                                      return OrderItem(
+                                        order_id: orderProvider
+                                            .pending_orders[index].order_id
+                                            .toString(),
+                                        latitude: orderProvider
+                                            .pending_orders[index].latitude,
+                                        longitude: orderProvider
+                                            .pending_orders[index].longitude,
+                                      );
+                                    }),
+                              );
                   })
                 ],
               ),
@@ -135,25 +160,50 @@ class _MyDeliveriesState extends State<MyDeliveries> {
                       builder: (context, orderProvider, child) {
                     return orderProvider.isLoading
                         ? const CustomIndicator()
-                        : Container(
-                            padding: const EdgeInsets.symmetric(
-                                horizontal: 10, vertical: 8),
-                            width: MediaQuery.of(context).size.width,
-                            height: MediaQuery.of(context).size.height * 0.6,
-                            child: ListView.builder(
-                                itemCount: orderProvider.my_orders.length,
-                                itemBuilder: (context, index) {
-                                  return OrderItem(
-                                    order_id: orderProvider
-                                        .my_orders[index].order_id
-                                        .toString(),
-                                    latitude:
-                                        orderProvider.my_orders[index].latitude,
-                                    longitude: orderProvider
-                                        .my_orders[index].longitude,
-                                  );
-                                }),
-                          );
+                        : orderProvider.my_orders.isEmpty
+                            ? Column(
+                                children: [
+                                  const SizedBox(
+                                    height: 20,
+                                  ),
+                                  Center(
+                                    child: Image.asset(
+                                      "assets/img/empty.jpg",
+                                      width: MediaQuery.of(context).size.width *
+                                          0.8,
+                                    ),
+                                  ),
+                                  const SizedBox(
+                                    height: 40,
+                                  ),
+                                  const Text(
+                                    "No Orders",
+                                    style: TextStyle(
+                                        fontSize: 35,
+                                        fontWeight: FontWeight.w700),
+                                  )
+                                ],
+                              )
+                            : Container(
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 10, vertical: 8),
+                                width: MediaQuery.of(context).size.width,
+                                height:
+                                    MediaQuery.of(context).size.height * 0.6,
+                                child: ListView.builder(
+                                    itemCount: orderProvider.my_orders.length,
+                                    itemBuilder: (context, index) {
+                                      return OrderItem(
+                                        order_id: orderProvider
+                                            .my_orders[index].order_id
+                                            .toString(),
+                                        latitude: orderProvider
+                                            .my_orders[index].latitude,
+                                        longitude: orderProvider
+                                            .my_orders[index].longitude,
+                                      );
+                                    }),
+                              );
                   })
                 ],
               ),

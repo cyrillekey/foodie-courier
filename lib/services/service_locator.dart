@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:foodie_courier/api_client/api_client.dart';
+import 'package:foodie_courier/constants/api_url.dart';
 import 'package:foodie_courier/database/local_db.dart';
 import 'package:foodie_courier/database/local_db_dao.dart';
 import 'package:foodie_courier/database/shared_database.dart';
@@ -18,7 +19,6 @@ var logger = Logger(
   printTime: true,
 ));
 void setupLocator() {
-  locator
-      .registerSingleton(ApiClient("https://foodieback.herokuapp.com/", Dio()));
+  locator.registerSingleton(ApiClient(ApiUrl.baseUrl, Dio()));
   locator.registerSingleton(LocalDaoDb(_appDatabase));
 }

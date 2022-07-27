@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:foodie_courier/screens/Layout/main_layout.dart';
 
 class Success extends StatelessWidget {
   const Success({Key? key}) : super(key: key);
@@ -62,7 +63,13 @@ class Success extends StatelessWidget {
                         Size(MediaQuery.of(context).size.width * 0.9, 60)),
                     backgroundColor: MaterialStateProperty.all(
                         const Color.fromRGBO(252, 126, 87, 0.9))),
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.pushAndRemoveUntil(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const MainLayout(index: 0)),
+                      (route) => false);
+                },
                 child: const Text(
                   "Back Home",
                   style: TextStyle(

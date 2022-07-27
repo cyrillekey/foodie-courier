@@ -19,7 +19,7 @@ class QrScanner extends StatefulWidget {
 
 class _QrScannerState extends State<QrScanner> {
   MobileScannerController _controller = MobileScannerController();
-  String? code;
+  String? code = "No Code";
   bool busy = false;
   @override
   Widget build(BuildContext context) {

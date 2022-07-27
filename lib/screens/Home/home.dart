@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:foodie_courier/api_client/api_response.dart';
@@ -9,6 +11,7 @@ import 'package:foodie_courier/screens/Scanner/qr_scanner.dart';
 import 'package:foodie_courier/screens/widgets/Alerts.dart';
 import 'package:foodie_courier/screens/widgets/order_item.dart';
 import 'package:foodie_courier/services/service_locator.dart';
+import 'package:foodie_courier/services/update_location.dart';
 import 'package:provider/provider.dart';
 import 'package:shimmer/shimmer.dart';
 
@@ -232,13 +235,23 @@ class _HomeState extends State<Home> {
                                         .pending_orders[index].latitude,
                                   );
                           })
-                      : const Center(
-                          child: Text(
-                          "You Currently Have No Pending Order",
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                              fontSize: 35, fontWeight: FontWeight.w700),
-                        ));
+                      : Container(
+                          alignment: Alignment.center,
+                          width: MediaQuery.of(context).size.width,
+                          decoration: const BoxDecoration(
+                              image: DecorationImage(
+                                  image: AssetImage(
+                                    "assets/img/empty.jpg",
+                                  ),
+                                  fit: BoxFit.fill)),
+                          child: const Text(
+                            "No Orders",
+                            style: TextStyle(
+                                color: Colors.amberAccent,
+                                fontSize: 35,
+                                fontWeight: FontWeight.w700),
+                          ),
+                        );
                 }),
               )
             ],

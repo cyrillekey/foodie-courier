@@ -58,19 +58,43 @@ class _ParcelCenterState extends State<ParcelCenter> {
                 height: MediaQuery.of(context).size.height * 0.7,
                 child: parcelCenterProvider.isLoading
                     ? const CustomIndicator()
-                    : ListView.builder(
-                        itemCount: parcelCenterProvider.awaiting_drivers.length,
-                        itemBuilder: (context, index) {
-                          return OrderItem(
-                            order_id: parcelCenterProvider
-                                .awaiting_drivers[index].order_id
-                                .toString(),
-                            latitude: parcelCenterProvider
-                                .awaiting_drivers[index].latitude,
-                            longitude: parcelCenterProvider
-                                .awaiting_drivers[index].longitude,
-                          );
-                        }),
+                    : parcelCenterProvider.awaiting_drivers.isNotEmpty
+                        ? ListView.builder(
+                            itemCount:
+                                parcelCenterProvider.awaiting_drivers.length,
+                            itemBuilder: (context, index) {
+                              return OrderItem(
+                                order_id: parcelCenterProvider
+                                    .awaiting_drivers[index].order_id
+                                    .toString(),
+                                latitude: parcelCenterProvider
+                                    .awaiting_drivers[index].latitude,
+                                longitude: parcelCenterProvider
+                                    .awaiting_drivers[index].longitude,
+                              );
+                            })
+                        : Column(
+                            children: [
+                              const SizedBox(
+                                height: 20,
+                              ),
+                              Center(
+                                child: Image.asset(
+                                  "assets/img/empty.jpg",
+                                  width:
+                                      MediaQuery.of(context).size.width * 0.8,
+                                ),
+                              ),
+                              const SizedBox(
+                                height: 40,
+                              ),
+                              const Text(
+                                "No Orders",
+                                style: TextStyle(
+                                    fontSize: 35, fontWeight: FontWeight.w700),
+                              )
+                            ],
+                          ),
               ),
             ],
           );
