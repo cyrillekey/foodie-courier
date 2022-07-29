@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:dio/dio.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:foodie_courier/controllers/auth_provider.dart';
 import 'package:foodie_courier/controllers/delivery_provider.dart';
@@ -18,16 +19,21 @@ import 'package:http/http.dart' as http;
 
 void main() async {
   WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
-  Workmanager().initialize(callBackDispathcer, isInDebugMode: true);
-  Workmanager().registerPeriodicTask(
-      "updateLocationBackgroundCourier", "updateLocation",
-      frequency: const Duration(minutes: 15),
-      constraints: Constraints(networkType: NetworkType.connected));
   FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
   await Firebase.initializeApp();
   setupLocator();
   final prefs = await SharedPreferences.getInstance();
   bool onBoarded = prefs.getBool("onboarded") ?? false;
+  Workmanager().initialize(
+    callBackDispathcer,
+    isInDebugMode: true,
+  );
+  Workmanager().registerPeriodicTask(
+    "updateLocationBackgroundCourier",
+    "updateLocation",
+    frequency: const Duration(minutes: 15),
+    constraints: Constraints(networkType: NetworkType.connected),
+  );
   runApp(MultiProvider(
     providers: [
       ChangeNotifierProvider(create: (_) => AuthProvider()),
@@ -56,9 +62,8 @@ void callBackDispathcer() {
     }
     Position position = await Geolocator.getCurrentPosition(
         desiredAccuracy: LocationAccuracy.bestForNavigation);
-    logger.d(position);
     try {
-      http.Response response = await http.post(
+      await http.post(
           Uri.parse(
               "https://foodieback.herokuapp.com/courier/update-location/$courier"),
           headers: {
@@ -69,13 +74,10 @@ void callBackDispathcer() {
             'latitude': position.latitude,
             'longitude': position.longitude,
           }));
-      logger.d(response.statusCode);
-      return true;
+      return Future.value(true);
     } on DioError catch (err) {
-      logger.e(err);
       return Future.error(err.response?.data['message']);
     } catch (err) {
-      logger.e(err);
       return Future.error("Error occured");
     }
   });
