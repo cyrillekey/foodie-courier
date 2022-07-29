@@ -50,7 +50,7 @@ Make sure you have a connected Android/iOS device/simulator and run the followin
 
 ### Delivery
 - Push Notifications On New Orders
-- Update Location To Server In The Background
+- Periodically Update Location To Server In The Background
 - Accept Order To Deliver
 - Google Maps Direction To Destination
 - Get past Delivered Orders
@@ -59,7 +59,21 @@ Make sure you have a connected Android/iOS device/simulator and run the followin
 ## Screenshots
 
 <p>
-<img src="https://github.com/cyrillekey/foodie_courier/blob/main/flutter_01.png?raw=true" alt="Splash View" width="200">
+<img src="https://github.com/cyrillekey/foodie-courier/blob/master/flutter_01.png?raw=true" alt="Splash View" width="200">
+<img src="https://github.com/cyrillekey/foodie-courier/blob/master/flutter_02.png?raw=true" alt="Splash View" width="200">
+<img src="https://github.com/cyrillekey/foodie-courier/blob/master/flutter_03.png?raw=true" alt="Splash View" width="200">
+<img src="https://github.com/cyrillekey/foodie-courier/blob/master/flutter_04.png?raw=true" alt="Splash View" width="200">
+<img src="https://github.com/cyrillekey/foodie-courier/blob/master/flutter_05.png?raw=true" alt="Splash View" width="200">
+<img src="https://github.com/cyrillekey/foodie-courier/blob/master/flutter_06.png?raw=true" alt="Splash View" width="200">
+<img src="https://github.com/cyrillekey/foodie-courier/blob/master/flutter_07.png?raw=true" alt="Splash View" width="200">
+<img src="https://github.com/cyrillekey/foodie-courier/blob/master/flutter_08.png?raw=true" alt="Splash View" width="200">
+<img src="https://github.com/cyrillekey/foodie-courier/blob/master/flutter_09.png?raw=true" alt="Splash View" width="200">
+<img src="https://github.com/cyrillekey/foodie-courier/blob/master/flutter_13.png?raw=true" alt="Splash View" width="200">
+<img src="https://github.com/cyrillekey/foodie-courier/blob/master/flutter_14.png?raw=true" alt="Splash View" width="200">
+<img src="https://github.com/cyrillekey/foodie-courier/blob/master/flutter_10.png?raw=true" alt="Splash View" width="200">
+<img src="https://github.com/cyrillekey/foodie-courier/blob/master/flutter_11.png?raw=true" alt="Splash View" width="200">
+<img src="https://github.com/cyrillekey/foodie-courier/blob/master/flutter_12.png?raw=true" alt="Splash View" width="200">
+
 </p>
 
 
