@@ -1,7 +1,7 @@
 # Foodie Courier App
 
 
-Foodie Courier app is a cross platform mobile application built in [flutter](https://flutter.dev/) using dart and consumes a custom [spring-boot rest api](git clone https://github.com/cyrillekey/restaurant-backend). The app allows courier to deliver make delivery of food ordered on the [Foodie Customer App](https://github.com/cyrillekey/foodie-app)
+Foodie Courier app is a cross platform mobile application built in [flutter](https://flutter.dev/) and consumes a custom [spring-boot rest api](https://github.com/cyrillekey/restaurant-backend). The app allows courier to deliver make delivery of food ordered on the [Foodie Customer App](https://github.com/cyrillekey/foodie-app)
 
 ## Getting Started
 
@@ -46,6 +46,7 @@ Make sure you have a connected Android/iOS device/simulator and run the followin
 - Authentication
 - Edit Account Details
 - Switch Account Status
+- Change Account Password
 
 ### Delivery
 - Push Notifications On New Orders
@@ -54,10 +55,11 @@ Make sure you have a connected Android/iOS device/simulator and run the followin
 - Google Maps Direction To Destination
 - Get past Delivered Orders
 - Pick Up New Orders If Free
+- Scan Qr Code To Deliver Order
 ## Screenshots
 
 <p>
-<img src="https://github.com/cyrillekey/gamereview/blob/main/flutter_01.png?raw=true" alt="Splash View" width="200">
+<img src="https://github.com/cyrillekey/foodie_courier/blob/main/flutter_01.png?raw=true" alt="Splash View" width="200">
 </p>
 
 
