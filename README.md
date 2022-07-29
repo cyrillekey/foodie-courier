@@ -14,7 +14,7 @@ A detailed guide for multiple platforms setup could be find [here](https://flutt
 ### Setup Project
 
 - Clone this repository using `git clone https://github.com/cyrillekey/foodie-courier`.
-- `cd` into `gamereview`.
+- `cd` into `foodie_courier`.
 - `flutter pub get` to get all the dependencies.
 - Generate files using Builder Runner (**required**) 
 ```
