@@ -1,4 +1,3 @@
-import 'package:background_fetch/background_fetch.dart';
 import 'package:flutter/material.dart';
 import 'package:foodie_courier/controllers/auth_provider.dart';
 import 'package:foodie_courier/screens/Authentication/login_screen.dart';
@@ -6,7 +5,6 @@ import 'package:foodie_courier/screens/Layout/main_layout.dart';
 import 'package:foodie_courier/screens/Onboarding/onboarding_screen.dart';
 import 'package:foodie_courier/screens/Orders/order_details.dart';
 import 'package:foodie_courier/services/push_notification_service.dart';
-import 'package:foodie_courier/services/service_locator.dart';
 import 'package:provider/provider.dart';
 
 class MyApp extends StatefulWidget {
