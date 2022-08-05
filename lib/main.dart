@@ -58,51 +58,29 @@ void callBackDispathcer() {
     if (token == null || courier == null) {
       return Future.error("Courier or token not setup");
     }
-    Position position = await Geolocator.getCurrentPosition();
+    Position position = await Geolocator.getCurrentPosition(
+        desiredAccuracy: LocationAccuracy.bestForNavigation);
     try {
       logger.i("im called");
-      await http.post(
-          Uri.parse(
-              "https://foodieback.herokuapp.com/courier/update-location/$courier"),
-          headers: {
-            "Authorization": "Bearer $token",
-            'Content-Type': 'application/json'
-          },
-          body: jsonEncode({
-            'latitude': position.latitude,
-            'longitude': position.longitude,
-          }));
-      return Future.value(true);
+      return await http
+          .post(
+              Uri.parse(
+                  "https://foodieback.herokuapp.com/courier/update-location/$courier"),
+              headers: {
+                "Authorization": "Bearer $token",
+                'Content-Type': 'application/json'
+              },
+              body: jsonEncode({
+                'latitude': position.latitude,
+                'longitude': position.longitude,
+              }))
+          .then((value) {
+        return Future.value(true);
+      });
     } on DioError catch (err) {
       return Future.value(false);
     } catch (err) {
       return Future.value(false);
     }
-    // return Geolocator.getCurrentPosition(
-    //         desiredAccuracy: LocationAccuracy.bestForNavigation)
-    //     .then((value) {
-    //   logger.i(value);
-    //   try {
-    //     logger.i("im called");
-    //     http.post(
-    //         Uri.parse(
-    //             "https://foodieback.herokuapp.com/courier/update-location/$courier"),
-    //         headers: {
-    //           "Authorization": "Bearer $token",
-    //           'Content-Type': 'application/json'
-    //         },
-    //         body: jsonEncode({
-    //           'latitude': value.latitude,
-    //           'longitude': value.longitude,
-    //         }));
-    //     return Future.value(true);
-    //   } on DioError catch (err) {
-    //     return Future.value(false);
-    //   } catch (err) {
-    //     return Future.value(false);
-    //   }
-    // }).catchError((err) {
-    //   return Future.value(false);
-    // });
   });
 }
